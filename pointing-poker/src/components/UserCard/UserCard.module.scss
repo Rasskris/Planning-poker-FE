@@ -1,0 +1,49 @@
+@import '../../layout/styles-config';
+
+.userCard {
+  padding: 10px;
+  width: 300px;
+  height: 75px;
+  @include flex($justify: flex-start);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+}
+.userAvatar {
+  margin-right: 20px;
+  width: 70px;
+  height: 70px;
+  @include flex($justify: center);
+  border-radius: 50%;
+  background-color: $bright-blue;
+  text-transform: uppercase;
+  color: white;
+  @include font($size: 33px, $weight: 900);
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.userInfo {
+  width: 50%;
+  @include flex($direction: column, $justify: center, $align: flex-start);
+}
+.userCurrent {
+  @include font($size: 10px, $weight: 900, $height: 15px);
+  text-transform: uppercase;
+}
+.userName {
+  font-size: 25px;
+}
+
+.jobPosition {
+  font-size: 10px;
+  line-height: 10px;
+  color: grey;
+}
+.btnKick {
+  width: 46px;
+  height: 46px;
+  background-image: url(../../assets/icons/icon__kick.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  &:hover {
+    opacity: 0.5;
+  }
+}
