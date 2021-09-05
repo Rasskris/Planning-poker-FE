@@ -1,0 +1,18 @@
+@import '../../layout/styles-config.scss';
+
+.button {
+  @include font(24px);
+  cursor: pointer;
+
+  &_light {
+    @include button($background: $white, $color: $dark-blue);
+  }
+
+  &_dark {
+    @include button($background: $dark-blue, $color: $white);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+  }
+}
