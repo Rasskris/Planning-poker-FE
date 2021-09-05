@@ -1,0 +1,11 @@
+@import '../../layout/styles-config.scss';
+
+.switcher__label {
+  @include font(24px);
+  @include flex();
+  width: 100%;
+}
+
+.switcher__input {
+  @include switcher($width: 60px);
+}
