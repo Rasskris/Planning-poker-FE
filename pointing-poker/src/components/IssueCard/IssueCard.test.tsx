@@ -2,15 +2,15 @@ import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { IssueCard } from '..';
 
-const issueName = 'Issue 345';
-const issuePriority = 'Low';
+const ISSUE_NAME = 'Issue 345';
+const ISSUE_PRIORITY = 'Low';
 
 describe('IssueCard', () => {
   const handleEditIssue = jest.fn();
   const handleRemoveIssue = jest.fn();
 
   test('should render with current props', () => {
-    const { getByTestId } = render(<IssueCard issueName={issueName} issuePriority={issuePriority} />);
+    const { getByTestId } = render(<IssueCard issueName={ISSUE_NAME} issuePriority={ISSUE_PRIORITY} />);
 
     expect(getByTestId(/issueName/)).toHaveTextContent(/issue 345/i);
     expect(getByTestId(/issuePriority/)).toHaveTextContent(/low/i);
@@ -18,14 +18,14 @@ describe('IssueCard', () => {
 
   test('should show that this is the current issue', () => {
     const { getByText } = render(
-      <IssueCard isCurrentIssue={true} issueName={issueName} issuePriority={issuePriority} />,
+      <IssueCard isCurrentIssue={true} issueName={ISSUE_NAME} issuePriority={ISSUE_PRIORITY} />,
     );
 
     expect(getByText(/current/)).toBeInTheDocument();
   });
 
   test('should show that this is not the current issue', () => {
-    const { queryByText } = render(<IssueCard issueName={issueName} issuePriority={issuePriority} />);
+    const { queryByText } = render(<IssueCard issueName={ISSUE_NAME} issuePriority={ISSUE_PRIORITY} />);
 
     expect(queryByText(/current/)).toBe(null);
   });
@@ -33,8 +33,8 @@ describe('IssueCard', () => {
   test('should calls handleEditIssue and handleRemoveIssue', () => {
     const { getByTestId } = render(
       <IssueCard
-        issueName={issueName}
-        issuePriority={issuePriority}
+        issueName={ISSUE_NAME}
+        issuePriority={ISSUE_PRIORITY}
         handleEditIssue={handleEditIssue}
         handleRemoveIssue={handleRemoveIssue}
       />,
