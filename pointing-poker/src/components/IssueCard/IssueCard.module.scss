@@ -1,0 +1,47 @@
+@import '../../layout/styles-config';
+
+.issueCard {
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+  @include flex($justify: flex-start);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+  @include flex($align: center, $justify: space-between);
+}
+.issueInfo {
+  height: 50%;
+  @include flex($direction: column, $justify: center, $align: flex-start);
+}
+.issueCurrent {
+  @include font($size: 10px, $weight: 900, $height: 15px);
+  text-transform: uppercase;
+}
+.issueName {
+  font-size: 23px;
+}
+.issuePriority {
+  @include font($size: 10px, $height: 10px, $weight: 200);
+  color: grey;
+}
+.btnContainer {
+  @include flex($align: center);
+}
+.btnEdit,
+.btnRemove {
+  background-repeat: no-repeat;
+  background-size: contain;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+.btnEdit {
+  width: 45px;
+  height: 45px;
+  background-image: url(../../assets/icons/icon__edit.svg);
+}
+.btnRemove {
+  width: 56px;
+  height: 56px;
+  background-image: url(../../assets/icons/icon__remove.svg);
+}
