@@ -5,4 +5,4 @@ const getNameInitials = (firstName: string, lastName?: string) => {
   return `${firstLetter}${secondLetter}`;
 };
 
-export default getNameInitials;
+export { getNameInitials };
