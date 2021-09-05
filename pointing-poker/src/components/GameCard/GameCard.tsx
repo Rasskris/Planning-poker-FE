@@ -26,4 +26,4 @@ const GameCard: FC<GameCardProps> = ({ scoreType, scoreValue, handleEditScoreVal
   );
 };
 
-export default GameCard;
+export { GameCard };

@@ -43,4 +43,4 @@ const IssueCard: FC<IssueCardProps> = ({
   );
 };
 
-export default IssueCard;
+export { IssueCard };

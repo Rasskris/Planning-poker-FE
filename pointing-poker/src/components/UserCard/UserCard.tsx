@@ -35,4 +35,4 @@ const UserCard: FC<UserCardProps> = ({ isCurrentUser, firstName, lastName, imgUR
   );
 };
 
-export default UserCard;
+export { UserCard };

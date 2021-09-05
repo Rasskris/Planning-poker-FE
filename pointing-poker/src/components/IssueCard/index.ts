@@ -1,1 +1,1 @@
-export { default as IssueCard } from './IssueCard';
+export { IssueCard } from './IssueCard';

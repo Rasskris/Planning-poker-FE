@@ -1,1 +1,1 @@
-export { default as UserCard } from './UserCard';
+export { UserCard } from './UserCard';
