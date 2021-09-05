@@ -4,11 +4,17 @@ import styles from './Switcher.module.scss';
 interface SwitcherProps {
   name: string;
   children: Node | string;
+  onClick: Function;
 }
 
 const Switcher = (props: SwitcherProps) => {
-  const { children, name } = props;
+  const { onClick, children, name } = props;
   const [isIncluded, setIsIncluded] = useState(false);
+
+  function handleChange() {
+    setIsIncluded(prev => !prev);
+    onClick();
+  }
 
   return (
     <label className={styles.switcher__label} htmlFor={`switcher-${name}`}>
@@ -20,7 +26,7 @@ const Switcher = (props: SwitcherProps) => {
         type="checkbox"
         name={name}
         id={`switcher-${name}`}
-        onClick={() => setIsIncluded(prev => !prev)}
+        onChange={() => handleChange()}
       ></input>
     </label>
   );
@@ -29,6 +35,7 @@ const Switcher = (props: SwitcherProps) => {
 Switcher.defaultProps = {
   name: 'default-switcher',
   children: 'label-for-default-switcher',
+  onClick: () => {},
 };
 
 export default Switcher;
