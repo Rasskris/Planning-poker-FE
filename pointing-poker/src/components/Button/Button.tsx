@@ -3,7 +3,7 @@ import styles from './Button.module.scss';
 
 interface ButtonProps {
   onClick: Function;
-  children: Node;
+  children: Node | string;
   disabled: boolean;
   colorButton: string; //dark or light
 }
