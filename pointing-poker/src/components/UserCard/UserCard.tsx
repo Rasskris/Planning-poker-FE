@@ -15,7 +15,7 @@ const UserCard: FC<UserCardProps> = ({ isCurrentUser, firstName, lastName, imgUR
   const nameInitials = getNameInitials(firstName, lastName);
 
   const avatarStyle = {
-    backgroundImage: 'url(' + imgURL + ')',
+    backgroundImage: `url(${imgURL})`,
   };
 
   return (
