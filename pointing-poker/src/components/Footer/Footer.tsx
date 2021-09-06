@@ -5,10 +5,10 @@ const Footer: React.FC = (): JSX.Element => {
   return (
     <div className={classes.footer}>
       <div className={classes.wrapper}>
-        <div className={classes.logo}>
+        <a className={classes.logo} href={'https://rs.school/react/'}>
           <div className={classes.logo_icon} />
-        </div>
-        <div></div>
+        </a>
+        <div className={classes.copyright}></div>
       </div>
     </div>
   );
