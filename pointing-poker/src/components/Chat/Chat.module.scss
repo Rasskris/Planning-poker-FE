@@ -2,7 +2,6 @@
 
 .logo {
   cursor: pointer;
-  background-image: url('../../assets/icons/icon__chat.svg');
   background-repeat: no-repeat;
   position: absolute;
   top: 11.12px;
@@ -12,5 +11,13 @@
   &_icon {
     width: 19px;
     height: 13.21px;
+  }
+
+  &_open {
+    background-image: url('../../assets/icons/icon__chat.svg');
+  }
+
+  &_close {
+    background-image: url('../../assets/icons/icon__cancel.svg');
   }
 }
