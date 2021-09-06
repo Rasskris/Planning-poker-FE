@@ -4,9 +4,8 @@ import Header from './components/Header/Header';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
+    <div className={classes.app}>
       <Header />
-      <h1 className={classes.header}>Pointing Poker</h1>
     </div>
   );
 };

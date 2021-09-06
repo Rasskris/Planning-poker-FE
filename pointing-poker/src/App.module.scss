@@ -1,6 +1,5 @@
 @import 'layout/base/base';
 
-.header {
-  @include font($size: 2rem);
-  color: $dark-blue;
+.app {
+  @include flex($direction: column);
 }
