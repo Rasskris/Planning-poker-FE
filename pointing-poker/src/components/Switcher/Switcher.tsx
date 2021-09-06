@@ -26,7 +26,7 @@ const Switcher = (props: SwitcherProps) => {
         type="checkbox"
         name={name}
         id={`switcher-${name}`}
-        onChange={() => handleChange()}
+        onChange={handleChange}
       ></input>
     </label>
   );
