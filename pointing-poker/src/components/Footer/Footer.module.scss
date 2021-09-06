@@ -1,7 +1,25 @@
 @import '../../layout/styles-config';
 
-.wrapper {
+.footer {
   background-color: $dark-blue;
   width: 100vw;
   height: 70px;
+}
+
+.wrapper {
+  @include flex();
+  max-width: 1200px;
+  padding: 10px 30px;
+}
+
+.logo {
+  background-image: url('../../assets/icons/icon__rs_school_js.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+
+  &_icon {
+    width: 120px;
+    height: 40px;
+  }
 }
