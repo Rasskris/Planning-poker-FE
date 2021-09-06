@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Header.module.scss';
 
-const Header: React.FC = () => {
+const Header: React.FC = (): JSX.Element => {
   return (
     <div className={classes.header}>
       <div className={classes.header__wrapper}>
