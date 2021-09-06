@@ -8,6 +8,6 @@ const App: React.FC = () => {
       <h1 className={classes.header}>Pointing Poker</h1>
     </div>
   );
-}
+};
 
 export default App;
