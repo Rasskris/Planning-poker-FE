@@ -27,7 +27,6 @@
   &__icons {
     @include flex();
     &__logo {
-      cursor: pointer;
       background-image: url('../../assets/icons/logo.svg');
       background-repeat: no-repeat;
       background-position: left;
