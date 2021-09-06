@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import classes from './Header.module.scss';
 import Chat from '../Chat/Chat';
 
 const Header: React.FC = (): JSX.Element => {
+  const [chatOpen, setChatOpen] = useState(false);
+  const [login, setLogin] = useState(true);
   return (
     <div className={classes.header}>
       <div className={classes.wrapper}>
@@ -14,7 +16,7 @@ const Header: React.FC = (): JSX.Element => {
           <div className={classes.logo}>
             <div className={classes.logo_icon} />
           </div>
-          <Chat />
+          {login ? <Chat isOpen={chatOpen} openChatHandler={() => setChatOpen(!chatOpen)} /> : null}
         </div>
       </div>
     </div>
