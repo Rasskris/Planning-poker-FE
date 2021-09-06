@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './Header.module.scss';
+import Chat from '../Chat/Chat';
 
 const Header: React.FC = (): JSX.Element => {
   return (
@@ -10,12 +11,10 @@ const Header: React.FC = (): JSX.Element => {
           <div className={classes.background_blue} />
         </div>
         <div className={classes.icons}>
-          <div className={classes.icons__logo}>
-            <div className={classes.icons__logo_icon} />
+          <div className={classes.logo}>
+            <div className={classes.logo_icon} />
           </div>
-          <div className={classes.icons__chat}>
-            <div className={classes.icons__chat_icon} />
-          </div>
+          <Chat />
         </div>
       </div>
     </div>
