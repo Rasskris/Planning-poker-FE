@@ -2,56 +2,56 @@
 
 .header {
   @include flex();
+}
 
-  &__wrapper {
-    width: 100vw;
+.wrapper {
+  width: 100vw;
+}
+
+.background {
+  position: relative;
+
+  &_darkBlue {
+    background-color: $dark-blue;
+    width: 100%;
+    height: 50px;
   }
 
-  &__background {
-    position: relative;
+  &_blue {
+    background-color: $blue;
+    width: 100%;
+    height: 19px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
 
-    &_darkBlue {
-      background-color: $dark-blue;
-      width: 100%;
-      height: 50px;
-    }
+.icons {
+  @include flex();
+  &__logo {
+    background-image: url('../../assets/icons/logo.svg');
+    background-repeat: no-repeat;
+    background-position: left;
+    position: absolute;
+    top: 15px;
+    left: 64px;
 
-    &_blue {
-      background-color: $blue;
-      width: 100%;
-      height: 19px;
-      box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    &_icon {
+      width: 79px;
+      height: 79px;
     }
   }
+  &__chat {
+    cursor: pointer;
+    background-image: url('../../assets/icons/icon__chat.svg');
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 11.12px;
+    right: 27px;
+    bottom: 25.27px;
 
-  &__icons {
-    @include flex();
-    &__logo {
-      background-image: url('../../assets/icons/logo.svg');
-      background-repeat: no-repeat;
-      background-position: left;
-      position: absolute;
-      top: 15px;
-      left: 64px;
-
-      &_icon {
-        width: 79px;
-        height: 79px;
-      }
-    }
-    &__chat {
-      cursor: pointer;
-      background-image: url('../../assets/icons/icon__chat.svg');
-      background-repeat: no-repeat;
-      position: absolute;
-      top: 11.12px;
-      right: 27px;
-      bottom: 25.27px;
-
-      &_icon {
-        width: 19px;
-        height: 13.21px;
-      }
+    &_icon {
+      width: 19px;
+      height: 13.21px;
     }
   }
 }
