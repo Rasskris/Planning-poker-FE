@@ -1,7 +1,14 @@
 @import '../../layout/styles-config';
 
-.wrapper {
+.row {
+  @include flex($align: flex-start);
+}
+
+.column {
   @include flex($direction: column, $align: flex-start);
+}
+
+.label {
   @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal);
   text-transform: capitalize;
 }
