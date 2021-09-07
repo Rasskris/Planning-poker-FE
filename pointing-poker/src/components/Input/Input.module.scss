@@ -2,6 +2,7 @@
 
 .row {
   @include flex($align: flex-start);
+  width: 100%;
 }
 
 .column {
