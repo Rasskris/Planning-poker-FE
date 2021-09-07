@@ -1,13 +1,13 @@
 import React from 'react';
-import classes from './Chat.module.scss';
+import classes from './ChatButton.module.scss';
 import { IClasses } from '../../interfaces/IClasses';
 
-interface IChatProps {
+interface IChatButtonProps {
   isOpen: boolean;
   openChatHandler: (event: React.MouseEvent) => void;
 }
 
-const Chat: React.FC<IChatProps> = (props: IChatProps): JSX.Element => {
+const ChatButton: React.FC<IChatButtonProps> = (props: IChatButtonProps): JSX.Element => {
   const incomingClasses: IClasses = { ...classes };
   let clsIsOpen = !props.isOpen ? incomingClasses.logo_open : incomingClasses.logo_close;
   const cls: string[] = [incomingClasses.logo, clsIsOpen];
@@ -19,4 +19,4 @@ const Chat: React.FC<IChatProps> = (props: IChatProps): JSX.Element => {
   );
 };
 
-export default Chat;
+export { ChatButton };

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import classes from './Header.module.scss';
-import Chat from '../Chat/Chat';
+import { ChatButton } from '../ChatButton/ChatButton';
 
 const Header: React.FC = (): JSX.Element => {
   const [chatOpen, setChatOpen] = useState(false);
@@ -16,7 +16,7 @@ const Header: React.FC = (): JSX.Element => {
           <div className={classes.logo}>
             <div className={classes.logo_icon} />
           </div>
-          {login ? <Chat isOpen={chatOpen} openChatHandler={() => setChatOpen(!chatOpen)} /> : null}
+          {login ? <ChatButton isOpen={chatOpen} openChatHandler={() => setChatOpen(!chatOpen)} /> : null}
         </div>
       </div>
     </div>
