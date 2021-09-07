@@ -1,10 +1,14 @@
 import React from 'react';
 import classes from './KickForm.module.scss';
 
-const KickForm: React.FC = (): JSX.Element => {
+interface IKickFormProps {
+  onClick(event: React.MouseEvent): void;
+}
+
+const KickForm: React.FC<IKickFormProps> = (props: IKickFormProps): JSX.Element => {
   return (
-    <div className={classes.logo}>
-      <div className={classes.logo_icon}></div>
+    <div className={classes.logo} onClick={props.onClick}>
+      <div className={classes.logo_icon} />
     </div>
   );
 };
