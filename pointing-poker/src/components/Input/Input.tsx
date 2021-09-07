@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './Input.module.scss';
 
 interface IPropsInput {
   type: string;
@@ -15,9 +16,9 @@ const Input: React.FC<IPropsInput> = (props: IPropsInput): JSX.Element => {
   const inputType: string = props.type || 'text';
   const htmlFor: string = `${props.type}-${Math.random()}`;
   return (
-    <div>
+    <div className={classes.wrapper}>
       <label htmlFor={htmlFor}>{props.label}</label>
-      <input type={inputType} id={htmlFor} value={props.value} onChange={props.onChange} />
+      <input className={classes.input} type={inputType} id={htmlFor} value={props.value} onChange={props.onChange} />
     </div>
   );
 };
