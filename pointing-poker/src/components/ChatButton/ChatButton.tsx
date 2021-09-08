@@ -10,12 +10,12 @@ interface IChatButtonProps {
 const ChatButton: React.FC<IChatButtonProps> = (props: IChatButtonProps): JSX.Element => {
   const incomingClasses: IClasses = { ...classes };
   let clsIsOpen = !props.isOpen ? incomingClasses.logo_open : incomingClasses.logo_close;
-  const cls: string[] = [incomingClasses.logo, clsIsOpen];
+  const chatButtonClasses: string = [incomingClasses.logo, clsIsOpen].join(' ');
 
   return (
-    <a className={cls.join(' ')} onClick={props.openChatHandler}>
+    <div className={chatButtonClasses} onClick={props.openChatHandler}>
       <div className={classes.logo_icon} />
-    </a>
+    </div>
   );
 };
 
