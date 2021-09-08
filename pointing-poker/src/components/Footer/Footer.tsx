@@ -1,6 +1,8 @@
 import React from 'react';
 import classes from './Footer.module.scss';
 
+const PROJECT_MEMBERS: string[] = ['elenaniksy', 'nine-eleven', 'rasskris'];
+
 const Footer: React.FC = (): JSX.Element => {
   return (
     <div className={classes.footer}>
@@ -11,15 +13,13 @@ const Footer: React.FC = (): JSX.Element => {
         <div className={classes.copyright}>
           <p className={classes.copyright__text}>
             Made by:
-            <a className={classes.copyright__text_link} href="https://github.com/elenaniksy">
-              @elenaniksy
-            </a>
-            <a className={classes.copyright__text_link} href="https://github.com/Nine-eleven">
-              @nine-eleven
-            </a>
-            <a className={classes.copyright__text_link} href="https://github.com/Rasskris">
-              @rasskris
-            </a>
+            {PROJECT_MEMBERS.map((member: string, index: number) => {
+              return (
+                <a className={classes.copyright__text_link} href={`https://github.com/${member}`} key={index}>
+                  @{member}
+                </a>
+              );
+            })}
           </p>
         </div>
       </div>
