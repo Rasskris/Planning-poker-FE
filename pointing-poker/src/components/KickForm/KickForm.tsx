@@ -13,4 +13,4 @@ const KickForm: React.FC<IKickFormProps> = (props: IKickFormProps): JSX.Element 
   );
 };
 
-export default KickForm;
+export { KickForm };
