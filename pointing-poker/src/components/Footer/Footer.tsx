@@ -27,4 +27,4 @@ const Footer: React.FC = (): JSX.Element => {
   );
 };
 
-export default Footer;
+export { Footer };
