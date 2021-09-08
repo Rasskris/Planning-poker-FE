@@ -16,11 +16,11 @@ interface IPropsInput {
   checked?: boolean;
 }
 
-const Input: React.FC<IPropsInput> = (props: IPropsInput): JSX.Element => {
-  const inputType: string = props.type;
-  const [uniqueId] = useState(_uniqueId(props.type));
+const Input: React.FC<IPropsInput> = ({type, layout, value, onChangeInputHandler, label}: IPropsInput): JSX.Element => {
+  const inputType: string = type;
+  const [uniqueId] = useState(_uniqueId(type));
   const incomingClasses: IClasses = { ...classes };
-  const layout = props.layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
+  const layout = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
   const inputClasses: string = [layout].join(' ');
 
   return (
