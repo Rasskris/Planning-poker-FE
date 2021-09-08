@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEventHandler } from 'react';
 import classes from './Input.module.scss';
 import { IClasses } from '../../interfaces/IClasses';
 import _uniqueId from 'lodash/uniqueId';
@@ -12,29 +12,29 @@ interface IPropsInput {
   touched: boolean;
   validate: boolean;
   shouldValidate: boolean;
-  onInputHandler(event: React.ChangeEvent<HTMLInputElement>): void;
+  onChangeInputHandler: ChangeEventHandler;
   checked?: boolean;
 }
 
-const Input: React.FC<IPropsInput> = ({type, layout, value, onChangeInputHandler, label}: IPropsInput): JSX.Element => {
+const Input: React.FC<IPropsInput> = ({
+  type,
+  layout,
+  value,
+  onChangeInputHandler,
+  label,
+}: IPropsInput): JSX.Element => {
   const inputType: string = type;
   const [uniqueId] = useState(_uniqueId(type));
   const incomingClasses: IClasses = { ...classes };
-  const layout = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
-  const inputClasses: string = [layout].join(' ');
+  const inputLayout: string = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
+  const inputClasses: string = [inputLayout].join(' ');
 
   return (
     <div className={inputClasses}>
       <label className={classes.label} htmlFor={uniqueId}>
-        {props.label}
+        {label}
       </label>
-      <input
-        className={classes.input}
-        type={inputType}
-        id={uniqueId}
-        value={props.value}
-        onChange={props.onInputHandler}
-      />
+      <input className={classes.input} type={inputType} id={uniqueId} value={value} onChange={onChangeInputHandler} />
     </div>
   );
 };
