@@ -27,10 +27,9 @@ const Input: React.FC<IPropsInput> = ({
   const [uniqueId] = useState(_uniqueId(type));
   const incomingClasses: IClasses = { ...classes };
   const inputLayout: string = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
-  const inputClasses: string = [inputLayout].join(' ');
 
   return (
-    <div className={inputClasses}>
+    <div className={inputLayout}>
       <label className={classes.label} htmlFor={uniqueId}>
         {label}
       </label>

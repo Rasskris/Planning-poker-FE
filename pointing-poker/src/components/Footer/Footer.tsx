@@ -13,7 +13,7 @@ const Footer: React.FC = (): JSX.Element => {
         <div className={classes.copyright}>
           <p className={classes.copyright__text}>
             Made by:
-            {PROJECT_MEMBERS.map((member: string, index: number) => {
+            {PROJECT_MEMBERS.map((member: string) => {
               return (
                 <a className={classes.copyright__text_link} href={`https://github.com/${member}`} key={member}>
                   @{member}
