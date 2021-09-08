@@ -6,10 +6,7 @@ interface TimerProps {
   seconds: number;
 }
 
-const Timer = (props: TimerProps) => {
-  const { minutes, seconds } = props;
-
-  return (
+const Timer = ({ minutes, seconds }: TimerProps) => (
     <div className={styles.timer}>
       <div className={styles.timer__minutes}>
         <p>minutes</p>
@@ -23,7 +20,6 @@ const Timer = (props: TimerProps) => {
         </p>
       </div>
     </div>
-  );
-};
+);
 
 export { Timer };
