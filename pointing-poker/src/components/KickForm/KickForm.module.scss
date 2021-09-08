@@ -1,0 +1,13 @@
+@import '../../layout/styles-config';
+
+.logo {
+  cursor: pointer;
+  background-image: url('../../assets/icons/icon__kickform.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &_icon {
+    width: 25px;
+    height: 25px;
+  }
+}

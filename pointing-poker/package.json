@@ -12,6 +12,7 @@
     "@types/react": "^16.14.14",
     "@types/react-dom": "^16.9.14",
     "@types/react-redux": "^7.1.18",
+    "lodash.uniqueid": "^4.0.1",
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -24,7 +25,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format: all": "prettier --write src"
   },
   "eslintConfig": {
     "extends": [
@@ -46,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.172",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.3.2"

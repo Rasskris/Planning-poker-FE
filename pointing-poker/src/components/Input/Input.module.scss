@@ -1,0 +1,23 @@
+@import '../../layout/styles-config';
+
+.row {
+  @include flex($align: flex-start);
+  width: 100%;
+}
+
+.column {
+  @include flex($direction: column, $align: flex-start);
+}
+
+.label {
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal);
+  text-transform: capitalize;
+}
+
+.input {
+  border: 1px solid $dark-blue;
+  border-radius: 0 0 0 10px;
+  box-shadow: inset 0 1px 0 1px rgba(0, 0, 0, 0.2);
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal, $align: left);
+  outline: none;
+}
