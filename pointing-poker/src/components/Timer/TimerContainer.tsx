@@ -1,8 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import Timer from './Timer';
+import { Timer } from './Timer';
 
 //https://stackoverflow.com/questions/40885923/countdown-timer-in-react
+
+const START_COUNTDOWN_SECONDS = 59;
+const DEFAULT_START_MINUTES = 1;
+const DEFAULT_START_SECONDS = 1;
 
 interface TimerContainerProps {
   initialMinute: number;
@@ -25,7 +29,7 @@ const TimerContainer = (props: TimerContainerProps) => {
           clearInterval(myInterval);
         } else {
           setMinutes(minutes - 1);
-          setSeconds(59);
+          setSeconds(START_COUNTDOWN_SECONDS);
         }
       }
     }, 1000);
@@ -38,9 +42,9 @@ const TimerContainer = (props: TimerContainerProps) => {
 };
 
 TimerContainer.defaultProps = {
-  initialMinute: 0,
-  initialSeconds: 0,
+  initialMinute: DEFAULT_START_MINUTES,
+  initialSeconds: DEFAULT_START_SECONDS,
   timerStarted: false,
 };
 
-export default TimerContainer;
+export { TimerContainer };

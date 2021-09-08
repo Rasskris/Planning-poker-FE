@@ -26,4 +26,4 @@ const Timer = (props: TimerProps) => {
   );
 };
 
-export default Timer;
+export { Timer };
