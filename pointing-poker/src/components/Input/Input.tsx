@@ -12,7 +12,7 @@ interface IPropsInput {
   touched: boolean;
   validate: boolean;
   shouldValidate: boolean;
-  onChange(event: React.ChangeEvent<HTMLInputElement>): void;
+  onInputHandler(event: React.ChangeEvent<HTMLInputElement>): void;
   checked?: boolean;
 }
 
@@ -28,7 +28,13 @@ const Input: React.FC<IPropsInput> = (props: IPropsInput): JSX.Element => {
       <label className={classes.label} htmlFor={uniqueId}>
         {props.label}
       </label>
-      <input className={classes.input} type={inputType} id={uniqueId} value={props.value} onChange={props.onChange} />
+      <input
+        className={classes.input}
+        type={inputType}
+        id={uniqueId}
+        value={props.value}
+        onChange={props.onInputHandler}
+      />
     </div>
   );
 };
