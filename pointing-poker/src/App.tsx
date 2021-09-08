@@ -1,11 +1,12 @@
 import React from 'react';
 import classes from './App.module.scss';
+import { Header, Footer } from './components';
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      {/*  test header in component to show, that styles added*/}
-      <h1 className={classes.header}>Pointing Poker</h1>
+    <div className={classes.app}>
+      <Header />
+      <Footer />
     </div>
   );
 };

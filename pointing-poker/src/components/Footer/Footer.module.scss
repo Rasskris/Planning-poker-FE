@@ -1,0 +1,49 @@
+@import '../../layout/styles-config';
+
+.footer {
+  background-color: $dark-blue;
+  width: 100vw;
+}
+
+.wrapper {
+  @include flex();
+  max-width: 1400px;
+  padding: 10px 30px;
+  margin: 0 auto;
+}
+
+.logo {
+  cursor: pointer;
+  background-image: url('../../assets/icons/icon__rs_school_js.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+
+  &_icon {
+    width: 120px;
+    height: 40px;
+  }
+}
+
+.copyright {
+  &__text {
+    @include font($size: 1.5rem);
+    @include flex();
+    color: $white;
+
+    &_link {
+      text-decoration: none;
+      margin: 0 0 0 10px;
+      color: $sage;
+
+      &:hover {
+        color: $peach;
+        transition: all 0.5s ease-in-out;
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+}
