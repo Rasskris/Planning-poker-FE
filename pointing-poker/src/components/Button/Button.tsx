@@ -1,8 +1,11 @@
 import React from 'react';
 import styles from './Button.module.scss';
 
+const DEFAULT_NAME_BUTTON = 'Default button';
+const DEFAULT_COLOR_BUTTON = 'light';
+
 interface ButtonProps {
-  onClick: Function;
+  onClick: () => void;
   children: Node | string;
   disabled: boolean;
   colorButton: string; //dark or light
@@ -13,7 +16,7 @@ const Button = (props: ButtonProps) => {
   const classes: Array<String> = [styles.button, styles[`button_${colorButton}`]];
 
   return (
-    <button onClick={() => onClick()} disabled={disabled} className={classes.join(' ')} {...attr}>
+    <button onClick={onClick} disabled={disabled} className={classes.join(' ')} {...attr}>
       {children}
     </button>
   );
@@ -21,9 +24,9 @@ const Button = (props: ButtonProps) => {
 
 Button.defaultProps = {
   onClick: () => {},
-  children: 'Default button',
+  children: DEFAULT_NAME_BUTTON,
   disabled: false,
-  colorButton: 'light',
+  colorButton: DEFAULT_COLOR_BUTTON,
 };
 
-export default Button;
+export { Button };
