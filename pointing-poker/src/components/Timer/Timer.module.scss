@@ -1,0 +1,25 @@
+@import '../../layout/styles-config.scss';
+
+.timer {
+  @include flex($justify: center);
+  @include font(36px);
+
+  &__minutes,
+  &__seconds {
+    padding: 3px;
+    font-weight: 600;
+
+    > :nth-child(1) {
+      @include font($size: 10px, $align: left);
+    }
+
+    > :nth-child(2) {
+      @include flex();
+    }
+
+    span {
+      @include font(26px);
+      padding-right: 3px;
+    }
+  }
+}

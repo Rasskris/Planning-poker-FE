@@ -6,3 +6,6 @@ export { Footer } from './Footer';
 export { ChatButton } from './ChatButton';
 export { KickForm } from './KickForm';
 export { Input } from './Input';
+export { Button } from './Button';
+export { Switcher } from './Switcher';
+export { TimerContainer } from './Timer';
