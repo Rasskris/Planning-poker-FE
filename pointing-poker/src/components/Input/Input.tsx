@@ -16,7 +16,7 @@ interface IPropsInput {
 }
 
 const Input: React.FC<IPropsInput> = (props: IPropsInput): JSX.Element => {
-  const inputType: string = props.type || 'text';
+  const inputType: string = props.type;
   const [uniqueId] = useState(_uniqueId(props.type));
   const incomingClasses: IClasses = { ...classes };
   const layout = props.layout === 'row' ? incomingClasses.row : incomingClasses.column;
