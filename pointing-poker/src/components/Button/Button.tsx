@@ -8,7 +8,7 @@ interface ButtonProps {
   onClick: () => void;
   children: Node | string;
   disabled: boolean;
-  colorButton: string; //dark or light
+  colorButton: 'dark' | 'light';
 }
 
 const Button = (props: ButtonProps) => {
