@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import classes from './Input.module.scss';
 import { IClasses } from '../../interfaces/IClasses';
 import _uniqueId from 'lodash/uniqueId';
+import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 
 interface IPropsInput {
   layout: string;
@@ -19,11 +20,11 @@ const Input: React.FC<IPropsInput> = (props: IPropsInput): JSX.Element => {
   const inputType: string = props.type;
   const [uniqueId] = useState(_uniqueId(props.type));
   const incomingClasses: IClasses = { ...classes };
-  const layout = props.layout === 'row' ? incomingClasses.row : incomingClasses.column;
-  const cls: string[] = [layout];
+  const layout = props.layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
+  const inputClasses: string = [layout].join(' ');
 
   return (
-    <div className={cls.join(' ')}>
+    <div className={inputClasses}>
       <label className={classes.label} htmlFor={uniqueId}>
         {props.label}
       </label>
