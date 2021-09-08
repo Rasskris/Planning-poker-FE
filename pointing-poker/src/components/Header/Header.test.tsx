@@ -6,7 +6,6 @@ import classes from '../Footer/Footer.module.scss';
 describe('Header', () => {
   it('renders Header component', () => {
     render(<Header />);
-    screen.debug();
   });
 
   it('renders logo block', () => {
