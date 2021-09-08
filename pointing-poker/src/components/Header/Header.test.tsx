@@ -4,10 +4,6 @@ import { Header } from './Header';
 import classes from '../Footer/Footer.module.scss';
 
 describe('Header', () => {
-  it('renders Header component', () => {
-    render(<Header />);
-  });
-
   it('renders logo block', () => {
     const { container } = render(<div className={classes.logo} />);
     expect(container.firstChild).toBeInTheDocument();

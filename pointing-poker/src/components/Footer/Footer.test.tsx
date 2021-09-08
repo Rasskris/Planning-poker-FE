@@ -4,10 +4,6 @@ import { Footer } from './Footer';
 import classes from './Footer.module.scss';
 
 describe('Footer', () => {
-  it('renders Footer component', () => {
-    render(<Footer />);
-  });
-
   it('renders logo block', () => {
     const { container } = render(<a className={classes.logo} href={'https://rs.school/react/'} />);
     expect(container.firstChild).toBeInTheDocument();
