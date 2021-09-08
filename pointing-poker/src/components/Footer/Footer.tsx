@@ -15,11 +15,7 @@ const Footer: React.FC = (): JSX.Element => {
             Made by:
             {PROJECT_MEMBERS.map((member: string, index: number) => {
               return (
-                <a
-                  className={classes.copyright__text_link}
-                  href={`https://github.com/${member}`}
-                  key={`${member}__${index}`}
-                >
+                <a className={classes.copyright__text_link} href={`https://github.com/${member}`} key={member}>
                   @{member}
                 </a>
               );
