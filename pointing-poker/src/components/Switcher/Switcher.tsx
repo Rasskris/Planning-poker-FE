@@ -1,41 +1,39 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Switcher.module.scss';
+
+const DEFAULT_NAME_SWITCHER = 'default-switcher';
+const DEFAULT_LABEL_TEXT_SWITCHER = 'label-for-default-switcher';
 
 interface SwitcherProps {
   name: string;
   children: Node | string;
-  onClick: Function;
+  onClick: () => void;
+  switchState: boolean;
 }
 
 const Switcher = (props: SwitcherProps) => {
-  const { onClick, children, name } = props;
-  const [isIncluded, setIsIncluded] = useState(false);
-
-  function handleChange() {
-    setIsIncluded(prev => !prev);
-    onClick();
-  }
+  const { onClick, children, name, switchState } = props;
+  // const [isIncluded, setIsIncluded] = useState(false);
 
   return (
-    <label className={styles.switcher__label} htmlFor={`switcher-${name}`}>
+    <label className={styles.switcher__label}>
       {children}
       <input
         className={styles.switcher__input}
         readOnly
-        checked={isIncluded}
+        checked={switchState}
         type="checkbox"
         name={name}
-        id={`switcher-${name}`}
-        onChange={handleChange}
+        onChange={onClick}
       ></input>
     </label>
   );
 };
 
 Switcher.defaultProps = {
-  name: 'default-switcher',
-  children: 'label-for-default-switcher',
+  name: DEFAULT_NAME_SWITCHER,
+  children: DEFAULT_LABEL_TEXT_SWITCHER,
   onClick: () => {},
 };
 
-export default Switcher;
+export { Switcher };
