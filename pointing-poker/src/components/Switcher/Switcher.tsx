@@ -13,7 +13,6 @@ interface SwitcherProps {
 
 const Switcher = (props: SwitcherProps) => {
   const { onClick, children, name, switchState } = props;
-  // const [isIncluded, setIsIncluded] = useState(false);
 
   return (
     <label className={styles.switcher__label}>
