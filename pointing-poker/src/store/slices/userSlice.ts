@@ -1,4 +1,4 @@
-import { UserRole } from '../interfaces/UserRole';
+import { UserRole } from '../../interfaces/UserRole';
 import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
@@ -10,8 +10,13 @@ interface UserState {
   role: UserRole;
 }
 
-const initialUserState: { users: UserState[] } = {
-  users: [],
+const initialUserState: UserState = {
+  firstName: '',
+  lastName: '',
+  jobPosition: '',
+  image: '',
+  observer: false,
+  role: UserRole.none,
 };
 export const UserSlice = createSlice({
   name: 'user',
@@ -20,7 +25,7 @@ export const UserSlice = createSlice({
     addUser(state, action) {
       console.log(state);
       console.log(action);
-      state.users.push({ ...action.payload.user });
+      state = { ...action.payload.user };
     },
   },
 });
