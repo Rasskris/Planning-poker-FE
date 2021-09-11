@@ -10,22 +10,6 @@ const App: React.FC = () => {
   return (
     <div className={classes.app}>
       <Header />
-      <button
-        onClick={() => {
-          dispatch(
-            addUser({
-              firstName: 'Jdhde',
-              lastName: 'ghghg',
-              jobPosition: 'ghghgh',
-              image: 'ggggdd',
-              observer: false,
-              role: 'none',
-            }),
-          );
-        }}
-      >
-        Click
-      </button>
       <Footer />
     </div>
   );
