@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import classes from './App.module.scss';
-import { Header, Footer } from './components';
+import { Header, MainPage, Footer } from './components';
 import { addUser } from './store/slices/userSlice';
 
 const App: React.FC = () => {
@@ -10,6 +10,7 @@ const App: React.FC = () => {
   return (
     <div className={classes.app}>
       <Header />
+      <MainPage />
       <Footer />
     </div>
   );
