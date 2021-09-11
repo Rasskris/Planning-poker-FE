@@ -10,20 +10,22 @@ interface UserState {
   role: UserRole;
 }
 
-const initialUserState: UserState = {
-  firstName: '',
-  lastName: '',
-  jobPosition: '',
-  image: '',
-  observer: false,
-  role: UserRole.none,
+const initialUserState: { user: UserState } = {
+  user: {
+    firstName: '',
+    lastName: '',
+    jobPosition: '',
+    image: '',
+    observer: false,
+    role: UserRole.none,
+  },
 };
 export const UserSlice = createSlice({
   name: 'user',
   initialState: initialUserState,
   reducers: {
     addUser(state, action) {
-      state = { ...action.payload.user };
+      state.user = { ...action.payload };
     },
   },
 });
