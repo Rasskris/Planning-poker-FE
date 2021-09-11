@@ -1,9 +1,47 @@
 import React from 'react';
+import classes from './MainPage.module.scss';
+import { Button, Input } from '../index';
+import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 
 const MainPage: React.FC = (): JSX.Element => {
   return (
-    <div>
-      <div></div>
+    <div className={classes.mainPage}>
+      <div className={classes.logo}>
+        <div className={classes.logo_icon} />
+      </div>
+      <h1 className={classes.header}>Start your planning:</h1>
+      <div className={classes.create}>
+        <p>Create session:</p>
+        <Button
+          children="Start new game"
+          colorButton="dark"
+          onClick={() => {
+            console.log('clicked');
+          }}
+        />
+      </div>
+      <p className={classes.header}>OR:</p>
+      <div className={classes.connect}>
+        <Input
+          layout={InputLayoutTypes.column}
+          type={'text'}
+          label={'Connect to lobby by URL:'}
+          value={''}
+          touched={false}
+          validate={true}
+          shouldValidate={true}
+          onChangeInputHandler={() => {
+            console.log('input');
+          }}
+        />
+      </div>
+      <Button
+        children="Connect"
+        colorButton="dark"
+        onClick={() => {
+          console.log('connect');
+        }}
+      />
     </div>
   );
 };
