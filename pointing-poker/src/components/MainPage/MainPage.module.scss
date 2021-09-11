@@ -1,0 +1,30 @@
+@import '../../layout/styles-config';
+
+.main-page {
+  @include flex();
+}
+
+.logo {
+  cursor: pointer;
+  background-image: url('../../assets/icons/icon_main-page.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &_icon {
+    width: 350px;
+    height: 150px;
+  }
+}
+
+.header {
+  @include font($size: 4.8rem, $height: 56.25px, $weight: 700);
+  color: $blue;
+}
+
+.create {
+  @include flex($direction: row);
+}
+
+.connect {
+  @include flex();
+}
