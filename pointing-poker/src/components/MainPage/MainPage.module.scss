@@ -26,5 +26,5 @@
 }
 
 .connect {
-  @include flex();
+  @include flex($align: flex-end);
 }

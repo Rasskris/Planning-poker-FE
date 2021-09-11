@@ -34,14 +34,14 @@ const MainPage: React.FC = (): JSX.Element => {
             console.log('input');
           }}
         />
+        <Button
+          children="Connect"
+          colorButton="dark"
+          onClick={() => {
+            console.log('connect');
+          }}
+        />
       </div>
-      <Button
-        children="Connect"
-        colorButton="dark"
-        onClick={() => {
-          console.log('connect');
-        }}
-      />
     </div>
   );
 };
