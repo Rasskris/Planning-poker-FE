@@ -5,7 +5,7 @@ import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 
 const MainPage: React.FC = (): JSX.Element => {
   return (
-    <div className={classes.mainPage}>
+    <div className={classes.wrapper}>
       <div className={classes.logo}>
         <div className={classes.logo_icon} />
       </div>
