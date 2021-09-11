@@ -10,3 +10,4 @@ export { Button } from './Button';
 export { Switcher } from './Switcher';
 export { TimerContainer } from './Timer';
 export { MainPage } from './MainPage';
+export { BackDrop } from './BackDrop';
