@@ -7,12 +7,12 @@ const DEFAULT_LABEL_TEXT_SWITCHER = 'label-for-default-switcher';
 interface SwitcherProps {
   name: string;
   children: Node | string;
-  onClick: () => void;
+  onChange: () => void;
   switchState: boolean;
 }
 
 const Switcher = (props: SwitcherProps) => {
-  const { onClick, children, name, switchState } = props;
+  const { onChange, children, name, switchState } = props;
 
   return (
     <label className={styles.switcher__label}>
@@ -23,7 +23,7 @@ const Switcher = (props: SwitcherProps) => {
         checked={switchState}
         type="checkbox"
         name={name}
-        onChange={onClick}
+        onChange={onChange}
       ></input>
     </label>
   );
@@ -32,7 +32,7 @@ const Switcher = (props: SwitcherProps) => {
 Switcher.defaultProps = {
   name: DEFAULT_NAME_SWITCHER,
   children: DEFAULT_LABEL_TEXT_SWITCHER,
-  onClick: () => {},
+  onChange: () => {},
 };
 
 export { Switcher };
