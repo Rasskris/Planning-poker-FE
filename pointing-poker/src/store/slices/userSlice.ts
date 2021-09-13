@@ -1,28 +1,21 @@
-import { UserRole } from '../../interfaces/UserRole';
 import { createSlice } from '@reduxjs/toolkit';
+import { User } from '../../interfaces';
 
-interface UserState {
-  firstName: string;
-  lastName: string;
-  jobPosition: string;
-  image: string;
-  observer: boolean;
-  role: UserRole;
+// TODO remake add AsyncThunk
+
+interface InitState {
+  isLogin: boolean;
+  user: null | User;
 }
 
-const initialUserState: { user: UserState } = {
-  user: {
-    firstName: '',
-    lastName: '',
-    jobPosition: '',
-    image: '',
-    observer: false,
-    role: UserRole.none,
-  },
+const initialState: InitState = {
+  isLogin: false,
+  user: null,
 };
-export const UserSlice = createSlice({
+
+export const userSlice = createSlice({
   name: 'user',
-  initialState: initialUserState,
+  initialState,
   reducers: {
     addUser(state, action) {
       state.user = { ...action.payload };
@@ -30,5 +23,5 @@ export const UserSlice = createSlice({
   },
 });
 
-export const { addUser } = UserSlice.actions;
-export default UserSlice.reducer;
+export const { addUser } = userSlice.actions;
+export const userReducer = userSlice.reducer;
