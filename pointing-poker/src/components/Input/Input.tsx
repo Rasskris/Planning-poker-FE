@@ -9,9 +9,9 @@ interface IPropsInput {
   type: string;
   label: string;
   value: string;
-  touched: boolean;
-  validate: boolean;
-  shouldValidate: boolean;
+  touched?: boolean;
+  validate?: boolean;
+  shouldValidate?: boolean;
   onChangeInputHandler: ChangeEventHandler;
   checked?: boolean;
 }
