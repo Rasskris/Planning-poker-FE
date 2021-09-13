@@ -1,8 +1,8 @@
-import React, { ChangeEventHandler } from 'react';
+import React from 'react';
 import classes from './BackDrop.module.scss';
 
 interface IBackDrop {
-  onBackDropHandler: ChangeEventHandler;
+  onBackDropHandler(event: React.MouseEvent): void;
 }
 
 const BackDrop: React.FC<IBackDrop> = ({ onBackDropHandler }: IBackDrop): JSX.Element => {
