@@ -1,12 +1,13 @@
 import React from 'react';
 import classes from './BackDrop.module.scss';
+import { Modal } from '../index';
 
 interface IBackDrop {
-  onBackDropHandler(event: React.MouseEvent): void;
+  isBackDropOpen: boolean;
 }
 
-const BackDrop: React.FC<IBackDrop> = ({ onBackDropHandler }: IBackDrop): JSX.Element => {
-  return <div className={classes.backdrop} onClick={onBackDropHandler} />;
+const BackDrop: React.FC<IBackDrop> = ({ isBackDropOpen }: IBackDrop): JSX.Element => {
+  return <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={'Connect to lobby'} /> : null}</div>;
 };
 
 export { BackDrop };
