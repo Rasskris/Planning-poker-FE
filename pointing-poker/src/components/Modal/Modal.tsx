@@ -1,10 +1,16 @@
 import React from 'react';
 import classes from './Modal.module.scss';
 
-const Modal: React.FC = (): JSX.Element => {
+interface IModalProps {
+  title: string;
+  children: Node | Node[] | string;
+}
+
+const Modal: React.FC<IModalProps> = ({ title, children }: IModalProps): JSX.Element => {
   return (
-    <div>
-      <div></div>
+    <div className={classes.wrapper}>
+      <h2>{title}</h2>
+      {children}
     </div>
   );
 };
