@@ -1,11 +1,12 @@
 import React from 'react';
 import classes from './MainPage.module.scss';
-import { Button, Input } from '../index';
+import { Button, Input, BackDrop } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 
 const MainPage: React.FC = (): JSX.Element => {
   return (
     <div className={classes.wrapper}>
+      <BackDrop isBackDropOpen={true} titleModal={'Connect to lobby'} children={'test'} />
       <div className={classes.logo}>
         <div className={classes.logo_icon} />
       </div>
@@ -16,7 +17,7 @@ const MainPage: React.FC = (): JSX.Element => {
           children="Start new game"
           colorButton="dark"
           onClick={() => {
-            console.log('clicked');
+            console.log('create');
           }}
         />
       </div>

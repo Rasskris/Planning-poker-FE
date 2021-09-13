@@ -4,10 +4,14 @@ import { Modal } from '../index';
 
 interface IBackDrop {
   isBackDropOpen: boolean;
+  titleModal: string;
+  children: Node | Node[] | string;
 }
 
-const BackDrop: React.FC<IBackDrop> = ({ isBackDropOpen }: IBackDrop): JSX.Element => {
-  return <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={'Connect to lobby'} /> : null}</div>;
+const BackDrop: React.FC<IBackDrop> = ({ isBackDropOpen, titleModal, children }: IBackDrop): JSX.Element => {
+  return (
+    <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={titleModal} children={children} /> : null}</div>
+  );
 };
 
 export { BackDrop };
