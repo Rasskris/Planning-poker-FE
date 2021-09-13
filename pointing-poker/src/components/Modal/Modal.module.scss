@@ -3,7 +3,7 @@
 .wrapper {
   position: relative;
   background-color: $white;
-  width: 479px;
+  width: 579px;
   min-height: 487px;
   overflow: auto;
   z-index: 150;
@@ -11,5 +11,6 @@
 }
 
 .header {
-  @include font($size: 6.4rem, $height: 75px, $weight: 700);
+  @include font($size: 3rem, $height: 75px, $weight: 700);
+  text-align: left;
 }
