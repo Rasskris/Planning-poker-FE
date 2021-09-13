@@ -9,3 +9,6 @@ export { Input } from './Input';
 export { Button } from './Button';
 export { Switcher } from './Switcher';
 export { TimerContainer } from './Timer';
+export { GameCardsList } from './GameCardsList';
+export { GameSettingRow } from './GameSettingRow';
+export { GameSettings } from './GameSettings';
