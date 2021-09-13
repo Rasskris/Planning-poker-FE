@@ -9,3 +9,4 @@ export { Input } from './Input';
 export { Button } from './Button';
 export { Switcher } from './Switcher';
 export { TimerContainer } from './Timer';
+export { Chat } from './Chat';
