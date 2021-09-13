@@ -1,12 +1,29 @@
 import React from 'react';
 import classes from './MainPage.module.scss';
-import { Button, Input, BackDrop } from '../index';
+import { useSelector } from 'react-redux';
+import { Button, Input, BackDrop, Switcher, Form } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
+import { RootState } from '../../store/store';
 
 const MainPage: React.FC = (): JSX.Element => {
+  const currentState = useSelector((state: RootState) => state.user.user);
   return (
     <div className={classes.wrapper}>
-      <BackDrop isBackDropOpen={true} titleModal={'Connect to lobby'} children={'test'} />
+      <BackDrop
+        isBackDropOpen={true}
+        titleModal={'Connect to lobby'}
+        children={[
+          <Switcher
+            switchState={currentState.observer}
+            name="formSwitcher"
+            children={'Connect as Observer'}
+            onClick={() => {
+              console.log('switcher');
+            }}
+          />,
+          <Form />,
+        ]}
+      />
       <div className={classes.logo}>
         <div className={classes.logo_icon} />
       </div>

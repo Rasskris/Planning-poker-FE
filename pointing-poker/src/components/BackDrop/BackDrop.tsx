@@ -5,7 +5,7 @@ import { Modal } from '../index';
 interface IBackDrop {
   isBackDropOpen: boolean;
   titleModal: string;
-  children: Node | Node[] | string;
+  children: any;
 }
 
 const BackDrop: React.FC<IBackDrop> = ({ isBackDropOpen, titleModal, children }: IBackDrop): JSX.Element => {
