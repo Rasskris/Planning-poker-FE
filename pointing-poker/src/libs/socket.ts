@@ -1,13 +1,13 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
-import { addMessage, addIssue, deleteIssue, editIssue } from '../store/slices';
+import { addMessage, addIssue, deleteIssue, editIssue } from '../redux/thunks';
 import { URL } from '../constants';
 
 export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): Socket => {
   const socket = io(URL, {
     transports: ['websocket', 'polling'],
     auth: {
-      userId: userId,
+      userId,
     },
   });
 
