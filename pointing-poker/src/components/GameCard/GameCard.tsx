@@ -3,7 +3,7 @@ import classes from './GameCard.module.scss';
 
 interface GameCardProps {
   scoreType: string;
-  scoreValue: number | string; //| 'unknown' | 'coffe';
+  scoreValue: number | 'unknown' | 'coffe';
   handleEditScoreValue?: VoidFunction;
 }
 

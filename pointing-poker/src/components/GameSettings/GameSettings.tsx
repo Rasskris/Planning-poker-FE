@@ -5,7 +5,8 @@ import classes from './GameSettings.module.scss';
 import { updateSettings } from '../../store/slices/gameSettingsSlice';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
-import collectionGameCards from '../../data/game-cards-data.json';
+import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
+const collectionGameCards: ICollectionGameCards[] = require('../../data/game-cards-data.json');
 
 const GameSettings = () => {
   const dispatch = useAppDispatch();

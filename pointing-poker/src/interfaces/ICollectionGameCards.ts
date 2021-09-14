@@ -1,6 +1,6 @@
 interface IGameCard {
   id: number;
-  scoreValue: number | string;
+  scoreValue: number | 'unknown' | 'coffe';
   scoreTypeShort: string;
 }
 
