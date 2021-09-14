@@ -1,29 +1,27 @@
 import { FC, useEffect, useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getMessages, addMessage, selectMessages } from '../../store/slices';
+import { getMessages, addMessage } from '../../redux/thunks';
+import { selectMessages, selectUser } from '../../redux/selectors';
 import classes from './Chat.module.scss';
 
 const Chat: FC = () => {
   const [text, setText] = useState('');
-  const gameId = useParams<{ gameId: string }>();
+  const { gameId } = useParams<{ gameId: string }>();
   const dispatch = useAppDispatch();
-  const messages = useAppSelector(state => selectMessages(state));
-  const user = useAppSelector(state => state.user);
+  const messages = useAppSelector(selectMessages);
+  const user = useAppSelector(selectUser);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(getMessages(gameId));
   }, [dispatch, gameId, messages]);
 
-  const messagesEndRef = useRef<HTMLDivElement>(null);
-
-  const scrollToBottom = () => {
+  useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  useEffect(scrollToBottom, [messages]);
+  }, [messages]);
 
   const sendMessage = () => {
     if (text) {
