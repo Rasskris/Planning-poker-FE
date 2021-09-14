@@ -9,22 +9,16 @@ interface IPropsInput {
   type: string;
   label: string;
   value: string;
-  touched: boolean;
-  validate: boolean;
-  shouldValidate: boolean;
+  touched?: boolean;
+  validate?: boolean;
+  shouldValidate?: boolean;
   onChangeInputHandler: ChangeEventHandler;
   checked?: boolean;
 }
 
-const Input: React.FC<IPropsInput> = ({
-  type,
-  layout,
-  value,
-  onChangeInputHandler,
-  label,
-}: IPropsInput): JSX.Element => {
+const Input: React.FC<IPropsInput> = ({ type, layout, value, onChangeInputHandler, label }) => {
   const inputType: string = type;
-  const [uniqueId] = useState(_uniqueId(type));
+  const [uniqueId] = useState(_uniqueId(label));
   const incomingClasses: IClasses = { ...classes };
   const inputLayout: string = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
 
