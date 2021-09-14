@@ -1,4 +1,4 @@
-import { URL } from '../constants';
+import { URL, FETCH_ERROR } from '../constants';
 
 type RequestOptions = {
   method: string;
@@ -8,11 +8,11 @@ type RequestOptions = {
 class Loader {
   private async request(endpoint: string, { method, body }: RequestOptions) {
     const config = {
-      method: method,
+      method,
       headers: {
         'Content-Type': 'application/json',
       },
-      body: body,
+      body,
     };
 
     try {
@@ -21,7 +21,7 @@ class Loader {
 
       return data;
     } catch (err) {
-      return Promise.reject(new Error(`Error`));
+      return Promise.reject(new Error(FETCH_ERROR));
     }
   }
 
@@ -30,7 +30,6 @@ class Loader {
   }
 
   public async post(endpoint: string, body?: object) {
-    console.log(body);
     return await this.request(endpoint, { method: 'POST', body: JSON.stringify(body) });
   }
 
