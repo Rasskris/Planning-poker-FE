@@ -1,11 +1,11 @@
 import React, { ChangeEvent } from 'react';
 import { GameCardsList, GameSettingRow, Input, Switcher, TimerContainer } from '..';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import classes from './GameSettings.module.scss';
 import { updateSettings } from '../../store/slices/gameSettingsSlice';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
+import classes from './GameSettings.module.scss';
 const collectionGameCards: ICollectionGameCards[] = require('../../data/game-cards-data.json');
 
 const GameSettings = () => {
