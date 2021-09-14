@@ -12,12 +12,12 @@ interface TimerContainerProps {
   initialMinute: number;
   initialSeconds: number;
   timerStarted: boolean;
-  editSetting: boolean;
+  areSettingsEdited: boolean;
   onChangeTimer?: (arg0: {}) => void;
 }
 
 const TimerContainer = (props: TimerContainerProps) => {
-  const { initialMinute, initialSeconds, timerStarted, editSetting, onChangeTimer } = props;
+  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer } = props;
   const [minutes, setMinutes] = useState<number>(initialMinute);
   const [seconds, setSeconds] = useState<number>(initialSeconds);
 
@@ -36,7 +36,7 @@ const TimerContainer = (props: TimerContainerProps) => {
   };
 
   useEffect(() => {
-    if (!timerStarted || editSetting) return;
+    if (!timerStarted || areSettingsEdited) return;
     let myInterval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
@@ -59,7 +59,7 @@ const TimerContainer = (props: TimerContainerProps) => {
     <Timer
       minutes={minutes}
       seconds={seconds}
-      editSetting={editSetting}
+      areSettingsEdited={areSettingsEdited}
       onChangeMinutes={handleChangeMinutes}
       onChangeSeconds={handleChangeSeconds}
     />
@@ -70,7 +70,7 @@ TimerContainer.defaultProps = {
   initialMinute: DEFAULT_START_MINUTES,
   initialSeconds: DEFAULT_START_SECONDS,
   timerStarted: false,
-  editSetting: false,
+  areSettingsEdited: false,
 };
 
 export { TimerContainer };

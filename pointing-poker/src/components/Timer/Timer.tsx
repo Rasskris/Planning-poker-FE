@@ -4,22 +4,22 @@ import styles from './Timer.module.scss';
 interface TimerProps {
   minutes: number;
   seconds: number;
-  editSetting: boolean;
+  areSettingsEdited: boolean;
   onChangeMinutes: (event: ChangeEvent<HTMLInputElement>) => void;
   onChangeSeconds: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Timer = ({ minutes, seconds, editSetting, onChangeMinutes, onChangeSeconds }: TimerProps) => (
+const Timer = ({ minutes, seconds, areSettingsEdited, onChangeMinutes, onChangeSeconds }: TimerProps) => (
   <div className={styles.timer}>
     <div className={styles.timer__minutes}>
       <p>minutes</p>
-      {editSetting ? <input type="number" value={minutes} onChange={onChangeMinutes} /> : <p> {minutes}</p>}
+      {areSettingsEdited ? <input type="number" value={minutes} onChange={onChangeMinutes} /> : <p> {minutes}</p>}
     </div>
     <div className={styles.timer__seconds}>
       <p>seconds</p>
       <p>
         <span>:</span>
-        {editSetting ? (
+        {areSettingsEdited ? (
           <input type="number" value={seconds} onChange={onChangeSeconds} />
         ) : (
           <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
