@@ -36,7 +36,7 @@ export const GameSettingsSlice = createSlice({
   initialState: initialGameSettingsState,
   reducers: {
     updateSettings(state, action) {
-      const newState = Object.assign(state.gameSettings, action.payload);
+      const newState = { ...state.gameSettings, ...action.payload };
       state.gameSettings = newState;
     },
   },
