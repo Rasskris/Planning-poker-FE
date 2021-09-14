@@ -2,14 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 
 interface GameSettingsState {
-  scramMasterAsPlayer: boolean;
-  changingCardInRoundEnd: boolean;
-  isTimerNeeded: boolean;
-  changeSelectionAfterFlippingCards: boolean;
-  automaticFlipCards: boolean;
-  scoreType: ITypesScoreCards;
-  scoreTypeShort: string;
-  timerValues: {
+  scramMasterAsPlayerSetting: boolean;
+  changingCardInRoundEndSetting: boolean;
+  isTimerNeededSetting: boolean;
+  changeSelectionAfterFlippingCardsSetting: boolean;
+  automaticFlipCardsSetting: boolean;
+  scoreTypeSetting: ITypesScoreCards;
+  scoreTypeShortSetting: string;
+  timerValuesSetting: {
     minutes: number;
     seconds: number;
   };
@@ -17,14 +17,14 @@ interface GameSettingsState {
 
 const initialGameSettingsState: { gameSettings: GameSettingsState } = {
   gameSettings: {
-    scramMasterAsPlayer: false,
-    changingCardInRoundEnd: false,
-    isTimerNeeded: false,
-    changeSelectionAfterFlippingCards: false,
-    automaticFlipCards: false,
-    scoreType: ITypesScoreCards.fibonacciNumbers,
-    scoreTypeShort: '',
-    timerValues: {
+    scramMasterAsPlayerSetting: false,
+    changingCardInRoundEndSetting: false,
+    isTimerNeededSetting: false,
+    changeSelectionAfterFlippingCardsSetting: false,
+    automaticFlipCardsSetting: false,
+    scoreTypeSetting: ITypesScoreCards.fibonacciNumbers,
+    scoreTypeShortSetting: '',
+    timerValuesSetting: {
       minutes: 0,
       seconds: 0,
     },

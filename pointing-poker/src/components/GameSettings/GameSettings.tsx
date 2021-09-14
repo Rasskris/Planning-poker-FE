@@ -11,12 +11,12 @@ const collectionGameCards: ICollectionGameCards[] = require('../../data/game-car
 const GameSettings = () => {
   const dispatch = useAppDispatch();
   const {
-    scramMasterAsPlayer,
-    changingCardInRoundEnd,
-    isTimerNeeded,
-    changeSelectionAfterFlippingCards,
-    automaticFlipCards,
-    scoreType,
+    scramMasterAsPlayerSetting,
+    changingCardInRoundEndSetting,
+    isTimerNeededSetting,
+    changeSelectionAfterFlippingCardsSetting,
+    automaticFlipCardsSetting,
+    scoreTypeSetting,
   } = useAppSelector(state => state.gameSettings.gameSettings);
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -29,8 +29,8 @@ const GameSettings = () => {
       <GameSettingRow
         component={
           <Switcher
-            switchState={scramMasterAsPlayer}
-            onChange={() => dispatch(updateSettings({ scramMasterAsPlayer: !scramMasterAsPlayer }))}
+            switchState={scramMasterAsPlayerSetting}
+            onChange={() => dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }))}
             children="Scram master as player"
           />
         }
@@ -38,8 +38,8 @@ const GameSettings = () => {
       <GameSettingRow
         component={
           <Switcher
-            switchState={changingCardInRoundEnd}
-            onChange={() => dispatch(updateSettings({ changingCardInRoundEnd: !changingCardInRoundEnd }))}
+            switchState={changingCardInRoundEndSetting}
+            onChange={() => dispatch(updateSettings({ changingCardInRoundEndSetting: !changingCardInRoundEndSetting }))}
             children="Changing card in round end"
           />
         }
@@ -47,20 +47,20 @@ const GameSettings = () => {
       <GameSettingRow
         component={
           <Switcher
-            switchState={isTimerNeeded}
-            onChange={() => dispatch(updateSettings({ isTimerNeeded: !isTimerNeeded }))}
+            switchState={isTimerNeededSetting}
+            onChange={() => dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }))}
             children="Is timer needed"
           />
         }
       />
 
-      {isTimerNeeded ? (
+      {isTimerNeededSetting ? (
         <GameSettingRow
           settingName="Round Time"
           component={
             <TimerContainer
               editSetting={true}
-              onChangeTimer={value => dispatch(updateSettings({ timerValues: value }))}
+              onChangeTimer={value => dispatch(updateSettings({ timerValuesSetting: value }))}
             />
           }
         />
@@ -69,9 +69,11 @@ const GameSettings = () => {
       <GameSettingRow
         component={
           <Switcher
-            switchState={changeSelectionAfterFlippingCards}
+            switchState={changeSelectionAfterFlippingCardsSetting}
             onChange={() =>
-              dispatch(updateSettings({ changeSelectionAfterFlippingCards: !changeSelectionAfterFlippingCards }))
+              dispatch(
+                updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }),
+              )
             }
             children="Сhange selection after flipping cards"
           />
@@ -80,8 +82,8 @@ const GameSettings = () => {
       <GameSettingRow
         component={
           <Switcher
-            switchState={automaticFlipCards}
-            onChange={() => dispatch(updateSettings({ automaticFlipCards: !automaticFlipCards }))}
+            switchState={automaticFlipCardsSetting}
+            onChange={() => dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }))}
             children="Automatic flip of cards if everyone voted"
           />
         }
@@ -89,7 +91,7 @@ const GameSettings = () => {
       <GameSettingRow
         settingName="Score type"
         component={
-          <select value={scoreType} onChange={handleChangeScoreType}>
+          <select value={scoreTypeSetting} onChange={handleChangeScoreType}>
             <option value={ITypesScoreCards.fibonacciNumbers}>Fibonacci numbers</option>
             <option value={ITypesScoreCards.powersOfTwo}>Powers of two</option>
             <option value={ITypesScoreCards.newScoreType}>Create new score type</option>
@@ -97,7 +99,7 @@ const GameSettings = () => {
         }
       />
 
-      {scoreType === ITypesScoreCards.newScoreType ? (
+      {scoreTypeSetting === ITypesScoreCards.newScoreType ? (
         <GameSettingRow
           component={
             <Input
@@ -113,7 +115,7 @@ const GameSettings = () => {
 
       <GameSettingRow
         settingName="Card values"
-        component={<GameCardsList scoreType={scoreType} collectionGameCards={collectionGameCards} />}
+        component={<GameCardsList scoreType={scoreTypeSetting} collectionGameCards={collectionGameCards} />}
       />
     </section>
   );
