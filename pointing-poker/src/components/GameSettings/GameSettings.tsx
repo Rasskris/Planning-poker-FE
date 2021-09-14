@@ -59,7 +59,7 @@ const GameSettings = () => {
           settingName="Round Time"
           component={
             <TimerContainer
-              editSetting={true}
+              editSetting
               onChangeTimer={value => dispatch(updateSettings({ timerValuesSetting: value }))}
             />
           }
