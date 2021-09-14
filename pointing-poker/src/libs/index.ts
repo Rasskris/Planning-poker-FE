@@ -1,2 +1,2 @@
-export { loader } from './loader';
+export { clientAPI } from './ClientAPI';
 export { initSocket } from './socket';

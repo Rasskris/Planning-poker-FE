@@ -5,7 +5,7 @@ type RequestOptions = {
   body: BodyInit;
 };
 
-class Loader {
+class ClientAPI {
   private async request(endpoint: string, { method, body }: RequestOptions) {
     const config = {
       method,
@@ -42,6 +42,6 @@ class Loader {
   }
 }
 
-const loader = new Loader();
+const clientAPI = new ClientAPI();
 
-export { loader };
+export { clientAPI };
