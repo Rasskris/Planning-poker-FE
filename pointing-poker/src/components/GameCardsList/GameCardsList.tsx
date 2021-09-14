@@ -10,18 +10,16 @@ interface GameCardsListProps {
 }
 
 const GameCardsList = ({ scoreType, collectionGameCards }: GameCardsListProps) => {
-  const getGameCards = () => {
-    return collectionGameCards.map(collection => {
-      if (collection.scoreType === scoreType) {
-        return collection.cards.map(card => {
-          return <GameCard scoreType={card.scoreTypeShort} scoreValue={card.scoreValue} />;
-        });
-      }
-      return null;
-    });
-  };
+  const selectedCardsCollection = collectionGameCards.find(collection => collection.scoreType === scoreType);
+  if (!selectedCardsCollection) return null;
 
-  return <div className={styles.game_cards_list}>{getGameCards()}</div>;
+  return (
+    <div className={styles.game_cards_list}>
+      {selectedCardsCollection.cards.map(card => {
+        return <GameCard scoreType={card.scoreTypeShort} scoreValue={card.scoreValue} />;
+      })}
+    </div>
+  );
 };
 
 export { GameCardsList };
