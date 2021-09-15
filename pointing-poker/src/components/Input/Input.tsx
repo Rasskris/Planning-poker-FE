@@ -16,14 +16,23 @@ interface IPropsInput {
   checked?: boolean;
 }
 
-const Input: React.FC<IPropsInput> = ({ type, layout, value, onChangeInputHandler, label }) => {
+const Input: React.FC<IPropsInput> = ({ type, layout, value, onChangeInputHandler, label, validate, touched }) => {
   const inputType: string = type;
   const [uniqueId] = useState(_uniqueId(label));
   const incomingClasses: IClasses = { ...classes };
   const inputLayout: string = layout === InputLayoutTypes.row ? incomingClasses.row : incomingClasses.column;
+  const inputClasses: string[] = [inputLayout];
+
+  if (validate && touched) {
+    inputClasses.push(classes.valid);
+  }
+
+  if (!validate && touched) {
+    inputClasses.push(classes.invalid);
+  }
 
   return (
-    <div className={inputLayout}>
+    <div className={inputClasses.join(' ')}>
       <label className={classes.label} htmlFor={uniqueId}>
         {label}
       </label>
