@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import classes from './MainPage.module.scss';
 import { useDispatch } from 'react-redux';
-import { addRole } from '../../store/slices/userSlice';
-import { Button, Input, BackDrop, Form } from '../index';
+import { BackDrop, Button, Form, Input } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { UserRole } from '../../interfaces/UserRole';
 
@@ -17,6 +16,7 @@ const CREATE = {
 const MainPage: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [role, setRole] = useState(UserRole.none);
 
   const onModalHandler = (event: React.MouseEvent): void => {
     const target = event.target as HTMLButtonElement;
@@ -28,11 +28,11 @@ const MainPage: React.FC = (): JSX.Element => {
 
     switch (id) {
       case 'connect':
-        dispatch(addRole(UserRole.player));
+        setRole(UserRole.player);
         break;
 
       case 'create':
-        dispatch(addRole(UserRole.master));
+        setRole(UserRole.master);
         break;
 
       default:
@@ -52,7 +52,7 @@ const MainPage: React.FC = (): JSX.Element => {
         <BackDrop
           isBackDropOpen={true}
           titleModal={'Connect to lobby'}
-          children={<Form onModalCloseHandler={onModalCloseHandler} />}
+          children={<Form onModalCloseHandler={onModalCloseHandler} role={role} />}
         />
       ) : null}
       <div className={classes.logo}>
