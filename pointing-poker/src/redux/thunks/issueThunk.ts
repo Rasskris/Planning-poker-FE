@@ -7,7 +7,7 @@ export const getIssues = createAsyncThunk('issues/getIssues', async (gameId: str
   return { issues: data, gameId };
 });
 
-export const addIssue = createAsyncThunk('issues/addIssue', async (issue: Issue) => {
+export const addIssue = createAsyncThunk('issues/addIssue', async (issue: Partial<Issue>) => {
   const data = await clientAPI.post('/api/issues', issue);
   return data;
 });
@@ -18,6 +18,6 @@ export const editIssue = createAsyncThunk('issues/editIssue', async (issue: Part
 });
 
 export const deleteIssue = createAsyncThunk('issues/deleteIssue', async (issueId: string) => {
-  const data = await clientAPI.delete(`/api/issues/${issueId}`);
-  return data;
+  const { id } = await clientAPI.delete(`/api/issues/${issueId}`);
+  return id;
 });
