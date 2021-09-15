@@ -1,0 +1,96 @@
+@import '../../layout/styles-config';
+
+$greyColor: #c4d2cf;
+$whiteColor: #ffffff;
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: 10px;
+  }
+}
+.chat {
+  width: 350px;
+  height: 500px;
+  background-color: $greyColor;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .user-name {
+    text-align: start;
+    width: 100%;
+  }
+  .chatMessage {
+    height: 80%;
+    overflow-y: auto;
+    @include scrollbars(5px, $dark-blue, $white);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-content: flex-start;
+
+    .message {
+      margin-bottom: 15px;
+      width: 100%;
+      @include flex();
+      padding-left: 0.5rem;
+
+      p {
+        padding: 1rem;
+        width: 220px;
+        @include flex();
+        @include font($size: 1rem, $weight: 300);
+        background-color: $whiteColor;
+        border-radius: 10px 0px 10px 10px;
+        text-align: start;
+        color: #0c0c0c;
+      }
+
+      span {
+        padding: 1rem;
+        @include font($size: 1rem, $weight: 300);
+        color: $dark-blue;
+        padding-left: 0.5rem;
+      }
+    }
+  }
+
+  .send {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    input {
+      width: 80%;
+      text-decoration: none;
+      background-color: #f9fbff;
+      border: none;
+      padding-left: 1rem;
+      border-radius: 5px 0px 0px 5px;
+      &:focus {
+        outline: none;
+      }
+    }
+    button {
+      width: 20%;
+      background-color: #2b3a67;
+      background-image: url(../../assets/icons/icon__send.svg);
+      background-repeat: no-repeat;
+      background-position: center;
+      border-radius: 0px 5px 5px 0px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+}
