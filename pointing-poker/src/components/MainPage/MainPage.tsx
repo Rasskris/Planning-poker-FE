@@ -14,7 +14,6 @@ const CREATE = {
 };
 
 const MainPage: React.FC = (): JSX.Element => {
-  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [role, setRole] = useState(UserRole.none);
 
