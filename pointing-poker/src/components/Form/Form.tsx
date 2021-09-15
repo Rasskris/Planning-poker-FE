@@ -1,16 +1,15 @@
-import React, { useState, ChangeEvent, FormEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { addObserver, addUser, isLogin } from '../../store/slices/userSlice';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addRole } from '../../store/slices/userSlice';
 import classes from './Form.module.scss';
-import { Input, Button, Switcher, ImageLoader } from '../index';
+import { Button, ImageLoader, Input, Switcher } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
-import { RootState } from '../../store/store';
+import { UserRole } from '../../interfaces/UserRole';
 
 interface IUserField {
   text: string;
   type: string;
 }
-
 const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUserField } = {
   firstName: {
     text: 'First name:',
@@ -31,31 +30,26 @@ const BUTTON_SUBMIT_TYPE = {
 
 interface IFormProps {
   onModalCloseHandler: () => void;
+  role: UserRole;
 }
 
-const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
+const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element => {
   const dispatch = useDispatch();
-  const currentState = useSelector((state: RootState) => state.user);
 
   const [firstName, setFirstName] = useState('');
   const [firstNameValid, setFirstNameValid] = useState(false);
   const [firstNameTouched, setFirstNameTouched] = useState(false);
-
   const [lastName, setLastName] = useState('');
-  // const [lastNameValid, setLastNameValid] = useState(false);
-  // const [lastNameTouched, setLastNameTouched] = useState(false);
-
   const [jobPosition, setJobPosition] = useState('');
-  // const [jobPositionValid, setJobPositionValid] = useState(false);
-  // const [jobPositionTouched, setJobPositionTouched] = useState(false);
+  const [userRole, setUserRole] = useState(role);
+  const [isObserver, setIsObserver] = useState(false);
+  const [imageLink, setImageLink] = useState('');
 
   const isValid = (id: string, value: string) => {
-    if (id === 'firstname') {
-      if (value.length > 2) {
-        setFirstNameValid(true);
-      } else {
-        setFirstNameValid(false);
-      }
+    if (id === 'firstname' && value.length > 1) {
+      setFirstNameValid(true);
+    } else {
+      setFirstNameValid(false);
     }
   };
 
@@ -65,13 +59,14 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
       firstName,
       lastName,
       jobPosition,
-      role: currentState.user.role,
-      image: '',
+      role: userRole,
+      image: imageLink,
     };
 
     if (firstNameValid) {
-      dispatch(addUser(user));
-      dispatch(isLogin(true));
+      //TODO: implement function, which will add to store user data after server request response
+      // dispatch(addUser(user));
+      // dispatch(isLogin(true));
       onModalCloseHandler();
     }
   };
@@ -104,13 +99,18 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
   };
 
   const handleSwitcher = () => {
-    dispatch(addObserver(!currentState.user.observer));
+    setIsObserver(!isObserver);
+    if (isObserver) {
+      setUserRole(UserRole.observer);
+    } else {
+      setUserRole(role);
+    }
   };
 
   return (
     <div className={classes.wrapper}>
       <Switcher
-        switchState={currentState.user.observer}
+        switchState={isObserver}
         name="formSwitcher"
         children={'Connect as Observer'}
         onClick={handleSwitcher}
@@ -123,6 +123,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           value={firstName}
           validate={firstNameValid}
           touched={firstNameTouched}
+          messageError={'Enter your name. Min length: 2 symbols'}
           onChangeInputHandler={handleFormChange}
         />
         <Input
@@ -130,8 +131,6 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           type={USER_INIT.lastName.type}
           label={USER_INIT.lastName.text}
           value={lastName}
-          // validate={lastNameValid}
-          // touched={lastNameTouched}
           onChangeInputHandler={handleFormChange}
         />
         <Input
@@ -139,8 +138,6 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           type={USER_INIT.jobPosition.type}
           label={USER_INIT.jobPosition.text}
           value={jobPosition}
-          // validate={jobPositionValid}
-          // touched={jobPositionTouched}
           onChangeInputHandler={handleFormChange}
         />
         <ImageLoader />
