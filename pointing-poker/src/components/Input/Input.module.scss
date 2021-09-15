@@ -31,3 +31,8 @@
   border: 1px solid $pink;
   box-shadow: none;
 }
+
+.error {
+  color: $pink;
+  @include font($size: 1.7rem, $weight: 200);
+}

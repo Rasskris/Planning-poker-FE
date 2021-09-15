@@ -14,9 +14,19 @@ interface IPropsInput {
   shouldValidate?: boolean;
   onChangeInputHandler: ChangeEventHandler;
   checked?: boolean;
+  messageError?: string;
 }
 
-const Input: React.FC<IPropsInput> = ({ type, layout, value, onChangeInputHandler, label, validate, touched }) => {
+const Input: React.FC<IPropsInput> = ({
+  type,
+  layout,
+  value,
+  onChangeInputHandler,
+  label,
+  validate,
+  touched,
+  messageError,
+}) => {
   const inputType: string = type;
   const [uniqueId] = useState(_uniqueId(label));
   const incomingClasses: IClasses = { ...classes };
@@ -37,6 +47,7 @@ const Input: React.FC<IPropsInput> = ({ type, layout, value, onChangeInputHandle
         {label}
       </label>
       <input className={classes.input} type={inputType} id={uniqueId} value={value} onChange={onChangeInputHandler} />
+      {messageError && !validate && touched ? <span className={classes.error}>{messageError}</span> : null}
     </div>
   );
 };
