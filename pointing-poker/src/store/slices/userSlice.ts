@@ -8,9 +8,10 @@ interface UserState {
   image: string;
   observer: boolean;
   role: UserRole;
+  isLogin?: boolean;
 }
 
-const initialUserState: { user: UserState } = {
+const initialUserState: { user: UserState; isLogin: boolean } = {
   user: {
     firstName: '',
     lastName: '',
@@ -19,6 +20,7 @@ const initialUserState: { user: UserState } = {
     observer: false,
     role: UserRole.none,
   },
+  isLogin: false,
 };
 export const UserSlice = createSlice({
   name: 'user',
@@ -27,8 +29,17 @@ export const UserSlice = createSlice({
     addUser(state, action) {
       state.user = { ...action.payload };
     },
+    addRole(state, action) {
+      state.user.role = action.payload;
+    },
+    addObserver(state, action) {
+      state.user.observer = action.payload;
+    },
+    isLogin(state, action) {
+      state.isLogin = action.payload;
+    },
   },
 });
 
-export const { addUser } = UserSlice.actions;
+export const { addUser, addRole, addObserver, isLogin } = UserSlice.actions;
 export default UserSlice.reducer;

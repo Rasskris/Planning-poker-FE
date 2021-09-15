@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../../store/slices/userSlice';
+import { addObserver, addUser, isLogin } from '../../store/slices/userSlice';
 import classes from './Form.module.scss';
 import { Input, Button, Switcher } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
@@ -37,7 +37,7 @@ interface IFormProps {
 
 const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
   const dispatch = useDispatch();
-  const currentUser = useSelector((state: RootState) => state.user);
+  const currentState = useSelector((state: RootState) => state.user);
 
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
@@ -49,12 +49,12 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
       firstName,
       lastName,
       jobPosition,
-      isLogin: true,
+      observer: currentState.user.observer,
+      role: currentState.user.role,
       image: '',
-      observer: false,
-      role: UserRole.player,
     };
     dispatch(addUser(user));
+    dispatch(isLogin(true));
   };
   const handleFormChange = (event: ChangeEvent) => {
     const target = event.target as HTMLInputElement;
@@ -82,12 +82,17 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
   };
 
   const handleSwitcher = () => {
-    console.log('switcher');
+    dispatch(addObserver(!currentState.user.observer));
   };
 
   return (
     <div className={classes.wrapper}>
-      <Switcher switchState={false} name="formSwitcher" children={'Connect as Observer'} onClick={handleSwitcher} />,
+      <Switcher
+        switchState={currentState.user.observer}
+        name="formSwitcher"
+        children={'Connect as Observer'}
+        onClick={handleSwitcher}
+      />
       <form className={classes.form} onSubmit={onFormSubmit}>
         <Input
           layout={InputLayoutTypes.column}

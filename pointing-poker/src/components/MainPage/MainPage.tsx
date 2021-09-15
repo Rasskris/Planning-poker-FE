@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import classes from './MainPage.module.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { addRole } from '../../store/slices/userSlice';
 import { Button, Input, BackDrop, Form } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
-import { RootState } from '../../store/store';
+import { UserRole } from '../../interfaces/UserRole';
 
 const CONNECT = {
   id: 'connect',
@@ -14,7 +15,7 @@ const CREATE = {
 };
 
 const MainPage: React.FC = (): JSX.Element => {
-  const currentState = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onModalHandler = (event: React.MouseEvent): void => {
@@ -27,9 +28,11 @@ const MainPage: React.FC = (): JSX.Element => {
 
     switch (id) {
       case 'connect':
+        dispatch(addRole(UserRole.player));
         break;
 
       case 'create':
+        dispatch(addRole(UserRole.master));
         break;
 
       default:
