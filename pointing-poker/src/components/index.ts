@@ -13,4 +13,4 @@ export { MainPage } from './MainPage';
 export { BackDrop } from './BackDrop';
 export { Modal } from './Modal';
 export { Form } from './Form';
-export { Image } from './Image';
+export { ImageLoader } from './ImageLoader';
