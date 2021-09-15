@@ -42,12 +42,12 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
 
   const [lastName, setLastName] = useState('');
-  const [lastNameValid, setLastNameValid] = useState(false);
-  const [lastNameTouched, setLastNameTouched] = useState(false);
+  // const [lastNameValid, setLastNameValid] = useState(false);
+  // const [lastNameTouched, setLastNameTouched] = useState(false);
 
   const [jobPosition, setJobPosition] = useState('');
-  const [jobPositionValid, setJobPositionValid] = useState(false);
-  const [jobPositionTouched, setJobPositionTouched] = useState(false);
+  // const [jobPositionValid, setJobPositionValid] = useState(false);
+  // const [jobPositionTouched, setJobPositionTouched] = useState(false);
 
   const isValid = (id: string, value: string) => {
     if (id === 'firstname') {
@@ -55,22 +55,6 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
         setFirstNameValid(true);
       } else {
         setFirstNameValid(false);
-      }
-    }
-
-    if (id === 'lastname') {
-      if (value.length > 2) {
-        setLastNameValid(true);
-      } else {
-        setLastNameValid(false);
-      }
-    }
-
-    if (id === 'jobposition') {
-      if (value.length > 2) {
-        setJobPositionValid(true);
-      } else {
-        setJobPositionValid(false);
       }
     }
   };
@@ -81,12 +65,11 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
       firstName,
       lastName,
       jobPosition,
-      observer: currentState.user.observer,
       role: currentState.user.role,
       image: '',
     };
 
-    if (firstNameValid && lastNameValid && jobPositionValid) {
+    if (firstNameValid) {
       dispatch(addUser(user));
       dispatch(isLogin(true));
       onModalCloseHandler();
@@ -108,15 +91,11 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
         break;
 
       case 'lastname':
-        setLastNameTouched(true);
         setLastName(value);
-        isValid(id, value);
         break;
 
       case 'jobposition':
-        setJobPositionTouched(true);
         setJobPosition(value);
-        isValid(id, value);
         break;
 
       default:
@@ -151,8 +130,8 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           type={USER_INIT.lastName.type}
           label={USER_INIT.lastName.text}
           value={lastName}
-          validate={lastNameValid}
-          touched={lastNameTouched}
+          // validate={lastNameValid}
+          // touched={lastNameTouched}
           onChangeInputHandler={handleFormChange}
         />
         <Input
@@ -160,8 +139,8 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           type={USER_INIT.jobPosition.type}
           label={USER_INIT.jobPosition.text}
           value={jobPosition}
-          validate={jobPositionValid}
-          touched={jobPositionTouched}
+          // validate={jobPositionValid}
+          // touched={jobPositionTouched}
           onChangeInputHandler={handleFormChange}
         />
         <ImageLoader />
