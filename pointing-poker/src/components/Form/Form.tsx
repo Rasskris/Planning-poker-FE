@@ -2,7 +2,7 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addObserver, addUser, isLogin } from '../../store/slices/userSlice';
 import classes from './Form.module.scss';
-import { Input, Button, Switcher } from '../index';
+import { Input, Button, Switcher, ImageLoader } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { RootState } from '../../store/store';
 
@@ -11,7 +11,7 @@ interface IUserField {
   type: string;
 }
 
-const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUserField; image: IUserField } = {
+const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUserField } = {
   firstName: {
     text: 'First name:',
     type: 'text',
@@ -23,10 +23,6 @@ const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUs
   jobPosition: {
     text: 'Job position:',
     type: 'text',
-  },
-  image: {
-    text: '',
-    type: 'file',
   },
 };
 const BUTTON_SUBMIT_TYPE = {
@@ -168,13 +164,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler }): JSX.Element => {
           touched={jobPositionTouched}
           onChangeInputHandler={handleFormChange}
         />
-        <Input
-          layout={InputLayoutTypes.column}
-          type={USER_INIT.image.type}
-          label={USER_INIT.image.text}
-          value={''}
-          onChangeInputHandler={handleFormChange}
-        />
+        <ImageLoader />
         <div className={classes.buttons}>
           <Button disabled={false} children={'Confirm'} colorButton="dark" {...BUTTON_SUBMIT_TYPE} />
           <Button disabled={false} children={'Cancel'} colorButton="light" onClick={onModalCloseHandler} />
