@@ -10,3 +10,5 @@ export { Button } from './Button';
 export { Switcher } from './Switcher';
 export { TimerContainer } from './Timer';
 export { Chat } from './Chat';
+export { IssueForm } from './IssueForm';
+export { IssueList } from './IssueList';
