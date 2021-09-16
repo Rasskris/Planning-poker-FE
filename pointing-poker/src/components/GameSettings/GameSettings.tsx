@@ -27,6 +27,22 @@ const GameSettings = () => {
   const handlerChangeTimer = (value: any) => {
     dispatch(updateSettings({ timerValuesSetting: value }));
   };
+  const handlerScramMasterAsPlayerSetting = () => {
+    dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }));
+  };
+  const handlerChangingCardInRoundEndSetting = () => {
+    dispatch(updateSettings({ changingCardInRoundEndSetting: !changingCardInRoundEndSetting }));
+  };
+  const handlerIsTimerNeededSetting = () => {
+    dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }));
+  };
+  const handlerChangeSelectionAfterFlippingCardsSetting = () => {
+    dispatch(updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }));
+  };
+  const handlerAutomaticFlipCardsSetting = () => {
+    dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }));
+  };
+
   return (
     <section className={classes.game_settings}>
       <h2 className={classes.game_settings_title}>Game Settings</h2>
@@ -34,7 +50,7 @@ const GameSettings = () => {
         component={
           <Switcher
             switchState={scramMasterAsPlayerSetting}
-            onChange={() => dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }))}
+            onChange={handlerScramMasterAsPlayerSetting}
             children="Scram master as player"
           />
         }
@@ -43,7 +59,7 @@ const GameSettings = () => {
         component={
           <Switcher
             switchState={changingCardInRoundEndSetting}
-            onChange={() => dispatch(updateSettings({ changingCardInRoundEndSetting: !changingCardInRoundEndSetting }))}
+            onChange={handlerChangingCardInRoundEndSetting}
             children="Changing card in round end"
           />
         }
@@ -52,7 +68,7 @@ const GameSettings = () => {
         component={
           <Switcher
             switchState={isTimerNeededSetting}
-            onChange={() => dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }))}
+            onChange={handlerIsTimerNeededSetting}
             children="Is timer needed"
           />
         }
@@ -76,11 +92,7 @@ const GameSettings = () => {
         component={
           <Switcher
             switchState={changeSelectionAfterFlippingCardsSetting}
-            onChange={() =>
-              dispatch(
-                updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }),
-              )
-            }
+            onChange={handlerChangeSelectionAfterFlippingCardsSetting}
             children="Сhange selection after flipping cards"
           />
         }
@@ -89,7 +101,7 @@ const GameSettings = () => {
         component={
           <Switcher
             switchState={automaticFlipCardsSetting}
-            onChange={() => dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }))}
+            onChange={handlerAutomaticFlipCardsSetting}
             children="Automatic flip of cards if everyone voted"
           />
         }
