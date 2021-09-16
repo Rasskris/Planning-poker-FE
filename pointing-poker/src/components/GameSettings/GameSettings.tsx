@@ -24,8 +24,8 @@ const GameSettings = () => {
     const { value } = event.target;
     dispatch(updateSettings({ scoreTypeSetting: value }));
   };
-  const handlerChangeTimer = (value: any) => {
-    dispatch(updateSettings({ timerValuesSetting: value }));
+  const handlerChangeTimer = (time: { minutes: number; seconds: number }) => {
+    dispatch(updateSettings({ timerValuesSetting: time }));
   };
   const handlerScramMasterAsPlayerSetting = () => {
     dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }));
