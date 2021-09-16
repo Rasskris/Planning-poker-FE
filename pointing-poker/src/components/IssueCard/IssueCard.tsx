@@ -1,44 +1,26 @@
 import { FC } from 'react';
+import { Issue } from '../../interfaces';
 import classes from './IssueCard.module.scss';
 
-interface IssueCardProps {
+interface IssueCardProps extends Omit<Issue, 'creatorId' | 'gameId'> {
   isCurrentIssue?: boolean;
-  issueName: string;
-  issuePriority: 'Low' | 'Middle' | 'Hight';
-  handleEditIssue?: VoidFunction;
-  handleRemoveIssue?: VoidFunction;
+  isDealer: boolean;
+  handleRemoveIssue: (id: string) => void;
 }
 
-const IssueCard: FC<IssueCardProps> = ({
-  isCurrentIssue,
-  issueName,
-  issuePriority,
-  handleEditIssue,
-  handleRemoveIssue,
-}) => {
+const IssueCard: FC<IssueCardProps> = ({ id, isCurrentIssue, isDealer, title, priority, handleRemoveIssue }) => {
+  const handleClick = () => {
+    handleRemoveIssue(id);
+  };
+
   return (
     <div className={classes.issueCard}>
       <div className={classes.issueInfo}>
-        {isCurrentIssue && (
-          <p className={classes.issueCurrent} data-testid="issueCurrent">
-            current
-          </p>
-        )}
-        <p className={classes.issueName} data-testid="issueName">
-          {issueName}
-        </p>
-        <p className={classes.issuePriority} data-testid="issuePriority">
-          {issuePriority} priority
-        </p>
+        {isCurrentIssue && <p className={classes.issueCurrent}>current</p>}
+        <p className={classes.issueName}>{title}</p>
+        <p className={classes.issuePriority}>{priority} priority</p>
       </div>
-      <div className={classes.btnContainer}>
-        {handleEditIssue && (
-          <button className={classes.btnEdit} onClick={handleEditIssue} data-testid="btnEdit"></button>
-        )}
-        {handleRemoveIssue && (
-          <button className={classes.btnRemove} onClick={handleRemoveIssue} data-testid="btnRemove"></button>
-        )}
-      </div>
+      {isDealer && <button className={classes.btnRemove} onClick={handleClick} data-testid="btnRemove"></button>}
     </div>
   );
 };
