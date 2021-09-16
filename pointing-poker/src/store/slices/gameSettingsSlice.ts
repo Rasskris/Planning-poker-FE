@@ -15,19 +15,17 @@ interface GameSettingsState {
   };
 }
 
-const initialGameSettingsState: { gameSettings: GameSettingsState } = {
-  gameSettings: {
-    scramMasterAsPlayerSetting: false,
-    changingCardInRoundEndSetting: false,
-    isTimerNeededSetting: false,
-    changeSelectionAfterFlippingCardsSetting: false,
-    automaticFlipCardsSetting: false,
-    scoreTypeSetting: ITypesScoreCards.fibonacciNumbers,
-    scoreTypeShortSetting: '',
-    timerValuesSetting: {
-      minutes: 0,
-      seconds: 0,
-    },
+const initialGameSettingsState: GameSettingsState = {
+  scramMasterAsPlayerSetting: false,
+  changingCardInRoundEndSetting: false,
+  isTimerNeededSetting: false,
+  changeSelectionAfterFlippingCardsSetting: false,
+  automaticFlipCardsSetting: false,
+  scoreTypeSetting: ITypesScoreCards.fibonacciNumbers,
+  scoreTypeShortSetting: '',
+  timerValuesSetting: {
+    minutes: 0,
+    seconds: 0,
   },
 };
 
@@ -36,8 +34,8 @@ export const GameSettingsSlice = createSlice({
   initialState: initialGameSettingsState,
   reducers: {
     updateSettings(state, action) {
-      const newState = { ...state.gameSettings, ...action.payload };
-      state.gameSettings = newState;
+      const newState = { ...state, ...action.payload };
+      return newState;
     },
   },
 });

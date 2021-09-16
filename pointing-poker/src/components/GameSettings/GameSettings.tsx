@@ -17,7 +17,7 @@ const GameSettings = () => {
     automaticFlipCardsSetting,
     scoreTypeSetting,
     timerValuesSetting,
-  } = useAppSelector(state => state.gameSettings.gameSettings);
+  } = useAppSelector(state => state.gameSettings);
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
