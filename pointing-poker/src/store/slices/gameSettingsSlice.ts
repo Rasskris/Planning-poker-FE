@@ -32,7 +32,7 @@ const initialGameSettingsState: { gameSettings: GameSettingsState } = {
 };
 
 export const GameSettingsSlice = createSlice({
-  name: 'game-settings',
+  name: 'gameSettings',
   initialState: initialGameSettingsState,
   reducers: {
     updateSettings(state, action) {
