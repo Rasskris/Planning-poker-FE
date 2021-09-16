@@ -1,6 +1,6 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addRole } from '../../store/slices/userSlice';
+import { addRole, isLogin } from '../../store/slices/userSlice';
 import classes from './Form.module.scss';
 import { Button, ImageLoader, Input, Switcher } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
@@ -53,6 +53,12 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
     }
   };
 
+  const onImageLoadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+    setImageLink(URL.createObjectURL(file));
+  };
+
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const user = {
@@ -66,7 +72,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
     if (firstNameValid) {
       //TODO: implement function, which will add to store user data after server request response
       // dispatch(addUser(user));
-      // dispatch(isLogin(true));
+      dispatch(isLogin(true));
       onModalCloseHandler();
     }
   };
@@ -140,7 +146,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
           value={jobPosition}
           onChangeInputHandler={handleFormChange}
         />
-        <ImageLoader />
+        <ImageLoader onLoadImage={onImageLoadHandler} imgLink={imageLink} />
         <div className={classes.buttons}>
           <Button disabled={false} children={'Confirm'} colorButton="dark" {...BUTTON_SUBMIT_TYPE} />
           <Button disabled={false} children={'Cancel'} colorButton="light" onClick={onModalCloseHandler} />

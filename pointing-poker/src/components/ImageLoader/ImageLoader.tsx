@@ -2,23 +2,12 @@ import React from 'react';
 import classes from './ImageLoader.module.scss';
 import { Button } from '../index';
 
-const ImageLoader: React.FC = (): JSX.Element => {
-  const onLoadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
-    const file = target.files ? target.files[0] : null;
-    const reader = new FileReader();
+interface ImageProps {
+  imgLink: string;
+  onLoadImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
+}
 
-    reader.onload = () => {
-      const newImage: HTMLImageElement = new Image();
-      if (typeof reader.result === 'string') {
-        newImage.src = reader.result;
-        const link = newImage.src;
-      }
-    };
-    if (file) reader.readAsDataURL(file);
-    event.target.value = '';
-  };
-
+const ImageLoader: React.FC<ImageProps> = ({ imgLink, onLoadImage }): JSX.Element => {
   return (
     <div className={classes.wrapper}>
       <h3>Image:</h3>
@@ -32,10 +21,11 @@ const ImageLoader: React.FC = (): JSX.Element => {
           id="button-image"
           name="upload"
           placeholder="Choose file"
-          onChange={onLoadHandler}
+          onChange={onLoadImage}
         />
         <Button children="Button" colorButton="dark" disabled={false} />
       </div>
+      {imgLink !== '' ? <img className={classes.image} src={imgLink} alt="User picture" /> : null}
     </div>
   );
 };
