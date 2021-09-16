@@ -12,7 +12,7 @@ const App: React.FC = () => {
       <Header />
       <GameSettings />
       <Footer />
-      <TimerContainer timerStarted={true} />
+      <TimerContainer timerStarted />
     </div>
   );
 };
