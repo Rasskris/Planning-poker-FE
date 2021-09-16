@@ -117,20 +117,6 @@ const GameSettings = () => {
         }
       />
 
-      {scoreTypeSetting === ITypesScoreCards.newScoreType ? (
-        <GameSettingRow
-          component={
-            <Input
-              type="text"
-              value="firstInput"
-              label="Score type (short)"
-              layout={InputLayoutTypes.row}
-              onChangeInputHandler={() => {}}
-            />
-          }
-        />
-      ) : null}
-
       <GameSettingRow
         settingName="Card values"
         component={<GameCardsList scoreType={scoreTypeSetting} collectionGameCards={collectionGameCards} />}
