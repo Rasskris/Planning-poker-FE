@@ -2,7 +2,7 @@
 
 .wrapper {
   @include flex($direction: column, $align: flex-start);
-  & >* {
+  & > * {
     margin: 10px 0;
   }
 }
