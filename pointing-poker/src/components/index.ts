@@ -10,7 +10,7 @@ export { Button } from './Button';
 export { Switcher } from './Switcher';
 export { TimerContainer } from './Timer';
 export { MainPage } from './MainPage';
-export { BackDrop } from './BackDrop';
+export { BackDropModal } from './BackDropModal';
 export { Modal } from './Modal';
 export { Form } from './Form';
 export { ImageLoader } from './ImageLoader';
