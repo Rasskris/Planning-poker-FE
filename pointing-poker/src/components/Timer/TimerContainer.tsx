@@ -25,14 +25,14 @@ const TimerContainer = (props: TimerContainerProps) => {
     //TODO: add validation
     const { value } = event.target;
     setMinutes(+value);
-    if (onChangeTimer) onChangeTimer({ minutes, seconds });
+    if (onChangeTimer) onChangeTimer({ minutes: +value, seconds });
   };
 
   const handleChangeSeconds = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
     const { value } = event.target;
     setSeconds(+value);
-    if (onChangeTimer) onChangeTimer({ minutes, seconds });
+    if (onChangeTimer) onChangeTimer({ minutes, seconds: +value });
   };
 
   useEffect(() => {

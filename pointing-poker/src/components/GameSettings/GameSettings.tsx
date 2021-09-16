@@ -17,11 +17,15 @@ const GameSettings = () => {
     changeSelectionAfterFlippingCardsSetting,
     automaticFlipCardsSetting,
     scoreTypeSetting,
+    timerValuesSetting,
   } = useAppSelector(state => state.gameSettings.gameSettings);
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
-    dispatch(updateSettings({ scoreType: value }));
+    dispatch(updateSettings({ scoreTypeSetting: value }));
+  };
+  const handlerChangeTimer = (value: any) => {
+    dispatch(updateSettings({ timerValuesSetting: value }));
   };
   return (
     <section className={classes.game_settings}>
@@ -59,8 +63,10 @@ const GameSettings = () => {
           settingName="Round Time"
           component={
             <TimerContainer
+              initialMinute={timerValuesSetting.minutes}
+              initialSeconds={timerValuesSetting.seconds}
               areSettingsEdited
-              onChangeTimer={value => dispatch(updateSettings({ timerValuesSetting: value }))}
+              onChangeTimer={handlerChangeTimer}
             />
           }
         />

@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import styles from './Timer.module.scss';
 
 interface TimerProps {
@@ -9,7 +9,7 @@ interface TimerProps {
   onChangeSeconds: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Timer = ({ minutes, seconds, areSettingsEdited, onChangeMinutes, onChangeSeconds }: TimerProps) => (
+const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMinutes, onChangeSeconds }) => (
   <div className={styles.timer}>
     <div className={styles.timer__minutes}>
       <p>minutes</p>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import classes from './GameSetiingRow.module.scss';
 
 interface GameSettingRowProps {
@@ -6,9 +6,7 @@ interface GameSettingRowProps {
   component: JSX.Element;
 }
 
-const GameSettingRow = (props: GameSettingRowProps) => {
-  const { settingName, component } = props;
-
+const GameSettingRow: FC<GameSettingRowProps> = ({ settingName, component }) => {
   return (
     <div className={classes.game_setting_row}>
       {settingName ? <p>{settingName}</p> : null}
