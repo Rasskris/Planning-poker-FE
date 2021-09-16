@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addRole, isLogin } from '../../store/slices/userSlice';
+import { isLogin } from '../../redux/slices/userSlice';
 import classes from './Form.module.scss';
 import { Button, ImageLoader, Input, Switcher } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
-import { UserRole } from '../../interfaces/UserRole';
+import { UserRole } from '../../interfaces/User';
 
 interface IUserField {
   text: string;
@@ -30,7 +30,7 @@ const BUTTON_SUBMIT_TYPE = {
 
 interface IFormProps {
   onModalCloseHandler: () => void;
-  role: UserRole;
+  role: null | UserRole;
 }
 
 const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element => {
@@ -71,7 +71,6 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
 
     if (firstNameValid) {
       //TODO: implement function, which will add to store user data after server request response
-      // dispatch(addUser(user));
       dispatch(isLogin(true));
       onModalCloseHandler();
     }

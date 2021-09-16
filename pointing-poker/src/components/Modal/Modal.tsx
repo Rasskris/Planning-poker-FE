@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import classes from './Modal.module.scss';
 
 interface IModalProps {
   title: string;
-  children: any;
+  children: ReactNode;
 }
 
 const Modal: React.FC<IModalProps> = ({ title, children }: IModalProps): JSX.Element => {

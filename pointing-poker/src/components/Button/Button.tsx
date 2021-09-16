@@ -5,7 +5,7 @@ const DEFAULT_NAME_BUTTON = 'Default button';
 const DEFAULT_COLOR_BUTTON = 'light';
 
 interface ButtonProps {
-  onClick: () => void;
+  onClick?: (event: React.MouseEvent) => void;
   children: Node | string;
   disabled: boolean;
   colorButton: 'dark' | 'light';

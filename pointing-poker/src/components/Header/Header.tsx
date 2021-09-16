@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import classes from './Header.module.scss';
 import { ChatButton } from '../index';
-import { RootState } from '../../store/store';
+import { RootState } from '../../redux/store';
 
 const Header: React.FC = (): JSX.Element => {
-  const currentState = useSelector((state: RootState) => state.user.user);
+  const currentState = useSelector((state: RootState) => state.user);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const openChatHandler = (): void => {
