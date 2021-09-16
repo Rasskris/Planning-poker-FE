@@ -13,7 +13,7 @@ interface TimerContainerProps {
   initialSeconds: number;
   timerStarted: boolean;
   areSettingsEdited: boolean;
-  onChangeTimer?: (arg0: {}) => void;
+  onChangeTimer?: (time: { minutes: number; seconds: number }) => void;
 }
 
 const TimerContainer = (props: TimerContainerProps) => {
