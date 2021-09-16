@@ -2,7 +2,6 @@ import React, { ChangeEvent } from 'react';
 import { GameCardsList, GameSettingRow, Input, Switcher, TimerContainer } from '..';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { updateSettings } from '../../store/slices/gameSettingsSlice';
-import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
 import classes from './GameSettings.module.scss';

@@ -37,13 +37,13 @@ const TimerContainer = (props: TimerContainerProps) => {
 
   useEffect(() => {
     if (!timerStarted || areSettingsEdited) return;
-    let myInterval = setInterval(() => {
+    let timerInterval = setInterval(() => {
       if (seconds > 0) {
         setSeconds(seconds - 1);
       }
       if (seconds === 0) {
         if (minutes === 0) {
-          clearInterval(myInterval);
+          clearInterval(timerInterval);
         } else {
           setMinutes(minutes - 1);
           setSeconds(START_COUNTDOWN_SECONDS);
@@ -51,7 +51,7 @@ const TimerContainer = (props: TimerContainerProps) => {
       }
     }, 1000);
     return () => {
-      clearInterval(myInterval);
+      clearInterval(timerInterval);
     };
   });
 
