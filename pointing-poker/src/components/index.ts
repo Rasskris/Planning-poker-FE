@@ -12,3 +12,6 @@ export { TimerContainer } from './Timer';
 export { GameCardsList } from './GameCardsList';
 export { GameSettingRow } from './GameSettingRow';
 export { GameSettings } from './GameSettings';
+export { Chat } from './Chat';
+export { IssueForm } from './IssueForm';
+export { IssueList } from './IssueList';

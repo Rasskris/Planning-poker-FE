@@ -1,13 +1,13 @@
-import React, { ChangeEvent } from 'react';
-import { GameCardsList, GameSettingRow, Input, Switcher, TimerContainer } from '..';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import { updateSettings } from '../../store/slices/gameSettingsSlice';
+import React, { ChangeEvent, FC } from 'react';
+import { GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { updateSettings } from '../../redux/slices/gameSettingsSlice';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
 import classes from './GameSettings.module.scss';
 const collectionGameCards: ICollectionGameCards[] = require('../../data/game-cards-data.json');
 
-const GameSettings = () => {
+const GameSettings: FC = () => {
   const dispatch = useAppDispatch();
   const {
     scramMasterAsPlayerSetting,

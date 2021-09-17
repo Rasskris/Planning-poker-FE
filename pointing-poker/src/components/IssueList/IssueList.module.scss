@@ -1,0 +1,25 @@
+@import '../../layout/styles-config';
+
+.issueList {
+  @include flex($direction: column);
+}
+.issueCard {
+  margin-bottom: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+  @include flex($justify: flex-start);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+  @include flex($align: center, $justify: space-between);
+}
+.btnCreate {
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 38px;
+  height: 38px;
+  background-image: url(../../assets/icons/icon__create.svg);
+  &:hover {
+    opacity: 0.5;
+  }
+}

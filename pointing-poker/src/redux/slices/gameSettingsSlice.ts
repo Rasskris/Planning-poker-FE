@@ -29,7 +29,7 @@ const initialGameSettingsState: GameSettingsState = {
   },
 };
 
-export const GameSettingsSlice = createSlice({
+export const gameSettingsSlice = createSlice({
   name: 'gameSettings',
   initialState: initialGameSettingsState,
   reducers: {
@@ -40,5 +40,5 @@ export const GameSettingsSlice = createSlice({
   },
 });
 
-export const { updateSettings } = GameSettingsSlice.actions;
-export default GameSettingsSlice.reducer;
+export const { updateSettings } = gameSettingsSlice.actions;
+export const gameSettingsReducer = gameSettingsSlice.reducer;
