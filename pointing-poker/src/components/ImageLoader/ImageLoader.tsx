@@ -25,7 +25,7 @@ const ImageLoader: React.FC<ImageProps> = ({ imgLink, onLoadImage }): JSX.Elemen
         />
         <Button children="Button" colorButton="dark" disabled={false} />
       </div>
-      {imgLink !== '' ? <img className={classes.image} src={imgLink} alt="User picture" /> : null}
+      {imgLink ? <img className={classes.image} src={imgLink} alt="User picture" /> : null}
     </div>
   );
 };
