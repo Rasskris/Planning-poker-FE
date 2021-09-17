@@ -8,10 +8,8 @@ interface IBackDrop {
   children: any;
 }
 
-const BackDropModal: React.FC<IBackDrop> = ({ isBackDropOpen, titleModal, children }: IBackDrop): JSX.Element => {
-  return (
-    <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={titleModal} children={children} /> : null}</div>
+const BackDropModal: React.FC<IBackDrop> = ({ isBackDropOpen, titleModal, children }: IBackDrop): JSX.Element => (
+    <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={titleModal}>{children}</Modal> : null}</div>
   );
-};
 
 export { BackDropModal };
