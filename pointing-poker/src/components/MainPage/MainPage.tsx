@@ -48,7 +48,7 @@ const MainPage: React.FC = (): JSX.Element => {
     <div className={classes.wrapper}>
       {isModalOpen ? (
         <BackDropModal
-          isBackDropOpen={true}
+          isBackDropOpen
           titleModal={'Connect to lobby'}
           children={<Form onModalCloseHandler={onModalCloseHandler} role={role ? role : null} />}
         />
