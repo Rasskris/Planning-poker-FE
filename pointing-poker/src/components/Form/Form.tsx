@@ -46,11 +46,9 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
   const [imageLink, setImageLink] = useState('');
 
   const isValid = (id: string, value: string) => {
-    if (id === 'firstname' && value.length > 1) {
-      setFirstNameValid(true);
-    } else {
-      setFirstNameValid(false);
-    }
+const isFirstNameValid = id === 'firstname' && value.length > 1;
+setFirstNameValid(isFirstNameValid);
+
   };
 
   const onImageLoadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
