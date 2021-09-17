@@ -4,7 +4,7 @@ import { isLogin } from '../../redux/slices/userSlice';
 import classes from './Form.module.scss';
 import { Button, ImageLoader, Input, Switcher } from '../index';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
-import { UserRole } from '../../interfaces/User';
+import { USER_ROLES } from '../../constants';
 
 interface IUserField {
   text: string;
@@ -24,9 +24,6 @@ const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUs
     type: 'text',
   },
 };
-const BUTTON_SUBMIT_TYPE = {
-  type: 'submit',
-};
 enum userNameFieldId {
   firstName = 'firstname',
   lastName = 'lastname',
@@ -36,7 +33,7 @@ const REGEX = /[a-zA-Z]/g;
 
 interface IFormProps {
   onModalCloseHandler: () => void;
-  role: null | UserRole;
+  role: USER_ROLES | null;
 }
 
 const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element => {
@@ -107,7 +104,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
 
   const handleSwitcher = () => {
     setIsObserver(!isObserver);
-      setUserRole(isObserver ? UserRole.observer : role);
+    setUserRole(isObserver ? USER_ROLES.OBSERVER : role);
   };
 
   return (
@@ -145,8 +142,8 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
         />
         <ImageLoader onLoadImage={onImageLoadHandler} imgLink={imageLink} />
         <div className={classes.buttons}>
-          <Button disabled={false} children={'Confirm'} colorButton="dark" {...BUTTON_SUBMIT_TYPE} />
-          <Button disabled={false} children={'Cancel'} colorButton="light" onClick={onModalCloseHandler} />
+          <Button text="Confirm" colorButton="dark" type="button" />
+          <Button text="Cancel" colorButton="light" type="button" onClick={onModalCloseHandler} />
         </div>
       </form>
     </div>

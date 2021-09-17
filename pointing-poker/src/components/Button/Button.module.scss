@@ -1,7 +1,7 @@
 @import '../../layout/styles-config.scss';
 
 .button {
-  @include font($size: 2rem, $height: 30.38px, $weight: 400);
+  @include font($size: 1.5rem, $height: 30.38px, $weight: 400);
   padding: 0 10px;
   cursor: pointer;
 
