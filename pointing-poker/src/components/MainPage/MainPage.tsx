@@ -50,7 +50,7 @@ const MainPage: React.FC = (): JSX.Element => {
         <BackDropModal
           isBackDropOpen
           titleModal={'Connect to lobby'}
-          children={<Form onModalCloseHandler={onModalCloseHandler} role={role ? role : null} />}
+          children={<Form onModalCloseHandler={onModalCloseHandler} role={role || null} />}
         />
       ) : null}
       <div className={classes.logo}>
