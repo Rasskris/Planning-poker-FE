@@ -1,0 +1,6 @@
+@import '../../layout/styles-config';
+
+.game_setting_row {
+  @include flex();
+  column-gap: 3%;
+}

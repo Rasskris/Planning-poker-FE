@@ -17,9 +17,10 @@
       @include flex();
     }
 
-    span {
-      @include font(26px);
-      padding-right: 3px;
+    input {
+      height: 40px;
+      width: 60px;
+      @include font(36px);
     }
   }
 }
