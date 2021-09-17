@@ -25,11 +25,11 @@ const MainPage: React.FC = (): JSX.Element => {
     }
 
     switch (id) {
-      case 'connect':
+      case CONNECT.id:
         setRole(UserRole.player);
         break;
 
-      case 'create':
+      case CREATE.id:
         setRole(UserRole.dealer);
         break;
 
@@ -65,8 +65,8 @@ const MainPage: React.FC = (): JSX.Element => {
       <div className={classes.connect}>
         <Input
           layout={InputLayoutTypes.column}
-          type={'text'}
-          label={'Connect to lobby by URL:'}
+          type="text"
+          label="Connect to lobby by URL:"
           value={''}
           onChangeInputHandler={() => {
             //TODO: implement function to add existing game link

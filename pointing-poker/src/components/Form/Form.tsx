@@ -27,6 +27,12 @@ const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUs
 const BUTTON_SUBMIT_TYPE = {
   type: 'submit',
 };
+enum userNameFieldId {
+  firstName = 'firstname',
+  lastName = 'lastname',
+  jobPosition = 'jobposition',
+}
+const REGEX = /[a-zA-Z]/g;
 
 interface IFormProps {
   onModalCloseHandler: () => void;
@@ -46,13 +52,12 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
   const [imageLink, setImageLink] = useState('');
 
   const isValid = (id: string, value: string) => {
-const isFirstNameValid = id === 'firstname' && value.length > 1;
-setFirstNameValid(isFirstNameValid);
-
+    const isFirstNameValid = id === userNameFieldId.firstName && value.length > 1;
+    setFirstNameValid(isFirstNameValid);
   };
 
   const onImageLoadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target as HTMLInputElement;
+    const target = event.target;
     const file = target.files ? target.files[0] : null;
     setImageLink(URL.createObjectURL(file));
   };
@@ -74,25 +79,24 @@ setFirstNameValid(isFirstNameValid);
     }
   };
 
-  const handleFormChange = (event: ChangeEvent) => {
-    const target = event.target as HTMLInputElement;
+  const handleFormChange = (event: ChangeEvent<HTMLFormElement>) => {
+    const target = event.target;
     const value = target.value;
-    const rgx = /[a-zA-Z]/g;
-    const match = target.id.match(rgx);
+    const match = target.id.match(REGEX);
     const id = match ? match.join('').toLowerCase() : null;
 
     switch (id) {
-      case 'firstname':
+      case userNameFieldId.firstName:
         setFirstNameTouched(true);
         setFirstName(value);
         isValid(id, value);
         break;
 
-      case 'lastname':
+      case userNameFieldId.lastName:
         setLastName(value);
         break;
 
-      case 'jobposition':
+      case userNameFieldId.jobPosition:
         setJobPosition(value);
         break;
 
