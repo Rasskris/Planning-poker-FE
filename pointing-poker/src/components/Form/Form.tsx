@@ -103,11 +103,7 @@ setFirstNameValid(isFirstNameValid);
 
   const handleSwitcher = () => {
     setIsObserver(!isObserver);
-    if (isObserver) {
-      setUserRole(UserRole.observer);
-    } else {
-      setUserRole(role);
-    }
+      setUserRole(isObserver ? UserRole.observer : role);
   };
 
   return (
