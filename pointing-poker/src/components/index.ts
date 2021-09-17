@@ -14,3 +14,6 @@ export { BackDropModal } from './BackDropModal';
 export { Modal } from './Modal';
 export { Form } from './Form';
 export { ImageLoader } from './ImageLoader';
+export { Chat } from './Chat';
+export { IssueForm } from './IssueForm';
+export { IssueList } from './IssueList';
