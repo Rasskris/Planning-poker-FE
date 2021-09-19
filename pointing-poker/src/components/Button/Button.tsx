@@ -6,10 +6,11 @@ const DEFAULT_COLOR_BUTTON = 'light';
 
 interface ButtonProps {
   type: 'button' | 'submit' | 'reset' | undefined;
-  onClick?: () => void;
+  onClick?: (event: React.MouseEvent) => void;
   text: string;
   disabled?: boolean;
   colorButton: 'dark' | 'light';
+  id?: string;
 }
 
 const Button: FC<ButtonProps> = ({ type, onClick, text, disabled, colorButton }) => {

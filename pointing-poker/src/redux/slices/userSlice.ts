@@ -20,8 +20,14 @@ export const userSlice = createSlice({
     addUser(state, action) {
       state.user = { ...action.payload };
     },
+    addRole(state, action) {
+      state.user.role = action.payload;
+    },
+    isLogin(state, action) {
+      state.isLogin = action.payload;
+    },
   },
 });
 
-export const { addUser } = userSlice.actions;
+export const { addUser, addRole, isLogin } = userSlice.actions;
 export const userReducer = userSlice.reducer;

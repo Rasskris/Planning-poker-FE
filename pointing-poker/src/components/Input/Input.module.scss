@@ -21,3 +21,18 @@
   @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal, $align: left);
   outline: none;
 }
+
+.valid .input {
+  border: 1px solid $green;
+  box-shadow: none;
+}
+
+.invalid .input {
+  border: 1px solid $pink;
+  box-shadow: none;
+}
+
+.error {
+  color: $pink;
+  @include font($size: 1.7rem, $weight: 200);
+}
