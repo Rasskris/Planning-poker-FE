@@ -1,0 +1,22 @@
+@import '../../layout/styles-config';
+
+.notification {
+  width: 400px;
+  height: 250px;
+  padding: 20px;
+  @include flex($direction: column, $align: center);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+  button {
+    padding: 2px 15px;
+  }
+}
+.title {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+}
+.btnContainer {
+  width: 100%;
+  @include flex();
+}

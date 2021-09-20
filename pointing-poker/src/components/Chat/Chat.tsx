@@ -1,16 +1,19 @@
 import { FC, useEffect, useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
-import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMessages, addMessage } from '../../redux/thunks';
-import { selectMessages, selectUser } from '../../redux/selectors';
+import { selectMessages } from '../../redux/selectors';
 import classes from './Chat.module.scss';
+import { User } from '../../interfaces';
 
-const Chat: FC = () => {
+interface ChatProps {
+  currentUser: User;
+}
+
+const Chat: FC<ChatProps> = ({ currentUser }) => {
   const [text, setText] = useState('');
-  const { gameId } = useParams<{ gameId: string }>();
   const dispatch = useAppDispatch();
   const messages = useAppSelector(selectMessages);
-  const user = useAppSelector(selectUser);
+  const gameId = currentUser.gameId;
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const Chat: FC = () => {
 
   const sendMessage = () => {
     if (text) {
-      dispatch(addMessage({ gameId, sender: user, text }));
+      dispatch(addMessage({ gameId, sender: currentUser, text }));
       setText('');
     }
   };
@@ -47,7 +50,7 @@ const Chat: FC = () => {
           return (
             <div key={id} className={classes.message}>
               <p>{text}</p>
-              <span>{user.id === sender.id ? 'You' : sender.firstName}</span>
+              <span>{currentUser.id === sender.id ? 'You' : sender.firstName}</span>
             </div>
           );
         })}

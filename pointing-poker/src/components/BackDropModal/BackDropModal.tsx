@@ -1,15 +1,15 @@
-import React from 'react';
-import classes from './BackDropModal.module.scss';
+import { FC } from 'react';
 import { Modal } from '../index';
+import classes from './BackDropModal.module.scss';
 
-interface IBackDrop {
+interface BackDropProps {
   isBackDropOpen: boolean;
-  titleModal: string;
+  titleModal?: string;
   children: any;
 }
 
-const BackDropModal: React.FC<IBackDrop> = ({ isBackDropOpen, titleModal, children }: IBackDrop): JSX.Element => (
-    <div className={classes.wrapper}>{isBackDropOpen ? <Modal title={titleModal}>{children}</Modal> : null}</div>
-  );
+const BackDropModal: FC<BackDropProps> = ({ isBackDropOpen, titleModal, children }) => {
+  return <>{isBackDropOpen && <div className={classes.wrapper}>{<Modal title={titleModal}>{children}</Modal>}</div>}</>;
+};
 
 export { BackDropModal };

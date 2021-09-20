@@ -1,12 +1,23 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import { userReducer, messageReducer, issueReducer, gameSettingsReducer } from '../slices';
+import {
+  usersReducer,
+  messageReducer,
+  issueReducer,
+  currentUserReducer,
+  gameSettingsReducer,
+  voteReducer,
+  gameReducer,
+} from '../slices';
 
 export const store = configureStore({
   reducer: {
-    user: userReducer,
+    game: gameReducer,
+    currentUser: currentUserReducer,
+    users: usersReducer,
     messages: messageReducer,
     issues: issueReducer,
     gameSettings: gameSettingsReducer,
+    vote: voteReducer,
   },
 });
 

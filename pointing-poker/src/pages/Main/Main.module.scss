@@ -10,7 +10,16 @@
     margin: 5px 0;
   }
 }
-
+.form {
+  @include flex($align: flex-end);
+  label {
+    @include flex($direction: column, $align: flex-start);
+    font-size: 16px;
+  }
+  input {
+    padding: 2px;
+  }
+}
 .logo {
   background-image: url('../../assets/icons/icon_main-page.svg');
   background-repeat: no-repeat;

@@ -37,7 +37,7 @@ const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId }) => {
       <p className={classes.title}>Create Issue:</p>
       <label>
         Title:
-        <input name="title" onChange={handleChange} value={title} type="text" />
+        <input name="title" onChange={handleChange} value={title} type="text" required />
       </label>
       <label>
         Priority:

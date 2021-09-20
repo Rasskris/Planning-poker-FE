@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { isLogin } from '../../redux/slices/userSlice';
-import classes from './Form.module.scss';
-import { Button, ImageLoader, Input, Switcher } from '../index';
+import { FC, ChangeEvent, FormEvent, useState } from 'react';
+import { Button, ImageLoader, Input, Switcher } from '..';
+import { addUser } from '../../redux/thunks';
 import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
 import { USER_ROLES } from '../../constants';
+import { useAppDispatch } from '../../hooks';
+import classes from './LoginForm.module.scss';
 
 interface IUserField {
   text: string;
@@ -32,12 +32,13 @@ enum userNameFieldId {
 const REGEX = /[a-zA-Z]/g;
 
 interface IFormProps {
+  gameId?: string;
   onModalCloseHandler: () => void;
-  role: USER_ROLES | null;
+  role: USER_ROLES;
 }
 
-const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element => {
-  const dispatch = useDispatch();
+const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
+  const dispatch = useAppDispatch();
 
   const [firstName, setFirstName] = useState('');
   const [firstNameValid, setFirstNameValid] = useState(false);
@@ -47,14 +48,14 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
   const [userRole, setUserRole] = useState(role);
   const [isObserver, setIsObserver] = useState(false);
   const [imageLink, setImageLink] = useState('');
+  const isDealer = role === USER_ROLES.DEALER;
 
   const isValid = (id: string, value: string) => {
     const isFirstNameValid = id === userNameFieldId.firstName && value.length > 1;
     setFirstNameValid(isFirstNameValid);
   };
 
-  const onImageLoadHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const target = event.target;
+  const onImageLoadHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const file = target.files ? target.files[0] : null;
     setImageLink(URL.createObjectURL(file));
   };
@@ -67,17 +68,16 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
       jobPosition,
       role: userRole,
       image: imageLink,
+      gameId,
     };
 
     if (firstNameValid) {
-      //TODO: implement function, which will add to store user data after server request response
-      dispatch(isLogin(true));
+      dispatch(addUser(user));
       onModalCloseHandler();
     }
   };
 
-  const handleFormChange = (event: ChangeEvent<HTMLFormElement>) => {
-    const target = event.target;
+  const handleFormChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const value = target.value;
     const match = target.id.match(REGEX);
     const id = match ? match.join('').toLowerCase() : null;
@@ -109,12 +109,14 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
 
   return (
     <div className={classes.wrapper}>
-      <Switcher
-        switchState={isObserver}
-        name="formSwitcher"
-        children={'Connect as Observer'}
-        onClick={handleSwitcher}
-      />
+      {!isDealer && (
+        <Switcher
+          switchState={isObserver}
+          name="formSwitcher"
+          labelText="Connect as Observer"
+          onChange={handleSwitcher}
+        />
+      )}
       <form className={classes.form} onSubmit={onFormSubmit}>
         <Input
           layout={InputLayoutTypes.column}
@@ -123,7 +125,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
           value={firstName}
           validate={firstNameValid}
           touched={firstNameTouched}
-          messageError={'Enter your name. Min length: 2 symbols'}
+          messageError="Enter your name. Min length: 2 symbols"
           onChangeInputHandler={handleFormChange}
         />
         <Input
@@ -142,7 +144,7 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
         />
         <ImageLoader onLoadImage={onImageLoadHandler} imgLink={imageLink} />
         <div className={classes.buttons}>
-          <Button text="Confirm" colorButton="dark" type="button" />
+          <Button text="Confirm" colorButton="dark" type="submit" />
           <Button text="Cancel" colorButton="light" type="button" onClick={onModalCloseHandler} />
         </div>
       </form>
@@ -150,4 +152,4 @@ const Form: React.FC<IFormProps> = ({ onModalCloseHandler, role }): JSX.Element 
   );
 };
 
-export { Form };
+export { LoginForm };

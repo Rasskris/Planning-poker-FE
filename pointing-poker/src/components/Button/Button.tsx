@@ -13,11 +13,11 @@ interface ButtonProps {
   id?: string;
 }
 
-const Button: FC<ButtonProps> = ({ type, onClick, text, disabled, colorButton }) => {
+const Button: FC<ButtonProps> = ({ id, type, onClick, text, disabled, colorButton }) => {
   const classes: Array<String> = [styles.button, styles[`button_${colorButton}`]];
 
   return (
-    <button type={type} onClick={onClick} disabled={disabled} className={classes.join(' ')}>
+    <button type={type} onClick={onClick} disabled={disabled} className={classes.join(' ')} id={id}>
       {text}
     </button>
   );

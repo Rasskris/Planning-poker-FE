@@ -1,5 +1,6 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
+import { enableVote } from '../redux/slices';
 import { addMessage, addIssue, deleteIssue, editIssue } from '../redux/thunks';
 import { URL } from '../constants';
 
@@ -31,6 +32,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('issueDelete', ({ issueId }) => {
     dispatch({ type: deleteIssue.fulfilled.type, payload: issueId });
+  });
+
+  socket.on('vote', ({ victim }) => {
+    dispatch(enableVote(victim));
   });
 
   socket.on('disconnect', reason => {
