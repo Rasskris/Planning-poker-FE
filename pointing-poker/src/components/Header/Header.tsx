@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import classes from './Header.module.scss';
 import { ChatButton } from '../index';
-import { RootState } from '../../redux/store';
+import { useAppSelector } from '../../hooks';
+import { selectLoginStatus } from '../../redux/selectors';
+import classes from './Header.module.scss';
 
 const Header: React.FC = (): JSX.Element => {
-  const currentState = useSelector((state: RootState) => state.user);
+  const isLogin = useAppSelector(selectLoginStatus);
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   const openChatHandler = (): void => {
     setIsChatOpen(!isChatOpen);
   };
+
   return (
     <div className={classes.header}>
       <div className={classes.wrapper}>
@@ -22,7 +23,7 @@ const Header: React.FC = (): JSX.Element => {
           <div className={classes.logo}>
             <div className={classes.logo_icon} />
           </div>
-          {currentState.isLogin ? <ChatButton isChatOpen={isChatOpen} onOpenChatHandler={openChatHandler} /> : null}
+          {isLogin ? <ChatButton isChatOpen={isChatOpen} onOpenChatHandler={openChatHandler} /> : null}
         </div>
       </div>
     </div>

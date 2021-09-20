@@ -1,13 +1,13 @@
-import React from 'react';
-import classes from './ImageLoader.module.scss';
+import { FC } from 'react';
 import { Button } from '../index';
+import classes from './ImageLoader.module.scss';
 
 interface ImageProps {
   imgLink: string;
   onLoadImage: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const ImageLoader: React.FC<ImageProps> = ({ imgLink, onLoadImage }): JSX.Element => {
+const ImageLoader: FC<ImageProps> = ({ imgLink, onLoadImage }) => {
   return (
     <div className={classes.wrapper}>
       <h3>Image:</h3>
@@ -23,9 +23,9 @@ const ImageLoader: React.FC<ImageProps> = ({ imgLink, onLoadImage }): JSX.Elemen
           placeholder="Choose file"
           onChange={onLoadImage}
         />
-        <Button children="Button" colorButton="dark" disabled={false} />
+        <Button type="button" text="Button" colorButton="dark" />
       </div>
-      {imgLink ? <img className={classes.image} src={imgLink} alt="User picture" /> : null}
+      {imgLink ? <img className={classes.image} src={imgLink} alt="Avatar" /> : null}
     </div>
   );
 };

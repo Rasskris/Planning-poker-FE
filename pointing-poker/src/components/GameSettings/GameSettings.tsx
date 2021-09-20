@@ -50,7 +50,7 @@ const GameSettings: FC = () => {
           <Switcher
             switchState={scramMasterAsPlayerSetting}
             onChange={handlerScramMasterAsPlayerSetting}
-            children="Scram master as player"
+            labelText="Scram master as player"
           />
         }
       />
@@ -59,7 +59,7 @@ const GameSettings: FC = () => {
           <Switcher
             switchState={changingCardInRoundEndSetting}
             onChange={handlerChangingCardInRoundEndSetting}
-            children="Changing card in round end"
+            labelText="Changing card in round end"
           />
         }
       />
@@ -68,7 +68,7 @@ const GameSettings: FC = () => {
           <Switcher
             switchState={isTimerNeededSetting}
             onChange={handlerIsTimerNeededSetting}
-            children="Is timer needed"
+            labelText="Is timer needed"
           />
         }
       />
@@ -92,7 +92,7 @@ const GameSettings: FC = () => {
           <Switcher
             switchState={changeSelectionAfterFlippingCardsSetting}
             onChange={handlerChangeSelectionAfterFlippingCardsSetting}
-            children="Сhange selection after flipping cards"
+            labelText="Сhange selection after flipping cards"
           />
         }
       />
@@ -101,7 +101,7 @@ const GameSettings: FC = () => {
           <Switcher
             switchState={automaticFlipCardsSetting}
             onChange={handlerAutomaticFlipCardsSetting}
-            children="Automatic flip of cards if everyone voted"
+            labelText="Automatic flip of cards if everyone voted"
           />
         }
       />
