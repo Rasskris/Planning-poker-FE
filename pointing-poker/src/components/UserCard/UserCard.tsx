@@ -3,19 +3,34 @@ import classes from './UserCard.module.scss';
 import { getNameInitials } from '../../utils';
 
 interface UserCardProps {
-  isCurrentUser?: boolean;
+  id: string;
+  currentUserId: string;
   firstName: string;
   lastName?: string;
   jobPosition?: string;
   imgURL?: string;
-  handleKickUser?: () => void;
+  isObserver: boolean;
+  handleKickUser: (id: string) => void;
 }
 
-const UserCard: FC<UserCardProps> = ({ isCurrentUser, firstName, lastName, imgURL, jobPosition, handleKickUser }) => {
+const UserCard: FC<UserCardProps> = ({
+  id,
+  currentUserId,
+  firstName,
+  lastName,
+  imgURL,
+  jobPosition,
+  isObserver,
+  handleKickUser,
+}) => {
   const nameInitials = getNameInitials(firstName, lastName);
-
+  const isCurrentUser = currentUserId === id;
   const avatarStyle = {
     backgroundImage: `url(${imgURL})`,
+  };
+
+  const handleClick = () => {
+    handleKickUser(id);
   };
 
   return (
@@ -30,7 +45,7 @@ const UserCard: FC<UserCardProps> = ({ isCurrentUser, firstName, lastName, imgUR
         </p>
         {jobPosition && <p className={classes.jobPosition}>{jobPosition}</p>}
       </div>
-      {handleKickUser && <button className={classes.btnKick} onClick={handleKickUser}></button>}
+      {isObserver && <button className={classes.btnKick} onClick={handleClick}></button>}
     </div>
   );
 };

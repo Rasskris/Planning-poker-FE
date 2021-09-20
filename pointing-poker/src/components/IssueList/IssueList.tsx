@@ -1,16 +1,19 @@
 import { FC, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIssues, deleteIssue } from '../../redux/thunks';
-import { selectIssues, selectUser } from '../../redux/selectors';
+import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm } from '..';
 import { USER_ROLES } from '../../constants';
+import { User } from '../../interfaces';
 import classes from './IssueList.module.scss';
 
-const IssueList: FC = () => {
-  const { gameId } = useParams<{ gameId: string }>();
+interface IssueListProps {
+  currentUser: User;
+}
+
+const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   const issues = useAppSelector(selectIssues);
-  const { id: userId, role } = useAppSelector(selectUser);
+  const { id: userId, role, gameId } = currentUser;
   const isDealer = role === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
@@ -29,6 +32,7 @@ const IssueList: FC = () => {
 
   return (
     <div className={classes.issueList}>
+      <p className={classes.title}>Issues:</p>
       {isDealer && (
         <div className={classes.issueCard}>
           <p>Create New Issue</p>

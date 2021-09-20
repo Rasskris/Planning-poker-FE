@@ -6,17 +6,17 @@ const DEFAULT_LABEL_TEXT_SWITCHER = 'label-for-default-switcher';
 
 interface SwitcherProps {
   name: string;
-  children: Node | string;
+  labelText: string;
   onChange: () => void;
   switchState: boolean;
 }
 
 const Switcher = (props: SwitcherProps) => {
-  const { onChange, children, name, switchState } = props;
+  const { onChange, labelText, name, switchState } = props;
 
   return (
     <label className={styles.switcher__label}>
-      {children}
+      {labelText}
       <input
         className={styles.switcher__input}
         readOnly
