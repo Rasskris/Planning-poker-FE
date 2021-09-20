@@ -1,0 +1,19 @@
+@import '../../layout/styles-config';
+
+.wrapper {
+  @include flex($direction: column);
+}
+
+.form {
+  @include flex($direction: column, $align: flex-start);
+  width: 100%;
+
+  & > * {
+    margin: 10px 0;
+  }
+}
+
+.buttons {
+  @include flex();
+  width: 100%;
+}
