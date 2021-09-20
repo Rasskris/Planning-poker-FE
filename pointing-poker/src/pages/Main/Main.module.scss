@@ -1,0 +1,54 @@
+@import '../../layout/styles-config';
+
+.wrapper {
+  @include flex($direction: column, $align: flex-start);
+  max-width: 1000px;
+  border-radius: 4px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  padding: 25px 40px;
+  > * {
+    margin: 5px 0;
+  }
+}
+.form {
+  @include flex($align: flex-end);
+  label {
+    @include flex($direction: column, $align: flex-start);
+    font-size: 16px;
+  }
+  input {
+    padding: 2px;
+  }
+}
+.logo {
+  background-image: url('../../assets/icons/icon_main-page.svg');
+  background-repeat: no-repeat;
+  background-size: contain;
+
+  &_icon {
+    width: 350px;
+    height: 150px;
+  }
+}
+
+.header {
+  @include font($size: 3.8rem, $height: 56.25px, $weight: 700);
+  color: $blue;
+}
+
+.create {
+  @include flex($direction: row);
+  width: 100%;
+  padding: 10px 0;
+  font-size: 2rem;
+}
+
+.connect {
+  @include flex($align: flex-end);
+  width: 100%;
+  font-size: 2rem;
+
+  > * {
+    margin: 0 20px 0 0;
+  }
+}
