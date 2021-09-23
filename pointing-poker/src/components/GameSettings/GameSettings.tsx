@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FC } from 'react';
-import { GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
+import { Button, GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateSettings } from '../../redux/slices/gameSettingsSlice';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
@@ -7,7 +7,11 @@ import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
 import classes from './GameSettings.module.scss';
 const collectionGameCards: ICollectionGameCards[] = require('../../data/game-cards-data.json');
 
-const GameSettings: FC = () => {
+interface GameSettingsProps {
+  handlerSaveSettingsButton?: () => void; //DELETE ?
+}
+
+const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
   const dispatch = useAppDispatch();
   const {
     scramMasterAsPlayerSetting,
@@ -45,6 +49,7 @@ const GameSettings: FC = () => {
   return (
     <section className={classes.game_settings}>
       <h2 className={classes.game_settings_title}>Game Settings</h2>
+      <Button type="button" text="Save Settings" colorButton="dark" onClick={handlerSaveSettingsButton} />
       <GameSettingRow
         component={
           <Switcher
