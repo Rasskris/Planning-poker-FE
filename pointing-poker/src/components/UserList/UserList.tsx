@@ -1,34 +1,20 @@
-import { FC, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getUsers, deleteUser } from '../../redux/thunks';
-import { selectUsers } from '../../redux/selectors';
+import { FC } from 'react';
 import { UserCard } from '..';
-import { USER_ROLES } from '../../constants';
 import { User } from '../../interfaces';
 import classes from './UserList.module.scss';
 
 interface UserListProps {
-  currentUser: User;
+  title: string;
+  users: User[];
+  currentUserId: string;
+  handleKickUser: (id: string, name: string) => void;
 }
 
-const UserList: FC<UserListProps> = ({ currentUser }) => {
-  const users = useAppSelector(selectUsers);
-  const { id: currentUserId, role, gameId } = currentUser;
-  const isObserver = role === USER_ROLES.OBSERVER;
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(getUsers(gameId));
-  }, [dispatch, gameId, users]);
-
-  const handleKickUser = (id: string) => {
-    dispatch(deleteUser(id));
-  };
-
+const UserList: FC<UserListProps> = ({ title, users, currentUserId, handleKickUser }) => {
   return (
     <div className={classes.userList}>
-      <p className={classes.title}>Members:</p>
-      {users.map(({ id, firstName, lastName, image, jobPosition }) => (
+      <p className={classes.title}>{title}</p>
+      {users.map(({ id, firstName, lastName, role, image, jobPosition }) => (
         <UserCard
           key={id}
           id={id}
@@ -36,8 +22,8 @@ const UserList: FC<UserListProps> = ({ currentUser }) => {
           firstName={firstName}
           lastName={lastName}
           jobPosition={jobPosition}
-          isObserver={isObserver}
           handleKickUser={handleKickUser}
+          role={role}
         />
       ))}
     </div>
