@@ -2,6 +2,11 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { clientAPI } from '../../libs';
 import { User } from '../../interfaces';
 
+interface IParams {
+  currentUserId: string;
+  victimId: string;
+}
+
 export const getUsers = createAsyncThunk('user/getUsers', async (gameId: string) => {
   const data = await clientAPI.get(`/api/users/${gameId}`);
 
@@ -14,8 +19,8 @@ export const addUser = createAsyncThunk('user/addUser', async (user: Partial<Use
   return data;
 });
 
-export const deleteUser = createAsyncThunk('user/deleteUser', async (userId: string) => {
-  const { id } = await clientAPI.delete(`/api/users/${userId}`);
+export const deleteUser = createAsyncThunk('user/deleteUser', async ({ currentUserId, victimId }: IParams) => {
+  const { id } = await clientAPI.delete(`/api/users/`, { currentUserId, victimId });
 
   return id;
 });
