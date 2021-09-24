@@ -7,9 +7,10 @@ import classes from './IssueForm.module.scss';
 interface IssueFormProps {
   gameId: string;
   creatorId: string;
+  handleCloseModal: () => void;
 }
 
-const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId }) => {
+const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId, handleCloseModal }) => {
   const [issueValues, setIssueValues] = useState({ title: '', priority: 'Low' });
   const dispatch = useAppDispatch();
 
@@ -22,12 +23,13 @@ const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId }) => {
     }));
   };
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
 
     const issue = { gameId, creatorId, ...issueValues };
 
     dispatch(addIssue(issue));
+    handleCloseModal();
   };
 
   const { title, priority } = issueValues;
@@ -49,7 +51,7 @@ const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId }) => {
       </label>
       <div className={classes.btnContainer}>
         <Button type="submit" text="Yes" colorButton="dark" />
-        <Button type="button" text="No" colorButton="light" />
+        <Button type="button" text="No" colorButton="light" onClick={handleCloseModal} />
       </div>
     </form>
   );

@@ -1,19 +1,16 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIssues, deleteIssue } from '../../redux/thunks';
-import { selectIssues } from '../../redux/selectors';
-import { IssueCard, IssueForm } from '..';
+import { selectCurrentUser, selectIssues } from '../../redux/selectors';
+import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
-import { User } from '../../interfaces';
 import classes from './IssueList.module.scss';
+import { User } from '../../interfaces';
 
-interface IssueListProps {
-  currentUser: User;
-}
-
-const IssueList: FC<IssueListProps> = ({ currentUser }) => {
+const IssueList: FC = () => {
+  const [isIssueFormOpen, setIsIssueFormOpen] = useState(false);
   const issues = useAppSelector(selectIssues);
-  const { id: userId, role, gameId } = currentUser;
+  const { id: userId, role, gameId } = useAppSelector(selectCurrentUser) as User;
   const isDealer = role === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
@@ -21,9 +18,8 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
     dispatch(getIssues(gameId));
   }, [dispatch, gameId, issues]);
 
-  const handleCreateIssue = () => {
-    //there should be a wrapper for the modal window, this wrapper doing by another person
-    <IssueForm gameId={gameId} creatorId={userId} />;
+  const handleClick = () => {
+    setIsIssueFormOpen(prevState => !prevState);
   };
 
   const handleRemoveIssue = (id: string) => {
@@ -31,25 +27,32 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   };
 
   return (
-    <div className={classes.issueList}>
-      <p className={classes.title}>Issues:</p>
-      {isDealer && (
-        <div className={classes.issueCard}>
-          <p>Create New Issue</p>
-          <button className={classes.btnCreate} onClick={handleCreateIssue}></button>
-        </div>
+    <>
+      {isIssueFormOpen && (
+        <BackDropModal isBackDropOpen={isIssueFormOpen}>
+          <IssueForm gameId={gameId} creatorId={userId} handleCloseModal={handleClick} />
+        </BackDropModal>
       )}
-      {issues.map(({ id, title, priority }) => (
-        <IssueCard
-          key={id}
-          id={id}
-          title={title}
-          priority={priority}
-          isDealer={isDealer}
-          handleRemoveIssue={handleRemoveIssue}
-        />
-      ))}
-    </div>
+      <div className={classes.issueList}>
+        <p className={classes.title}>Issues:</p>
+        {isDealer && (
+          <div className={classes.issueCard}>
+            <p>Create New Issue</p>
+            <button className={classes.btnCreate} onClick={handleClick}></button>
+          </div>
+        )}
+        {issues.map(({ id, title, priority }) => (
+          <IssueCard
+            key={id}
+            id={id}
+            title={title}
+            priority={priority}
+            isDealer={isDealer}
+            handleRemoveIssue={handleRemoveIssue}
+          />
+        ))}
+      </div>
+    </>
   );
 };
 
