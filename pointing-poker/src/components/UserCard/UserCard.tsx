@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import classes from './UserCard.module.scss';
 import { getNameInitials } from '../../utils';
+import { USER_ROLES } from '../../constants';
 
 interface UserCardProps {
   id: string;
@@ -9,8 +10,8 @@ interface UserCardProps {
   lastName?: string;
   jobPosition?: string;
   imgURL?: string;
-  isObserver: boolean;
-  handleKickUser: (id: string) => void;
+  role: string;
+  handleKickUser: (id: string, name: string) => void;
 }
 
 const UserCard: FC<UserCardProps> = ({
@@ -20,17 +21,18 @@ const UserCard: FC<UserCardProps> = ({
   lastName,
   imgURL,
   jobPosition,
-  isObserver,
+  role,
   handleKickUser,
 }) => {
   const nameInitials = getNameInitials(firstName, lastName);
   const isCurrentUser = currentUserId === id;
+  const isDealer = role === USER_ROLES.DEALER;
   const avatarStyle = {
     backgroundImage: `url(${imgURL})`,
   };
 
   const handleClick = () => {
-    handleKickUser(id);
+    handleKickUser(id, firstName);
   };
 
   return (
@@ -45,7 +47,7 @@ const UserCard: FC<UserCardProps> = ({
         </p>
         {jobPosition && <p className={classes.jobPosition}>{jobPosition}</p>}
       </div>
-      {isObserver && <button className={classes.btnKick} onClick={handleClick}></button>}
+      {!isDealer && !isCurrentUser ? <button className={classes.btnKick} onClick={handleClick}></button> : null}
     </div>
   );
 };

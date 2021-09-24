@@ -1,27 +1,52 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
 import { deleteUser } from '../../redux/thunks';
-import { Button } from '..';
-import { User } from '../../interfaces';
+import { BackDropModal, Button } from '..';
 import classes from './Notification.module.scss';
 
-const DealerNotification: FC<{ user: User }> = ({ user }) => {
-  const { id, firstName } = user;
+interface Props {
+  currentUserId: string;
+  victimData: {
+    id: string;
+    name: string;
+  };
+}
+
+const DealerNotification: FC<Props> = ({ currentUserId, victimData }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const { id: victimId, name: victimName } = victimData;
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(deleteUser(id));
+  useEffect(() => {
+    if (victimData.id) {
+      setIsOpen(true);
+    }
+  }, [victimData]);
+
+  const handleClickYes = () => {
+    dispatch(deleteUser({ currentUserId, victimId }));
+    setIsOpen(false);
+  };
+
+  const handleClickNo = () => {
+    setIsOpen(false);
   };
 
   return (
-    <div>
-      <p>Kick player?</p>
-      <p>Are you really want to remove player `${firstName}` from game session?</p>
-      <div className={classes.btnContainer}>
-        <Button type="submit" text="Yes" colorButton="dark" onClick={handleClick} />
-        <Button type="button" text="No" colorButton="light" />
-      </div>
-    </div>
+    <>
+      {isOpen && (
+        <BackDropModal isBackDropOpen={isOpen}>
+          <div>
+            <p>Kick player?</p>
+            <p>Are you really want to remove player {victimName} from game session?</p>
+            <div className={classes.btnContainer}>
+              <Button type="button" text="Yes" colorButton="dark" onClick={handleClickYes} />
+              <Button type="button" text="No" colorButton="light" onClick={handleClickNo} />
+            </div>
+          </div>
+        </BackDropModal>
+      )}
+    </>
   );
 };
 

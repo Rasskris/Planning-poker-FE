@@ -1,7 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
-import { enableVote, startGameRound, updateGameRoundData } from '../redux/slices';
-import { addMessage, addIssue, deleteIssue, editIssue } from '../redux/thunks';
+import { addMessage, addIssue, updateIssue, deleteIssue, deleteUser, updateGameStatus } from '../redux/thunks';
+import { enableVote, startGameRound, updateGameRoundData, deleteCurrentUser, memberJoin } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
 
@@ -19,24 +19,43 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     console.log(`socket connected: ${socket.id}`);
   });
 
-  socket.on('message', ({ message }) => {
+  socket.on('memberJoin', user => {
+    dispatch(memberJoin(user));
+  });
+
+  socket.on('memberLeave', deletedUserId => {
+    console.log('member leave');
+    if (userId === deletedUserId) {
+      dispatch(deleteCurrentUser());
+    } else {
+      dispatch({ type: deleteUser.fulfilled.type, payload: deletedUserId });
+    }
+  });
+
+  socket.on('message', message => {
     dispatch({ type: addMessage.fulfilled.type, payload: message });
   });
 
-  socket.on('issue', ({ issue }) => {
+  socket.on('issueAdd', issue => {
     dispatch({ type: addIssue.fulfilled.type, payload: issue });
   });
 
-  socket.on('issueEdit', ({ issue }) => {
-    dispatch({ type: editIssue.fulfilled.type, payload: issue });
+  socket.on('issueUpdate', issue => {
+    dispatch({ type: updateIssue.fulfilled.type, payload: issue });
   });
 
-  socket.on('issueDelete', ({ issueId }) => {
+  socket.on('issueDelete', issueId => {
     dispatch({ type: deleteIssue.fulfilled.type, payload: issueId });
   });
 
-  socket.on('vote', ({ victim }) => {
-    dispatch(enableVote(victim));
+  socket.on('vote', ({ victim, currentUserId }) => {
+    if (victim.id !== userId) {
+      dispatch(enableVote({ victim, currentUserId }));
+    }
+  });
+
+  socket.on('gameStatus', status => {
+    dispatch({ type: updateGameStatus.fulfilled.type, payload: status });
   });
 
   socket.on('disconnect', reason => {

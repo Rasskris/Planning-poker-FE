@@ -1,19 +1,16 @@
-import { FC, useEffect, useState, useRef, ChangeEvent, KeyboardEvent } from 'react';
+import { FC, useEffect, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMessages, addMessage } from '../../redux/thunks';
-import { selectMessages } from '../../redux/selectors';
-import classes from './Chat.module.scss';
+import { selectCurrentUser, selectMessages } from '../../redux/selectors';
 import { User } from '../../interfaces';
+import classes from './Chat.module.scss';
 
-interface ChatProps {
-  currentUser: User;
-}
-
-const Chat: FC<ChatProps> = ({ currentUser }) => {
+const Chat: FC = () => {
   const [text, setText] = useState('');
   const dispatch = useAppDispatch();
   const messages = useAppSelector(selectMessages);
-  const gameId = currentUser.gameId;
+  const currentUser = useAppSelector(selectCurrentUser) as User;
+  const { gameId, id: currentUserId } = currentUser;
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -22,20 +19,16 @@ const Chat: FC<ChatProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+      messagesEndRef.current.scrollTo({ top: messagesEndRef.current.scrollHeight, behavior: 'smooth' });
     }
   }, [messages]);
 
-  const sendMessage = () => {
-    if (text) {
+  const handleSubmit = (event: FormEvent) => {
+    event.preventDefault();
+
+    if (text.length > 0) {
       dispatch(addMessage({ gameId, sender: currentUser, text }));
       setText('');
-    }
-  };
-
-  const handleKeyPress = ({ key }: KeyboardEvent) => {
-    if (key === 'Enter') {
-      sendMessage();
     }
   };
 
@@ -44,28 +37,21 @@ const Chat: FC<ChatProps> = ({ currentUser }) => {
   };
 
   return (
-    <div className={classes.chat}>
+    <div ref={messagesEndRef} className={classes.chat}>
       <div className={classes.chatMessage}>
         {messages.map(({ id, text, sender }) => {
           return (
             <div key={id} className={classes.message}>
               <p>{text}</p>
-              <span>{currentUser.id === sender.id ? 'You' : sender.firstName}</span>
+              <span>{currentUserId === sender.id ? 'You' : sender.firstName}</span>
             </div>
           );
         })}
-        <div ref={messagesEndRef} />
       </div>
-      <div className={classes.send}>
-        <input
-          placeholder="type your message..."
-          type="text"
-          value={text}
-          onChange={handleChange}
-          onKeyPress={handleKeyPress}
-        />
-        <button onClick={sendMessage}></button>
-      </div>
+      <form onSubmit={handleSubmit} className={classes.send}>
+        <input placeholder="type your message..." type="text" value={text} onChange={handleChange} />
+        <button type="submit"></button>
+      </form>
     </div>
   );
 };

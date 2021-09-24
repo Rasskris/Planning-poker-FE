@@ -1,19 +1,23 @@
-import React from 'react';
-import classes from './ChatButton.module.scss';
+import { FC } from 'react';
 import { IClasses } from '../../interfaces/IClasses';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectChatStatus } from '../../redux/selectors';
+import { changeChatStatus } from '../../redux/slices';
+import classes from './ChatButton.module.scss';
 
-interface IChatButtonProps {
-  isChatOpen: boolean;
-  onOpenChatHandler: (event: React.MouseEvent) => void;
-}
-
-const ChatButton: React.FC<IChatButtonProps> = (props: IChatButtonProps): JSX.Element => {
+const ChatButton: FC = () => {
+  const isChatOpen = useAppSelector(selectChatStatus);
   const incomingClasses: IClasses = { ...classes };
-  const chatButtonIsOpen = !props.isChatOpen ? incomingClasses.logo_open : incomingClasses.logo_close;
+  const chatButtonIsOpen = !isChatOpen ? incomingClasses.logo_open : incomingClasses.logo_close;
   const chatButtonClasses: string = [incomingClasses.logo, chatButtonIsOpen].join(' ');
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(changeChatStatus(!isChatOpen));
+  };
 
   return (
-    <div className={chatButtonClasses} onClick={props.onOpenChatHandler}>
+    <div className={chatButtonClasses} onClick={handleClick}>
       <div className={classes.logo_icon} />
     </div>
   );

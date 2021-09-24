@@ -1,13 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { User } from '../../interfaces';
 import { usersAdapter } from '../adapters';
-import { getUsers, addUser, deleteUser } from '../thunks';
+import { getUsers, addUser, deleteUser, putVoteForKick } from '../thunks';
 
 const initialState = usersAdapter.getInitialState();
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState,
-  reducers: {},
+  reducers: {
+    memberJoin: (state, { payload }: PayloadAction<User>) => {
+      usersAdapter.addOne(state, payload);
+    },
+  },
   extraReducers: builder => {
     builder
       .addCase(getUsers.fulfilled, (state, { payload }) => {
@@ -18,8 +23,14 @@ export const usersSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         usersAdapter.removeOne(state, payload);
+      })
+      .addCase(putVoteForKick.fulfilled, (state, { payload }) => {
+        if (payload.success) {
+          usersAdapter.removeOne(state, payload.id);
+        }
       });
   },
 });
 
+export const { memberJoin } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
