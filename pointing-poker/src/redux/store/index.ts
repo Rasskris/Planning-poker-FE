@@ -7,6 +7,7 @@ import {
   gameSettingsReducer,
   voteReducer,
   gameReducer,
+  chatReducer,
 } from '../slices';
 
 export const store = configureStore({
@@ -18,6 +19,7 @@ export const store = configureStore({
     issues: issueReducer,
     gameSettings: gameSettingsReducer,
     vote: voteReducer,
+    chat: chatReducer,
   },
 });
 
