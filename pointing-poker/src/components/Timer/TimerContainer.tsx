@@ -18,8 +18,13 @@ interface TimerContainerProps {
 
 const TimerContainer = (props: TimerContainerProps) => {
   const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer } = props;
-  const [minutes, setMinutes] = useState<number>(initialMinute);
-  const [seconds, setSeconds] = useState<number>(initialSeconds);
+  const [minutes, setMinutes] = useState<number>(DEFAULT_START_MINUTES);
+  const [seconds, setSeconds] = useState<number>(DEFAULT_START_SECONDS);
+
+  useEffect(() => {
+    setMinutes(initialMinute);
+    setSeconds(initialSeconds);
+  }, [initialMinute, initialSeconds]);
 
   const handleChangeMinutes = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation

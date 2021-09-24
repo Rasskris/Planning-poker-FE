@@ -1,21 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { IGameSettings } from '../../interfaces/IGameSettings';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
+import { addGameSettings, getGameSettings } from '../thunks';
 
-interface GameSettingsState {
-  scramMasterAsPlayerSetting: boolean;
-  changingCardInRoundEndSetting: boolean;
-  isTimerNeededSetting: boolean;
-  changeSelectionAfterFlippingCardsSetting: boolean;
-  automaticFlipCardsSetting: boolean;
-  scoreTypeSetting: ITypesScoreCards;
-  scoreTypeShortSetting: string;
-  timerValuesSetting: {
-    minutes: number;
-    seconds: number;
-  };
-}
-
-const initialGameSettingsState: GameSettingsState = {
+const initialGameSettingsState: IGameSettings = {
   scramMasterAsPlayerSetting: false,
   changingCardInRoundEndSetting: false,
   isTimerNeededSetting: false,
@@ -37,6 +25,16 @@ export const gameSettingsSlice = createSlice({
       const newState = { ...state, ...action.payload };
       return newState;
     },
+  },
+  extraReducers: builder => {
+    builder.addCase(addGameSettings.fulfilled, (state, action) => {
+      const newState = { ...state, ...action.payload };
+      return newState;
+    });
+    builder.addCase(getGameSettings.fulfilled, (state, action) => {
+      const newState = { ...state, ...action.payload };
+      return newState;
+    });
   },
 });
 
