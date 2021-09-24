@@ -2,20 +2,20 @@ import { FC } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { putVoteForKick } from '../../redux/thunks';
 import { BackDropModal, Button } from '..';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import { selectUserById, selectUserOpenedVote, selectVoteVictim } from '../../redux/selectors';
 import classes from './Notification.module.scss';
 import { disableVote } from '../../redux/slices';
 
-interface Props {
+interface IProps {
   isActiveVote: boolean;
   currentUserId: string;
 }
 
-const MemberNotification: FC<Props> = ({ isActiveVote, currentUserId }) => {
+const MemberNotification: FC<IProps> = ({ isActiveVote, currentUserId }) => {
   const userIdOpenedVote = useAppSelector(selectUserOpenedVote) as string;
-  const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as User;
-  const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as User;
+  const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as IUser;
+  const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as IUser;
   const dispatch = useAppDispatch();
 
   const handleClickYes = () => {

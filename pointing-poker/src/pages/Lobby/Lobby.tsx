@@ -19,7 +19,7 @@ import {
   VoteNotification,
 } from '../../components';
 import { USER_ROLES } from '../../constants';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import { getUsers, addVote, updateGameStatus } from '../../redux/thunks';
 import classes from './Lobby.module.scss';
 
@@ -30,7 +30,7 @@ const Lobby: FC = () => {
   const observers = useAppSelector(selectObservers);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
-  const { id: currentUserId, role: currentUserRole, gameId } = useAppSelector(selectCurrentUser) as User;
+  const { id: currentUserId, role: currentUserRole, gameId } = useAppSelector(selectCurrentUser) as IUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 

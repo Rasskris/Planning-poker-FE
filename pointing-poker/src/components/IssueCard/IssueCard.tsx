@@ -2,13 +2,13 @@ import { FC } from 'react';
 import { Issue } from '../../interfaces';
 import classes from './IssueCard.module.scss';
 
-interface IssueCardProps extends Omit<Issue, 'creatorId' | 'gameId'> {
+interface IProps extends Omit<Issue, 'creatorId' | 'gameId'> {
   isCurrentIssue?: boolean;
   isDealer: boolean;
   handleRemoveIssue: (id: string) => void;
 }
 
-const IssueCard: FC<IssueCardProps> = ({ id, isCurrentIssue, isDealer, title, priority, handleRemoveIssue }) => {
+const IssueCard: FC<IProps> = ({ id, isCurrentIssue, isDealer, title, priority, handleRemoveIssue }) => {
   const handleClick = () => {
     handleRemoveIssue(id);
   };

@@ -5,12 +5,12 @@ import { selectCurrentUser, selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import classes from './IssueList.module.scss';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 
 const IssueList: FC = () => {
   const [isIssueFormOpen, setIsIssueFormOpen] = useState(false);
   const issues = useAppSelector(selectIssues);
-  const { id: userId, role, gameId } = useAppSelector(selectCurrentUser) as User;
+  const { id: userId, role, gameId } = useAppSelector(selectCurrentUser) as IUser;
   const isDealer = role === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 

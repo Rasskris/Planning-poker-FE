@@ -1,14 +1,21 @@
 import { FC } from 'react';
+import { useAppSelector } from '../../hooks';
+import { selectStatusGame } from '../../redux/selectors';
 import classes from './GameCard.module.scss';
 
-interface GameCardProps {
+interface IProps {
   scoreType: string;
   scoreValue: number | 'unknown' | 'coffe';
   handleEditScoreValue?: VoidFunction;
 }
 
-const GameCard: FC<GameCardProps> = ({ scoreType, scoreValue, handleEditScoreValue }) => {
+const GameCard: FC<IProps> = ({ scoreType, scoreValue, handleEditScoreValue }) => {
+  const isStartedGame = useAppSelector(selectStatusGame);
   const centerCard = scoreValue === 'coffe' ? <div className={classes.cardImg} /> : scoreType;
+
+  const handleClick = () => {
+
+  };
 
   return (
     <div className={classes.gameCard}>
@@ -22,6 +29,7 @@ const GameCard: FC<GameCardProps> = ({ scoreType, scoreValue, handleEditScoreVal
       <div className={classes.bottom}>
         <span data-testid="bottomCard">{scoreValue}</span>
       </div>
+      {isStartedGame && <div onClick={handleClick}></div>}
     </div>
   );
 };

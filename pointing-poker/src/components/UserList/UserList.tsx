@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { UserCard } from '..';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import classes from './UserList.module.scss';
 
 interface UserListProps {
   title: string;
-  users: User[];
+  users: IUser[];
   currentUserId: string;
   handleKickUser: (id: string, name: string) => void;
 }

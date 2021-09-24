@@ -2,14 +2,14 @@ import { FC, useEffect, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMessages, addMessage } from '../../redux/thunks';
 import { selectCurrentUser, selectMessages } from '../../redux/selectors';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import classes from './Chat.module.scss';
 
 const Chat: FC = () => {
   const [text, setText] = useState('');
   const dispatch = useAppDispatch();
   const messages = useAppSelector(selectMessages);
-  const currentUser = useAppSelector(selectCurrentUser) as User;
+  const currentUser = useAppSelector(selectCurrentUser) as IUser;
   const { gameId, id: currentUserId } = currentUser;
   const messagesEndRef = useRef<HTMLDivElement>(null);
 

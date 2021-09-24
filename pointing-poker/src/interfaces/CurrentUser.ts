@@ -1,6 +1,6 @@
-import { User } from './User';
+import { IUser } from './IUser';
 
-export interface CurrentUser {
+export interface ICurrentUser {
   isLogin: boolean;
-  user: null | User;
+  user: null | IUser;
 }

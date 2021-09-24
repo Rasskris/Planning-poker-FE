@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { User } from '../../interfaces';
+import { IUser } from '../../interfaces';
 import { usersAdapter } from '../adapters';
 import { getUsers, addUser, deleteUser, putVoteForKick } from '../thunks';
 
@@ -9,7 +9,7 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    memberJoin: (state, { payload }: PayloadAction<User>) => {
+    memberJoin: (state, { payload }: PayloadAction<IUser>) => {
       usersAdapter.addOne(state, payload);
     },
   },
