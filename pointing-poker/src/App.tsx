@@ -3,16 +3,17 @@ import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
 import type { Socket } from 'socket.io-client';
 import { initSocket } from './libs';
 import { useAppDispatch, useAppSelector } from './hooks';
-import { selectCurrentUser, selectLoginStatus } from './redux/selectors';
+import { selectCurrentUser, selectLoginStatus, selectStatusGame } from './redux/selectors';
 import { Header, Footer } from './components';
-import { Lobby, Main } from './pages';
+import { Main, Lobby, Game } from './pages';
 import classes from './App.module.scss';
 
 const App: FC = () => {
   const socket = useRef<Socket>();
-  const dispatch = useAppDispatch();
   const isLogin = useAppSelector(selectLoginStatus);
+  const isStartedGame = useAppSelector(selectStatusGame);
   const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
 
   const isSocketDissconnect = () => !socket.current || socket.current.disconnected;
 
@@ -26,7 +27,7 @@ const App: FC = () => {
         socket.current.disconnect();
       }
     };
-  });
+  }, [currentUser, dispatch, socket]);
 
   return (
     <div className={classes.app}>
@@ -35,9 +36,8 @@ const App: FC = () => {
         <Route exact path="/">
           {isLogin ? <Redirect to="/lobby" /> : <Main />}
         </Route>
-        <Route path="/lobby">
-          <Lobby />
-        </Route>
+        <Route path="/lobby">{isLogin ? <Lobby /> : <Redirect to="/" />}</Route>
+        <Route path="/game">{isStartedGame ? <Game /> : <Redirect to="/lobby" />}</Route>
       </Router>
       <Footer />
     </div>
