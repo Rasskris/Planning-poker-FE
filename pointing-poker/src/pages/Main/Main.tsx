@@ -29,6 +29,7 @@ const Main: FC = () => {
   const handleStartGame = () => {
     setRole(USER_ROLES.DEALER);
     setIsLoginFormOpen(true);
+    setGameId('');
   };
 
   const handleConnectGame = (event: FormEvent) => {

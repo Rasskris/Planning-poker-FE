@@ -62,6 +62,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
 
   const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     const user = {
       firstName,
       lastName,
@@ -103,7 +104,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
   };
 
   const handleSwitcher = () => {
-    setIsObserver(!isObserver);
+    setIsObserver(prevState => !prevState);
     setUserRole(isObserver ? USER_ROLES.OBSERVER : role);
   };
 
