@@ -1,8 +1,9 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
-import { enableVote } from '../redux/slices';
+import { enableVote, startGameRound, updateGameRoundData } from '../redux/slices';
 import { addMessage, addIssue, deleteIssue, editIssue } from '../redux/thunks';
 import { URL } from '../constants';
+import { updateSettings } from '../redux/slices/gameSettingsSlice';
 
 export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): Socket => {
   const socket = io(URL, {
@@ -40,6 +41,18 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('disconnect', reason => {
     console.log(`socked disconnected: ${reason}`);
+  });
+
+  socket.on('gameSettings', gameSettings => {
+    dispatch(updateSettings({ ...gameSettings }));
+  });
+
+  socket.on('startGameRound', gameRoundData => {
+    dispatch(startGameRound({ ...gameRoundData }));
+  });
+
+  socket.on('updateGameRoundData', gameRoundData => {
+    dispatch(updateGameRoundData({ ...gameRoundData }));
   });
 
   return socket;

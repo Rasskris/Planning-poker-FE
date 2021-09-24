@@ -5,3 +5,4 @@ export { issueSlice, issueReducer } from './issueSlice';
 export { gameSettingsSlice, gameSettingsReducer } from './gameSettingsSlice';
 export { enableVote, voteReducer } from './voteSlice';
 export { gameSlice, gameReducer } from './gameSlice';
+export { gameRoundSlice, gameRoundReducer, startGameRound, updateGameRoundData } from './gameRoundSlice';
