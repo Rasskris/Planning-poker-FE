@@ -1,35 +1,46 @@
 import { FC } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { deleteUser } from '../../redux/thunks';
-import { Button } from '..';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { putVoteForKick } from '../../redux/thunks';
+import { BackDropModal, Button } from '..';
 import { User } from '../../interfaces';
+import { selectUserById, selectUserOpenedVote, selectVoteVictim } from '../../redux/selectors';
 import classes from './Notification.module.scss';
+import { disableVote } from '../../redux/slices';
 
 interface Props {
-  user: User;
-  victim: User;
+  isActiveVote: boolean;
+  currentUserId: string;
 }
-const KickNotification: FC<Props> = ({ user, victim }) => {
-  const { firstName } = user;
-  const { id, firstName: victimName } = victim;
+
+const MemberNotification: FC<Props> = ({ isActiveVote, currentUserId }) => {
+  const userIdOpenedVote = useAppSelector(selectUserOpenedVote) as string;
+  const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as User;
+  const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as User;
   const dispatch = useAppDispatch();
 
-  const handleClick = () => {
-    dispatch(deleteUser(id));
+  const handleClickYes = () => {
+    dispatch(putVoteForKick({ gameId, currentUserId }));
+    dispatch(disableVote());
+  };
+
+  const handleClickNo = () => {
+    dispatch(disableVote());
   };
 
   return (
-    <div>
-      <p>Kick player?</p>
-      <p>
-        ${firstName} want to kick member `${victimName}`. Do you agree with it?{' '}
-      </p>
-      <div className={classes.btnContainer}>
-        <Button type="submit" text="Yes" colorButton="dark" onClick={handleClick} />
-        <Button type="button" text="No" colorButton="light" />
+    <BackDropModal isBackDropOpen={isActiveVote}>
+      <div>
+        <p>Kick player?</p>
+        <p>
+          {userNameOpenedVote} want to kick member {victimName}. Do you agree with it?{' '}
+        </p>
+        <div className={classes.btnContainer}>
+          <Button type="submit" text="Yes" colorButton="dark" onClick={handleClickYes} />
+          <Button type="button" text="No" colorButton="light" onClick={handleClickNo} />
+        </div>
       </div>
-    </div>
+    </BackDropModal>
   );
 };
 
-export { KickNotification };
+export { MemberNotification };
