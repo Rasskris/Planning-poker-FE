@@ -1,11 +1,10 @@
-import React, { ChangeEvent, FC } from 'react';
+import { ChangeEvent, FC } from 'react';
 import { Button, GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateSettings } from '../../redux/slices/gameSettingsSlice';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
-import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
+import { SCORE_VALUES_PT, SCORE_VALUES_FN, SCORE_TYPE_SHORT_FN, SCORE_TYPE_SHORT_PT } from '../../constants';
 import classes from './GameSettings.module.scss';
-const collectionGameCards: ICollectionGameCards[] = require('../../data/game-cards-data.json');
 
 interface GameSettingsProps {
   handlerSaveSettingsButton?: () => void; //DELETE ?
@@ -25,7 +24,18 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
-    dispatch(updateSettings({ scoreTypeSetting: value }));
+    let scoreValues;
+    let scoreTypeShortSetting;
+
+    if (value === ITypesScoreCards.fibonacciNumbers) {
+      scoreValues = SCORE_VALUES_FN;
+      scoreTypeShortSetting = SCORE_TYPE_SHORT_FN;
+    } else {
+      scoreValues = SCORE_VALUES_PT;
+      scoreTypeShortSetting = SCORE_TYPE_SHORT_PT;
+    }
+
+    dispatch(updateSettings({ scoreTypeSetting: value, scoreValues, scoreTypeShortSetting }));
   };
   const handlerChangeTimer = (time: { minutes: number; seconds: number }) => {
     dispatch(updateSettings({ timerValuesSetting: time }));
@@ -116,15 +126,11 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
           <select value={scoreTypeSetting} onChange={handleChangeScoreType}>
             <option value={ITypesScoreCards.fibonacciNumbers}>Fibonacci numbers</option>
             <option value={ITypesScoreCards.powersOfTwo}>Powers of two</option>
-            <option value={ITypesScoreCards.newScoreType}>Create new score type</option>
           </select>
         }
       />
 
-      <GameSettingRow
-        settingName="Card values"
-        component={<GameCardsList scoreType={scoreTypeSetting} collectionGameCards={collectionGameCards} />}
-      />
+      <GameSettingRow settingName="Card values" component={<GameCardsList />} />
     </section>
   );
 };
