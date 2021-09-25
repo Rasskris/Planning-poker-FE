@@ -11,13 +11,13 @@ export const issueSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getIssues.fulfilled, (state, { payload }) => {
-        issuesAdapter.addMany(state, payload.issues);
+        issuesAdapter.addMany(state, payload);
       })
       .addCase(addIssue.fulfilled, (state, { payload }) => {
         issuesAdapter.addOne(state, payload);
       })
       .addCase(updateIssue.fulfilled, (state, { payload }) => {
-        issuesAdapter.updateOne(state, { id: payload.id, changes: payload });
+        issuesAdapter.setAll(state, payload);
       })
       .addCase(deleteIssue.fulfilled, (state, { payload }) => {
         issuesAdapter.removeOne(state, payload);
