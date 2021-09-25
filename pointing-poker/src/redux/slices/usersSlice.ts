@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../interfaces';
 import { usersAdapter } from '../adapters';
-import { getUsers, addUser, deleteUser, putVoteForKick } from '../thunks';
+import { getUsers, addUser, deleteUser, putVoteForKick, updateUser } from '../thunks';
 
 const initialState = usersAdapter.getInitialState();
 
@@ -16,10 +16,13 @@ export const usersSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(getUsers.fulfilled, (state, { payload }) => {
-        usersAdapter.addMany(state, payload.users);
+        usersAdapter.addMany(state, payload);
       })
       .addCase(addUser.fulfilled, (state, { payload }) => {
         usersAdapter.addOne(state, payload);
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        usersAdapter.updateOne(state, { id: payload.id, changes: payload });
       })
       .addCase(deleteUser.fulfilled, (state, { payload }) => {
         usersAdapter.removeOne(state, payload);
