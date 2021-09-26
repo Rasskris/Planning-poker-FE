@@ -4,13 +4,14 @@ import { Issue } from '../../interfaces';
 import { selectGameStatus } from '../../redux/selectors';
 import classes from './IssueCard.module.scss';
 
-interface IProps extends Issue {
+interface IssueProps extends Issue {
   isDealer: boolean;
+  isCurrent: boolean;
   handleRemoveIssue: (id: string) => void;
   handleSelectCurrentIssue: (issue: Partial<Issue>) => void;
 }
 
-const IssueCard: FC<IProps> = ({
+const IssueCard: FC<IssueProps> = ({
   id,
   isCurrent,
   isDealer,
