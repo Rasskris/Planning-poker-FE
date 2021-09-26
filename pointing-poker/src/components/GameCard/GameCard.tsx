@@ -33,7 +33,7 @@ const GameCard: FC<IProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCu
       </div>
       {isGameStarted && (
         <div className={classes.cover} onClick={handleClick}>
-          <span className={classes.selectedCard}></span>
+          <span className={classes.selectedCard} />
         </div>
       )}
     </div>
