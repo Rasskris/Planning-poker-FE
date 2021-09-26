@@ -59,7 +59,6 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
   return (
     <section className={classes.game_settings}>
       <h2 className={classes.game_settings_title}>Game Settings</h2>
-      <Button type="button" text="Save Settings" colorButton="dark" onClick={handlerSaveSettingsButton} />
       <GameSettingRow>
         <Switcher
           switchState={scramMasterAsPlayerSetting}
