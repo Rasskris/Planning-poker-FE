@@ -16,7 +16,6 @@ export const checkExistGame = createAsyncThunk('game/getGame', async (gameId: st
 export const updateGameStatus = createAsyncThunk(
   'game/updateGameStatus',
   async ({ gameId, currentUserId, isStarted }: IParams) => {
-    console.log('request');
     const { status } = await clientAPI.put(`/api/games/${gameId}`, { currentUserId, isStarted });
 
     return status;

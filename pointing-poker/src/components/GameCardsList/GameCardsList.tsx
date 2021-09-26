@@ -24,7 +24,7 @@ const GameCardsList: FC = () => {
 
   return (
     <div className={classes.game_cards_list}>
-      {scoreValues.map((value, index) => (
+      {scoreValues.map(value => (
         <GameCard
           key={value}
           isCurrent={currentGameCard === value}
