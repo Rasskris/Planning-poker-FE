@@ -20,7 +20,7 @@ $whiteColor: #ffffff;
   }
 }
 .chat {
-  width: 350px;
+  min-width: 300px;
   height: 500px;
   background-color: $greyColor;
   padding: 1rem;
