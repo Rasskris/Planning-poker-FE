@@ -1,23 +1,38 @@
-import React, { FC } from 'react';
+import { FC, useState } from 'react';
 import { GameCard } from '..';
-import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
-import { ICollectionGameCards } from '../../interfaces/ICollectionGameCards';
-import styles from './GameCardList.module.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectCurrentUser, selectScoreTypeShort, selectScoreValues } from '../../redux/selectors';
+import { updateUser } from '../../redux/thunks';
+import classes from './GameCardList.module.scss';
 
-interface GameCardsListProps {
-  scoreType: ITypesScoreCards;
-  collectionGameCards: ICollectionGameCards[];
-}
+const GameCardsList: FC = () => {
+  const [currentGameCard, setCurrentGameCard] = useState('');
+  const scoreValues = useAppSelector(selectScoreValues);
+  const scoreType = useAppSelector(selectScoreTypeShort);
+  const currentUser = useAppSelector(selectCurrentUser);
+  const dispatch = useAppDispatch();
 
-const GameCardsList: FC<GameCardsListProps> = ({ scoreType, collectionGameCards }) => {
-  const selectedCardsCollection = collectionGameCards.find(collection => collection.scoreType === scoreType);
-  if (!selectedCardsCollection) return null;
+  const handleSelectCurrentCard = (scoreValue: string, scoreType: string) => {
+    const selectedCard = {
+      scoreType,
+      scoreValue,
+    };
+
+    setCurrentGameCard(scoreValue);
+    dispatch(updateUser({ ...currentUser, selectedCard }));
+  };
 
   return (
-    <div className={styles.game_cards_list}>
-      {selectedCardsCollection.cards.map(card => {
-        return <GameCard scoreType={card.scoreTypeShort} scoreValue={card.scoreValue} key={card.id} />;
-      })}
+    <div className={classes.game_cards_list}>
+      {scoreValues.map(value => (
+        <GameCard
+          key={value}
+          isCurrent={currentGameCard === value}
+          scoreType={scoreType}
+          scoreValue={value}
+          handleSelectCurrentCard={handleSelectCurrentCard}
+        />
+      ))}
     </div>
   );
 };

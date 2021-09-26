@@ -2,11 +2,11 @@ import { FC } from 'react';
 import { Button } from '..';
 import classes from './Notification.module.scss';
 
-interface ConnectNotificationProps {
+interface INotificationProps {
   onModalCloseHandler: () => void;
 }
 
-const ConnectNotification: FC<ConnectNotificationProps> = ({ onModalCloseHandler }) => {
+const ConnectNotification: FC<INotificationProps> = ({ onModalCloseHandler }) => {
   const handleClick = () => {
     onModalCloseHandler();
   };

@@ -2,11 +2,13 @@ import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   selectChatStatus,
-  selectCurrentUser,
   selectDealer,
   selectObservers,
   selectPlayers,
+  selectUserById,
+  selectUserOpenedVote,
   selectVoteStatus,
+  selectVoteVictim,
 } from '../../redux/selectors';
 import {
   IssueList,
@@ -19,18 +21,25 @@ import {
   VoteNotification,
 } from '../../components';
 import { USER_ROLES } from '../../constants';
-import { User } from '../../interfaces';
 import { getUsers, addVote, updateGameStatus } from '../../redux/thunks';
 import classes from './Lobby.module.scss';
+import { IUser } from '../../interfaces';
 
-const Lobby: FC = () => {
+interface ILobbyProps {
+  currentUser: IUser;
+}
+
+const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const [victimData, setVictimData] = useState({ id: '', name: '' });
-  const isActiveVote = useAppSelector(selectVoteStatus);
+  const victim = useAppSelector(selectVoteVictim);
+  const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
+  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const isVoteActive = useAppSelector(selectVoteStatus);
   const isChatOpen = useAppSelector(selectChatStatus);
   const observers = useAppSelector(selectObservers);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
-  const { id: currentUserId, role: currentUserRole, gameId } = useAppSelector(selectCurrentUser) as User;
+  const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
@@ -70,7 +79,7 @@ const Lobby: FC = () => {
           <UserList users={observers} title="Observers" currentUserId={currentUserId} handleKickUser={handleKickUser} />
         </div>
         <div className={classes.wrapper}>
-          <IssueList />
+          <IssueList currentUser={currentUser} />
         </div>
         {isDealer && (
           <div className={classes.wrapper}>
@@ -80,11 +89,18 @@ const Lobby: FC = () => {
       </div>
       {isChatOpen && (
         <div className={classes.chat}>
-          <Chat />
+          <Chat currentUser={currentUser} />
         </div>
       )}
       <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isActiveVote && <MemberNotification isActiveVote={isActiveVote} currentUserId={currentUserId} />}
+      {isVoteActive && victim && userNameOpenedVote && (
+        <MemberNotification
+          isVoteActive={isVoteActive}
+          currentUserId={currentUserId}
+          victim={victim}
+          userNameOpenedVote={userNameOpenedVote.firstName}
+        />
+      )}
       <VoteNotification />
     </section>
   );

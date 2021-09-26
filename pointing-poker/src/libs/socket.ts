@@ -1,6 +1,14 @@
 import { Dispatch } from '@reduxjs/toolkit';
 import { io, Socket } from 'socket.io-client';
-import { addMessage, addIssue, updateIssue, deleteIssue, deleteUser, updateGameStatus } from '../redux/thunks';
+import {
+  addMessage,
+  addIssue,
+  updateIssue,
+  deleteIssue,
+  deleteUser,
+  updateGameStatus,
+  updateUser,
+} from '../redux/thunks';
 import { enableVote, startGameRound, updateGameRoundData, deleteCurrentUser, memberJoin } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
@@ -32,6 +40,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     }
   });
 
+  socket.on('userUpdate', user => {
+    dispatch({ type: updateUser.fulfilled.type, payload: user });
+  });
+
   socket.on('message', message => {
     dispatch({ type: addMessage.fulfilled.type, payload: message });
   });
@@ -40,8 +52,8 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch({ type: addIssue.fulfilled.type, payload: issue });
   });
 
-  socket.on('issueUpdate', issue => {
-    dispatch({ type: updateIssue.fulfilled.type, payload: issue });
+  socket.on('issueUpdate', issues => {
+    dispatch({ type: updateIssue.fulfilled.type, payload: issues });
   });
 
   socket.on('issueDelete', issueId => {

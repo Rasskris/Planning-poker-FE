@@ -1,17 +1,20 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIssues, deleteIssue } from '../../redux/thunks';
-import { selectCurrentUser, selectIssues } from '../../redux/selectors';
+import { getIssues, deleteIssue, updateIssue } from '../../redux/thunks';
+import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
+import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
-import { User } from '../../interfaces';
 
-const IssueList: FC = () => {
+interface IssueListProps {
+  currentUser: IUser;
+}
+const IssueList: FC<IssueListProps> = ({ currentUser }) => {
+  const { id: userId, role, gameId } = currentUser;
+  const isDealer = role === USER_ROLES.DEALER;
   const [isIssueFormOpen, setIsIssueFormOpen] = useState(false);
   const issues = useAppSelector(selectIssues);
-  const { id: userId, role, gameId } = useAppSelector(selectCurrentUser) as User;
-  const isDealer = role === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,6 +27,10 @@ const IssueList: FC = () => {
 
   const handleRemoveIssue = (id: string) => {
     dispatch(deleteIssue(id));
+  };
+
+  const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
+    dispatch(updateIssue(issue));
   };
 
   return (
@@ -41,13 +48,17 @@ const IssueList: FC = () => {
             <button className={classes.btnCreate} onClick={handleClick}></button>
           </div>
         )}
-        {issues.map(({ id, title, priority }) => (
+        {issues.map(({ id, title, priority, gameId, isCurrent, creatorId }) => (
           <IssueCard
             key={id}
             id={id}
             title={title}
             priority={priority}
+            gameId={gameId}
+            creatorId={creatorId}
             isDealer={isDealer}
+            isCurrent={isCurrent}
+            handleSelectCurrentIssue={handleSelectCurrentIssue}
             handleRemoveIssue={handleRemoveIssue}
           />
         ))}

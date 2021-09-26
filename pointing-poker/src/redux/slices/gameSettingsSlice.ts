@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { IGameSettings } from '../../interfaces/IGameSettings';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 import { addGameSettings, getGameSettings } from '../thunks';
+import { SCORE_VALUES_FN, SCORE_TYPE_SHORT_FN } from '../../constants';
 
 const initialGameSettingsState: IGameSettings = {
   scramMasterAsPlayerSetting: false,
@@ -10,11 +11,12 @@ const initialGameSettingsState: IGameSettings = {
   changeSelectionAfterFlippingCardsSetting: false,
   automaticFlipCardsSetting: false,
   scoreTypeSetting: ITypesScoreCards.fibonacciNumbers,
-  scoreTypeShortSetting: '',
+  scoreTypeShortSetting: SCORE_TYPE_SHORT_FN,
   timerValuesSetting: {
     minutes: 0,
     seconds: 0,
   },
+  scoreValues: SCORE_VALUES_FN,
 };
 
 export const gameSettingsSlice = createSlice({

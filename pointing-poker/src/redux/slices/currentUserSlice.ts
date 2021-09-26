@@ -1,8 +1,8 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { CurrentUser } from '../../interfaces';
+import { ICurrentUser } from '../../interfaces';
 import { addUser } from '../thunks';
 
-const initialState: CurrentUser = {
+const initialState: ICurrentUser = {
   isLogin: false,
   user: null,
 };

@@ -1,6 +1,7 @@
 @import '../../layout/styles-config';
 
 .gameCard {
+  position: relative;
   width: 100px;
   height: 160px;
   @include flex($direction: column);
@@ -8,6 +9,9 @@
   border-radius: $card-radius;
   span {
     font-size: 14px;
+  }
+  &.active {
+    background-color: #60dabf;
   }
 }
 .top {
@@ -36,5 +40,18 @@
   @include flex($justify: flex-end);
   span {
     transform: rotate(180dg);
+  }
+}
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 4;
+  &:hover {
+    cursor: pointer;
+    background-color: #60dabf;
+    opacity: 0.5;
   }
 }
