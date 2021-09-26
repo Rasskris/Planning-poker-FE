@@ -9,7 +9,15 @@ import {
   updateGameStatus,
   updateUser,
 } from '../redux/thunks';
-import { enableVote, startGameRound, updateGameRoundData, deleteCurrentUser, memberJoin } from '../redux/slices';
+import {
+  enableVote,
+  startGameRound,
+  updateGameRoundData,
+  deleteCurrentUser,
+  memberJoin,
+  setRoundStatisticFromServer,
+  resetGameRoundData,
+} from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
 
@@ -84,6 +92,14 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('updateGameRoundData', gameRoundData => {
     dispatch(updateGameRoundData({ ...gameRoundData }));
+  });
+
+  socket.on('resetGameRoundData', () => {
+    dispatch(resetGameRoundData());
+  });
+
+  socket.on('getRoundStatistic', roundStatistic => {
+    dispatch(setRoundStatisticFromServer(roundStatistic));
   });
 
   return socket;
