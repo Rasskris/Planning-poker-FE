@@ -60,77 +60,63 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
     <section className={classes.game_settings}>
       <h2 className={classes.game_settings_title}>Game Settings</h2>
       <Button type="button" text="Save Settings" colorButton="dark" onClick={handlerSaveSettingsButton} />
-      <GameSettingRow
-        component={
-          <Switcher
-            switchState={scramMasterAsPlayerSetting}
-            onChange={handlerScramMasterAsPlayerSetting}
-            labelText="Scram master as player"
-          />
-        }
-      />
-      <GameSettingRow
-        component={
-          <Switcher
-            switchState={changingCardInRoundEndSetting}
-            onChange={handlerChangingCardInRoundEndSetting}
-            labelText="Changing card in round end"
-          />
-        }
-      />
-      <GameSettingRow
-        component={
-          <Switcher
-            switchState={isTimerNeededSetting}
-            onChange={handlerIsTimerNeededSetting}
-            labelText="Is timer needed"
-          />
-        }
-      />
-
-      {isTimerNeededSetting ? (
-        <GameSettingRow
-          settingName="Round Time"
-          component={
-            <TimerContainer
-              initialMinute={timerValuesSetting.minutes}
-              initialSeconds={timerValuesSetting.seconds}
-              areSettingsEdited
-              onChangeTimer={handlerChangeTimer}
-            />
-          }
+      <GameSettingRow>
+        <Switcher
+          switchState={scramMasterAsPlayerSetting}
+          onChange={handlerScramMasterAsPlayerSetting}
+          labelText="Scram master as player"
         />
-      ) : null}
+      </GameSettingRow>
+      <GameSettingRow>
+        <Switcher
+          switchState={changingCardInRoundEndSetting}
+          onChange={handlerChangingCardInRoundEndSetting}
+          labelText="Changing card in round end"
+        />
+      </GameSettingRow>
+      <GameSettingRow>
+        <Switcher
+          switchState={isTimerNeededSetting}
+          onChange={handlerIsTimerNeededSetting}
+          labelText="Is timer needed"
+        />
+      </GameSettingRow>
 
-      <GameSettingRow
-        component={
-          <Switcher
-            switchState={changeSelectionAfterFlippingCardsSetting}
-            onChange={handlerChangeSelectionAfterFlippingCardsSetting}
-            labelText="Сhange selection after flipping cards"
+      {isTimerNeededSetting && (
+        <GameSettingRow settingName="Round Time">
+          <TimerContainer
+            initialMinute={timerValuesSetting.minutes}
+            initialSeconds={timerValuesSetting.seconds}
+            areSettingsEdited
+            onChangeTimer={handlerChangeTimer}
           />
-        }
-      />
-      <GameSettingRow
-        component={
-          <Switcher
-            switchState={automaticFlipCardsSetting}
-            onChange={handlerAutomaticFlipCardsSetting}
-            labelText="Automatic flip of cards if everyone voted"
-          />
-        }
-      />
-      <GameSettingRow
-        settingName="Score type"
-        component={
-          <select value={scoreTypeSetting} onChange={handleChangeScoreType}>
-            <option value={ITypesScoreCards.fibonacciNumbers}>Fibonacci numbers</option>
-            <option value={ITypesScoreCards.powersOfTwo}>Powers of two</option>
-          </select>
-        }
-      />
+        </GameSettingRow>
+      )}
 
-      <GameSettingRow settingName="Card values" component={<GameCardsList />} />
+      <GameSettingRow>
+        <Switcher
+          switchState={changeSelectionAfterFlippingCardsSetting}
+          onChange={handlerChangeSelectionAfterFlippingCardsSetting}
+          labelText="Сhange selection after flipping cards"
+        />
+      </GameSettingRow>
+      <GameSettingRow>
+        <Switcher
+          switchState={automaticFlipCardsSetting}
+          onChange={handlerAutomaticFlipCardsSetting}
+          labelText="Automatic flip of cards if everyone voted"
+        />
+      </GameSettingRow>
+      <GameSettingRow settingName="Score type">
+        <select value={scoreTypeSetting} onChange={handleChangeScoreType}>
+          <option value={ITypesScoreCards.fibonacciNumbers}>Fibonacci numbers</option>
+          <option value={ITypesScoreCards.powersOfTwo}>Powers of two</option>
+        </select>
+      </GameSettingRow>
+
+      <GameSettingRow settingName="Card values">
+        <GameCardsList />
+      </GameSettingRow>
     </section>
   );
 };
