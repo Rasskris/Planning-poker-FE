@@ -1,17 +1,20 @@
 import { FC, useEffect, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMessages, addMessage } from '../../redux/thunks';
-import { selectCurrentUser, selectMessages } from '../../redux/selectors';
-import { IUser } from '../../interfaces';
+import { selectMessages } from '../../redux/selectors';
 import classes from './Chat.module.scss';
+import { IUser } from '../../interfaces';
 
-const Chat: FC = () => {
+interface IChatProps {
+  currentUser: IUser;
+}
+
+const Chat: FC<IChatProps> = ({ currentUser }) => {
   const [text, setText] = useState('');
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const { gameId, id: currentUserId } = currentUser;
   const dispatch = useAppDispatch();
   const messages = useAppSelector(selectMessages);
-  const currentUser = useAppSelector(selectCurrentUser) as IUser;
-  const { gameId, id: currentUserId } = currentUser;
-  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     dispatch(getMessages(gameId));

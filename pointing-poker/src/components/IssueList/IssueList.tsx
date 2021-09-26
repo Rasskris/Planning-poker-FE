@@ -1,17 +1,20 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIssues, deleteIssue, updateIssue } from '../../redux/thunks';
-import { selectCurrentUser, selectIssues } from '../../redux/selectors';
+import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
 
-const IssueList: FC = () => {
+interface IssueListProps {
+  currentUser: IUser;
+}
+const IssueList: FC<IssueListProps> = ({ currentUser }) => {
+  const { id: userId, role, gameId } = currentUser;
+  const isDealer = role === USER_ROLES.DEALER;
   const [isIssueFormOpen, setIsIssueFormOpen] = useState(false);
   const issues = useAppSelector(selectIssues);
-  const { id: userId, role, gameId } = useAppSelector(selectCurrentUser) as IUser;
-  const isDealer = role === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
   useEffect(() => {

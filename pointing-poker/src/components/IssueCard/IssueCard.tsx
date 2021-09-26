@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks';
 import { Issue } from '../../interfaces';
-import { selectStatusGame } from '../../redux/selectors';
+import { selectGameStatus } from '../../redux/selectors';
 import classes from './IssueCard.module.scss';
 
 interface IProps extends Issue {
@@ -22,7 +22,7 @@ const IssueCard: FC<IProps> = ({
   handleSelectCurrentIssue,
 }) => {
   const issueCardClasses = isCurrent ? [classes.issueCard, classes.active].join(' ') : classes.issueCard;
-  const isStartedGame = useAppSelector(selectStatusGame);
+  const isGameStarted = useAppSelector(selectGameStatus);
 
   const handleClickRemove = () => {
     handleRemoveIssue(id);
@@ -40,7 +40,7 @@ const IssueCard: FC<IProps> = ({
         <p className={classes.issuePriority}>{priority} priority</p>
       </div>
       {isDealer && <button className={classes.btnRemove} onClick={handleClickRemove} data-testid="btnRemove"></button>}
-      {isStartedGame && isDealer ? <div className={classes.cover} onClick={handleClickSelect}></div> : null}
+      {isGameStarted && isDealer ? <div className={classes.cover} onClick={handleClickSelect}></div> : null}
     </div>
   );
 };

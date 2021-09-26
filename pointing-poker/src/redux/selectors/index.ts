@@ -17,7 +17,7 @@ export const selectLoginStatus = (state: RootState) => state.currentUser.isLogin
 
 export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 
-export const selectStatusGame = (state: RootState) => state.game.isStarded;
+export const selectGameStatus = (state: RootState) => state.game.isStarded;
 
 export const selectChatStatus = (state: RootState) => state.chat.isOpen;
 
