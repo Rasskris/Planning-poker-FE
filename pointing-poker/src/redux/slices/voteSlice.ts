@@ -7,7 +7,7 @@ interface IVote {
   notAvailible: boolean;
   isActive: boolean;
   victim: null | IUser;
-  userOpenedVote: null | string;
+  userOpenedVote: string;
 }
 
 const initialState: IVote = {
@@ -15,7 +15,7 @@ const initialState: IVote = {
   notAvailible: false,
   isActive: false,
   victim: null,
-  userOpenedVote: null,
+  userOpenedVote: '',
 };
 
 export const voteSlice = createSlice({
