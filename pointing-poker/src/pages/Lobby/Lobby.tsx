@@ -21,7 +21,7 @@ import {
   VoteNotification,
 } from '../../components';
 import { USER_ROLES } from '../../constants';
-import { getUsers, addVote, updateGameStatus } from '../../redux/thunks';
+import { getUsers, addVote, updateGameStatus, addGameSettings } from '../../redux/thunks';
 import classes from './Lobby.module.scss';
 import { IUser } from '../../interfaces';
 
@@ -41,6 +41,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const players = useAppSelector(selectPlayers);
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
+  const settings = useAppSelector(state => state.gameSettings);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -57,6 +58,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
 
   const handleStartGame = () => {
     dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
+    dispatch(addGameSettings({ userId: currentUserId, settings, gameId: gameId }));
   };
 
   return (
