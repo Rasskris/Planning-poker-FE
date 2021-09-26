@@ -7,12 +7,12 @@ import { selectUserById, selectUserOpenedVote, selectVoteVictim } from '../../re
 import classes from './Notification.module.scss';
 import { disableVote } from '../../redux/slices';
 
-interface IProps {
+interface INotificationProps {
   isActiveVote: boolean;
   currentUserId: string;
 }
 
-const MemberNotification: FC<IProps> = ({ isActiveVote, currentUserId }) => {
+const MemberNotification: FC<INotificationProps> = ({ isActiveVote, currentUserId }) => {
   const userIdOpenedVote = useAppSelector(selectUserOpenedVote) as string;
   const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as IUser;
   const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as IUser;
