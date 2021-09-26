@@ -5,7 +5,6 @@ import { clientAPI } from '../../libs';
 interface IAddGameRoundData {
   gameId: string;
   userId: string;
-  gameRoundData: IGameRoundData;
   currentIssue: string;
   playerCards: string[];
 }
@@ -17,16 +16,28 @@ interface IUpdateUserGameCard {
   userId: string;
 }
 
-//добавляет данные на сервер после обработки сервер присылается ответ с данными раунда и он стартует
+interface IUpdateGameRoundStatistics {
+  gameId: string;
+  gameRoundData: IGameRoundData;
+  userId: string;
+}
+
+interface IGetRoundStatistic {
+  gameId: string;
+  userId: string;
+  currentIssue: string;
+}
+
+// add data to the server. After processing, the server sends a response with the round data and starts the round
 export const addGameRoundData = createAsyncThunk(
   'gameRound/addGameRoundData',
-  async ({ gameRoundData, gameId, currentIssue, playerCards, userId }: IAddGameRoundData) => {
-    const data = await clientAPI.post(`/api/gameround/${gameId}`, { gameRoundData, currentIssue, playerCards, userId });
+  async ({ gameId, currentIssue, playerCards, userId }: IAddGameRoundData) => {
+    const data = await clientAPI.post(`/api/gameround/${gameId}`, { currentIssue, playerCards, userId });
+    console.log('playerCards', playerCards);
     return data;
   },
 );
 
-//обновлет данные раунда на сервере добавляя к ним значение карты игрока, и возвращается обновленые данные всем остальным
 export const updateUserGameCard = createAsyncThunk(
   'gameRound/updateUserGameCard',
   async ({ gameRoundData, gameId, userId, valueSelectedGameCard }: IUpdateUserGameCard) => {
@@ -39,9 +50,26 @@ export const updateUserGameCard = createAsyncThunk(
   },
 );
 
-// получить данные всех комнат текущей игры
+// get data of all rooms of the current game
 export const getDataAllRoomsOfGame = createAsyncThunk('gameRound/getDataAllRoomsOfGame', async (gameId: string) => {
   const data = await clientAPI.get(`/api/gameround/${gameId}`);
   console.log(data);
   return data;
 });
+
+//writing the results of round statistics to the server
+export const updateGameRoundStatistics = createAsyncThunk(
+  'gameRound/updateGameRoundStatistics',
+  async ({ gameId, gameRoundData, userId }: IUpdateGameRoundStatistics) => {
+    const data = await clientAPI.put(`/api/gameround/roundStatistics/${gameId}`, { gameRoundData, userId });
+    return data;
+  },
+);
+
+export const getRoundStatistic = createAsyncThunk(
+  'gameRound/getRoundStatistic',
+  async ({ gameId, currentIssue, userId }: IGetRoundStatistic) => {
+    const data = await clientAPI.get(`/api/gameround/roundStatistics/${gameId}`, { currentIssue, userId });
+    return data;
+  },
+);
