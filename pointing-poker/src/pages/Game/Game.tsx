@@ -1,6 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectChatStatus, selectDealer, selectPlayers, selectVoteStatus } from '../../redux/selectors';
+import {
+  selectChatStatus,
+  selectDealer,
+  selectPlayers,
+  selectUserById,
+  selectUserOpenedVote,
+  selectVoteStatus,
+  selectVoteVictim,
+} from '../../redux/selectors';
 import { addVote, getUsers } from '../../redux/thunks';
 import { USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
@@ -22,6 +30,9 @@ interface IGameProps {
 const Game: FC<IGameProps> = ({ currentUser }) => {
   const [victimData, setVictimData] = useState({ id: '', name: '' });
   const isVoteActive = useAppSelector(selectVoteStatus);
+  const victim = useAppSelector(selectVoteVictim);
+  const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
+  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
   const isChatOpen = useAppSelector(selectChatStatus);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
@@ -75,7 +86,14 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         </div>
       )}
       <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isVoteActive && <MemberNotification isActiveVote={isVoteActive} currentUserId={currentUserId} />}
+      {isVoteActive && victim && userNameOpenedVote && (
+        <MemberNotification
+          isVoteActive={isVoteActive}
+          currentUserId={currentUserId}
+          victim={victim}
+          userNameOpenedVote={userNameOpenedVote.firstName}
+        />
+      )}
       <VoteNotification />
     </section>
   );

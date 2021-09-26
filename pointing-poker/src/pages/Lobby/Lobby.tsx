@@ -5,7 +5,10 @@ import {
   selectDealer,
   selectObservers,
   selectPlayers,
+  selectUserById,
+  selectUserOpenedVote,
   selectVoteStatus,
+  selectVoteVictim,
 } from '../../redux/selectors';
 import {
   IssueList,
@@ -28,7 +31,10 @@ interface ILobbyProps {
 
 const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const [victimData, setVictimData] = useState({ id: '', name: '' });
-  const isActiveVote = useAppSelector(selectVoteStatus);
+  const victim = useAppSelector(selectVoteVictim);
+  const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
+  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const isVoteActive = useAppSelector(selectVoteStatus);
   const isChatOpen = useAppSelector(selectChatStatus);
   const observers = useAppSelector(selectObservers);
   const dealer = useAppSelector(selectDealer);
@@ -87,7 +93,14 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
         </div>
       )}
       <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isActiveVote && <MemberNotification isActiveVote={isActiveVote} currentUserId={currentUserId} />}
+      {isVoteActive && victim && userNameOpenedVote && (
+        <MemberNotification
+          isVoteActive={isVoteActive}
+          currentUserId={currentUserId}
+          victim={victim}
+          userNameOpenedVote={userNameOpenedVote.firstName}
+        />
+      )}
       <VoteNotification />
     </section>
   );

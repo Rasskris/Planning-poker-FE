@@ -1,21 +1,20 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { putVoteForKick } from '../../redux/thunks';
 import { BackDropModal, Button } from '..';
 import { IUser } from '../../interfaces';
-import { selectUserById, selectUserOpenedVote, selectVoteVictim } from '../../redux/selectors';
 import classes from './Notification.module.scss';
 import { disableVote } from '../../redux/slices';
 
 interface INotificationProps {
-  isActiveVote: boolean;
+  isVoteActive: boolean;
   currentUserId: string;
+  victim: IUser;
+  userNameOpenedVote: string;
 }
 
-const MemberNotification: FC<INotificationProps> = ({ isActiveVote, currentUserId }) => {
-  const userIdOpenedVote = useAppSelector(selectUserOpenedVote) as string;
-  const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as IUser;
-  const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as IUser;
+const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserId, victim, userNameOpenedVote }) => {
+  const { firstName: victimName, gameId } = victim;
   const dispatch = useAppDispatch();
 
   const handleClickYes = () => {
@@ -28,7 +27,7 @@ const MemberNotification: FC<INotificationProps> = ({ isActiveVote, currentUserI
   };
 
   return (
-    <BackDropModal isBackDropOpen={isActiveVote}>
+    <BackDropModal isBackDropOpen={isVoteActive}>
       <div>
         <p>Kick player?</p>
         <p>
