@@ -1,7 +1,10 @@
 @import '../../layout/styles-config';
 
 .wrapper {
+  width: 500px;
+  padding: 20px;
   @include flex($direction: column);
+  background-color: #ffffff;
 }
 
 .form {

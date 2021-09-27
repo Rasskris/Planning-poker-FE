@@ -36,7 +36,7 @@ const DealerNotification: FC<INotificationProps> = ({ currentUserId, victimData 
     <>
       {isOpen && (
         <BackDropModal isBackDropOpen={isOpen}>
-          <div>
+          <div className={classes.notification}>
             <p>Kick player?</p>
             <p>Are you really want to remove player {victimName} from game session?</p>
             <div className={classes.btnContainer}>
