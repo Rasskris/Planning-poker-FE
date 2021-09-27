@@ -17,6 +17,7 @@ const initialGameSettingsState: IGameSettings = {
     seconds: 0,
   },
   scoreValues: SCORE_VALUES_FN,
+  automaticAdmitAfterStartGame: false,
 };
 
 export const gameSettingsSlice = createSlice({

@@ -19,4 +19,12 @@ export { Chat } from './Chat';
 export { ChatButton } from './ChatButton';
 export { TimerContainer } from './Timer';
 export { ImageLoader } from './ImageLoader';
-export { DealerNotification, MemberNotification, ConnectNotification, VoteNotification } from './Notification';
+export { Loader } from './Loader';
+export { WaitingList } from './WaitingList';
+export {
+  DealerNotification,
+  MemberNotification,
+  ConnectNotification,
+  VoteNotification,
+  RejectedToGameNotification,
+} from './Notification';

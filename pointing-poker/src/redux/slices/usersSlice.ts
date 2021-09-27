@@ -19,7 +19,7 @@ export const usersSlice = createSlice({
         usersAdapter.addMany(state, payload);
       })
       .addCase(addUser.fulfilled, (state, { payload }) => {
-        usersAdapter.addOne(state, payload);
+        usersAdapter.addOne(state, payload.user);
       })
       .addCase(updateUser.fulfilled, (state, { payload }) => {
         usersAdapter.updateOne(state, { id: payload.id, changes: payload });
