@@ -4,7 +4,7 @@ import { IUser } from '../../interfaces';
 
 interface IParams {
   currentUserId: string;
-  victimId: string;
+  victimId?: string;
 }
 
 export const getUsers = createAsyncThunk('user/getUsers', async (gameId: string) => {
