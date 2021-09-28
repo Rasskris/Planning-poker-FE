@@ -1,10 +1,14 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
+  selectAutoAdmitedStatus,
   selectChatStatus,
   selectDealer,
   selectObservers,
+  selectPendingDealerAnswer,
   selectPlayers,
+  selectRejectedToGameStatus,
+  selectSettings,
   selectUserById,
   selectUserOpenedVote,
   selectVoteStatus,
@@ -19,11 +23,14 @@ import {
   MemberNotification,
   DealerNotification,
   VoteNotification,
+  Loader,
+  RejectedToGameNotification,
 } from '../../components';
 import { USER_ROLES } from '../../constants';
-import { getUsers, addVote, updateGameStatus } from '../../redux/thunks';
+import { getUsers, addVote, updateGameStatus, addGameSettings } from '../../redux/thunks';
 import classes from './Lobby.module.scss';
 import { IUser } from '../../interfaces';
+import { resetAdmitedToGameStatus } from '../../redux/slices';
 
 interface ILobbyProps {
   currentUser: IUser;
@@ -31,14 +38,20 @@ interface ILobbyProps {
 
 const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const [victimData, setVictimData] = useState({ id: '', name: '' });
+
+  const settings = useAppSelector(selectSettings);
   const victim = useAppSelector(selectVoteVictim);
   const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
-  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const userOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
   const isVoteActive = useAppSelector(selectVoteStatus);
   const isChatOpen = useAppSelector(selectChatStatus);
   const observers = useAppSelector(selectObservers);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
+  const isPendingDealerAnswer = useAppSelector(selectPendingDealerAnswer);
+  const isAccessToGameRejected = useAppSelector(selectRejectedToGameStatus);
+  const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
+
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
@@ -47,8 +60,15 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
     dispatch(getUsers(gameId));
   }, [dispatch, gameId, observers, players, dealer]);
 
+  useEffect(() => {
+    if (isAutoAdmitedToGame) {
+      dispatch({ type: updateGameStatus.fulfilled.type, payload: true });
+      dispatch(resetAdmitedToGameStatus());
+    }
+  }, [currentUserId, dispatch, isAutoAdmitedToGame]);
+
   const handleKickUser = (id: string, name: string) => {
-    if (currentUserRole === USER_ROLES.DEALER) {
+    if (isDealer) {
       setVictimData({ id, name });
     } else {
       dispatch(addVote({ gameId, victimId: id, currentUserId }));
@@ -57,10 +77,13 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
 
   const handleStartGame = () => {
     dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
+    dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
   };
 
   return (
     <section className={classes.lobby}>
+      {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
+      {isAccessToGameRejected && <RejectedToGameNotification isVisible={isAccessToGameRejected} />}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.wrapper}>
@@ -93,12 +116,12 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
         </div>
       )}
       <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isVoteActive && victim && userNameOpenedVote && (
+      {isVoteActive && victim && userOpenedVote && (
         <MemberNotification
           isVoteActive={isVoteActive}
           currentUserId={currentUserId}
           victim={victim}
-          userNameOpenedVote={userNameOpenedVote.firstName}
+          userNameOpenedVote={userOpenedVote.firstName}
         />
       )}
       <VoteNotification />

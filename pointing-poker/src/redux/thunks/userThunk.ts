@@ -19,7 +19,7 @@ export const addUser = createAsyncThunk('user/addUser', async (user: Partial<IUs
   return data;
 });
 
-export const updateUser = createAsyncThunk('user/editIssue', async (user: Partial<IUser>) => {
+export const updateUser = createAsyncThunk('user/updateUser', async (user: Partial<IUser>) => {
   const data = await clientAPI.put('/api/users', user);
 
   return data;

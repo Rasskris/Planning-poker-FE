@@ -3,8 +3,8 @@ import { useAppDispatch } from '../../hooks';
 import { putVoteForKick } from '../../redux/thunks';
 import { BackDropModal, Button } from '..';
 import { IUser } from '../../interfaces';
-import classes from './Notification.module.scss';
 import { disableVote } from '../../redux/slices';
+import classes from './Notification.module.scss';
 
 interface INotificationProps {
   isVoteActive: boolean;
@@ -28,7 +28,7 @@ const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserI
 
   return (
     <BackDropModal isBackDropOpen={isVoteActive}>
-      <div>
+      <div className={classes.notification}>
         <p>Kick player?</p>
         <p>
           {userNameOpenedVote} want to kick member {victimName}. Do you agree with it?{' '}

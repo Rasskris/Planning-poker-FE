@@ -20,6 +20,7 @@ import {
   MemberNotification,
   UserList,
   VoteNotification,
+  WaitingList,
 } from '../../components';
 import classes from './Game.module.scss';
 
@@ -32,12 +33,13 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const isVoteActive = useAppSelector(selectVoteStatus);
   const victim = useAppSelector(selectVoteVictim);
   const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
-  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const userOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
   const isChatOpen = useAppSelector(selectChatStatus);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
   const isScoreVisible = true;
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
+  const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -45,7 +47,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   }, [dispatch, gameId, players, dealer]);
 
   const handleKickUser = (id: string, name: string) => {
-    if (currentUserRole === USER_ROLES.DEALER) {
+    if (isDealer) {
       setVictimData({ id, name });
     } else {
       dispatch(addVote({ gameId, victimId: id, currentUserId }));
@@ -55,6 +57,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   return (
     <section className={classes.game}>
       <div className={classes.content}>
+        {isDealer && <WaitingList />}
         <div className={classes.wrapper}>
           <UserList
             isScoreVisible={!isScoreVisible}
@@ -86,12 +89,12 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         </div>
       )}
       <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isVoteActive && victim && userNameOpenedVote && (
+      {isVoteActive && victim && userOpenedVote && (
         <MemberNotification
           isVoteActive={isVoteActive}
           currentUserId={currentUserId}
           victim={victim}
-          userNameOpenedVote={userNameOpenedVote.firstName}
+          userNameOpenedVote={userOpenedVote.firstName}
         />
       )}
       <VoteNotification />

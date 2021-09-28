@@ -3,6 +3,7 @@ import { BackDropModal, Button } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { resetAvailibleStatus } from '../../redux/slices/voteSlice';
 import { VOTE_NOT_AVAILIBLE_TEXT, VOTE_AVAILIBLE_TEXT } from '../../constants';
+import classes from './Notification.module.scss';
 
 const VoteNotification: FC = () => {
   const { availible, notAvailible } = useAppSelector(state => state.vote);
@@ -18,7 +19,7 @@ const VoteNotification: FC = () => {
     <>
       {availible && (
         <BackDropModal isBackDropOpen={availible}>
-          <div>
+          <div className={classes.notification}>
             <p>{VOTE_AVAILIBLE_TEXT}</p>
             {button}
           </div>

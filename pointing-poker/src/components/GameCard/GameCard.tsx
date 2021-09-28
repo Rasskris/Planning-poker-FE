@@ -4,14 +4,14 @@ import { selectGameStatus } from '../../redux/selectors';
 import { VALUE_COFFE } from '../../constants';
 import classes from './GameCard.module.scss';
 
-interface IProps {
+interface IGameProps {
   isCurrent: boolean;
   scoreType: string;
   scoreValue: string;
   handleSelectCurrentCard: (scoreValue: string, scoreType: string) => void;
 }
 
-const GameCard: FC<IProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCurrentCard }) => {
+const GameCard: FC<IGameProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCurrentCard }) => {
   const gameCardClasses = isCurrent ? [classes.gameCard, classes.active].join(' ') : classes.gameCard;
   const centerCard = scoreValue === VALUE_COFFE ? <div className={classes.cardImg} /> : scoreType;
   const isGameStarted = useAppSelector(selectGameStatus);
