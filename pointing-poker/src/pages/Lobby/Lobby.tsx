@@ -58,7 +58,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
 
   const handleStartGame = () => {
     dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
-    dispatch(addGameSettings({ userId: currentUserId, settings, gameId: gameId }));
+    dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
   };
 
   return (

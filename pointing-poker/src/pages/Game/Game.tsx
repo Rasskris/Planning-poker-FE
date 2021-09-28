@@ -70,7 +70,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const handlerRestartRound = () => {
     dispatch(
       addGameRoundData({
-        gameId: gameId,
+        gameId,
         currentIssue: gameRoundData.currentIssue,
         playerCards: allPlayersIds,
         userId: currentUserId,
@@ -81,7 +81,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const handlerStartRound = () => {
     dispatch(
       addGameRoundData({
-        gameId: gameId,
+        gameId,
         currentIssue: gameRoundData.currentIssue,
         playerCards: allPlayersIds,
         userId: currentUserId,
@@ -90,7 +90,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   };
 
   const handlerNextIssue = () => {
-    dispatch(updateGameRoundStatistics({ gameId: gameId, gameRoundData, userId: currentUserId }));
+    dispatch(updateGameRoundStatistics({ gameId, gameRoundData, userId: currentUserId }));
   };
 
   const handlerStopGameRound = useCallback(() => {
