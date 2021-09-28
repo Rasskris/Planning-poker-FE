@@ -33,7 +33,6 @@ const TimerContainer = (props: TimerContainerProps) => {
     if (minutes === 0 && seconds === 0 && !areSettingsEdited && !resetTimer) {
       setResetTimer(true);
       handlerStopTimer();
-      console.log('Stop Timer');
     }
   }, [areSettingsEdited, handlerStopTimer, minutes, resetTimer, seconds, timerStarted]);
 

@@ -33,7 +33,6 @@ export const addGameRoundData = createAsyncThunk(
   'gameRound/addGameRoundData',
   async ({ gameId, currentIssue, playerCards, userId }: IAddGameRoundData) => {
     const data = await clientAPI.post(`/api/gameround/${gameId}`, { currentIssue, playerCards, userId });
-    console.log('playerCards', playerCards);
     return data;
   },
 );
@@ -53,7 +52,6 @@ export const updateUserGameCard = createAsyncThunk(
 // get data of all rooms of the current game
 export const getDataAllRoomsOfGame = createAsyncThunk('gameRound/getDataAllRoomsOfGame', async (gameId: string) => {
   const data = await clientAPI.get(`/api/gameround/${gameId}`);
-  console.log(data);
   return data;
 });
 
