@@ -1,21 +1,20 @@
 import { FC } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks';
+import { useAppDispatch } from '../../hooks';
 import { putVoteForKick } from '../../redux/thunks';
 import { BackDropModal, Button } from '..';
-import { User } from '../../interfaces';
-import { selectUserById, selectUserOpenedVote, selectVoteVictim } from '../../redux/selectors';
-import classes from './Notification.module.scss';
+import { IUser } from '../../interfaces';
 import { disableVote } from '../../redux/slices';
+import classes from './Notification.module.scss';
 
-interface Props {
-  isActiveVote: boolean;
+interface INotificationProps {
+  isVoteActive: boolean;
   currentUserId: string;
+  victim: IUser;
+  userNameOpenedVote: string;
 }
 
-const MemberNotification: FC<Props> = ({ isActiveVote, currentUserId }) => {
-  const userIdOpenedVote = useAppSelector(selectUserOpenedVote) as string;
-  const { gameId, firstName: victimName } = useAppSelector(selectVoteVictim) as User;
-  const { firstName: userNameOpenedVote } = useAppSelector(state => selectUserById(state, userIdOpenedVote)) as User;
+const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserId, victim, userNameOpenedVote }) => {
+  const { firstName: victimName, gameId } = victim;
   const dispatch = useAppDispatch();
 
   const handleClickYes = () => {
@@ -28,8 +27,8 @@ const MemberNotification: FC<Props> = ({ isActiveVote, currentUserId }) => {
   };
 
   return (
-    <BackDropModal isBackDropOpen={isActiveVote}>
-      <div>
+    <BackDropModal isBackDropOpen={isVoteActive}>
+      <div className={classes.notification}>
         <p>Kick player?</p>
         <p>
           {userNameOpenedVote} want to kick member {victimName}. Do you agree with it?{' '}

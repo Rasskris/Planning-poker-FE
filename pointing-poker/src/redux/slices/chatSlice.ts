@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface Chat {
+interface IChat {
   isOpen: boolean;
 }
 
-const initialState: Chat = {
+const initialState: IChat = {
   isOpen: false,
 };
 

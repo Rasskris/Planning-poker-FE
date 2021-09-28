@@ -14,4 +14,24 @@
   text-align: left;
   border-bottom: 1px dotted brown;
   border-top: 1px dotted brown;
+  @include flex($direction: column);
+}
+.scoreCard {
+  padding: 10px;
+  width: 300px;
+  height: 75px;
+  @include flex($justify: center);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+}
+.cardWrapper {
+  @include flex();
+}
+.titleWrapper {
+  width: 60%;
+  @include flex($justify: space-between);
+  .title {
+    @include font($size: 24px, $weight: bold);
+    margin-bottom: 5px;
+  }
 }

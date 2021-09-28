@@ -1,26 +1,47 @@
 import { FC } from 'react';
+import { useAppSelector } from '../../hooks';
 import { Issue } from '../../interfaces';
+import { selectGameStatus } from '../../redux/selectors';
 import classes from './IssueCard.module.scss';
 
-interface IssueCardProps extends Omit<Issue, 'creatorId' | 'gameId'> {
-  isCurrentIssue?: boolean;
+interface IssueProps extends Issue {
   isDealer: boolean;
+  isCurrent: boolean;
   handleRemoveIssue: (id: string) => void;
+  handleSelectCurrentIssue: (issue: Partial<Issue>) => void;
 }
 
-const IssueCard: FC<IssueCardProps> = ({ id, isCurrentIssue, isDealer, title, priority, handleRemoveIssue }) => {
-  const handleClick = () => {
+const IssueCard: FC<IssueProps> = ({
+  id,
+  isCurrent,
+  isDealer,
+  title,
+  priority,
+  gameId,
+  creatorId,
+  handleRemoveIssue,
+  handleSelectCurrentIssue,
+}) => {
+  const issueCardClasses = isCurrent ? [classes.issueCard, classes.active].join(' ') : classes.issueCard;
+  const isGameStarted = useAppSelector(selectGameStatus);
+
+  const handleClickRemove = () => {
     handleRemoveIssue(id);
   };
 
+  const handleClickSelect = () => {
+    handleSelectCurrentIssue({ id, gameId, creatorId });
+  };
+
   return (
-    <div className={classes.issueCard}>
+    <div className={issueCardClasses}>
       <div className={classes.issueInfo}>
-        {isCurrentIssue && <p className={classes.issueCurrent}>current</p>}
+        {isCurrent && <p className={classes.issueCurrent}>current</p>}
         <p className={classes.issueName}>{title}</p>
         <p className={classes.issuePriority}>{priority} priority</p>
       </div>
-      {isDealer && <button className={classes.btnRemove} onClick={handleClick} data-testid="btnRemove"></button>}
+      {isDealer && <button className={classes.btnRemove} onClick={handleClickRemove} data-testid="btnRemove"></button>}
+      {isGameStarted && isDealer ? <div className={classes.cover} onClick={handleClickSelect}></div> : null}
     </div>
   );
 };

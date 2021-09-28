@@ -12,4 +12,6 @@ export interface IGameSettings {
     minutes: number;
     seconds: number;
   };
+  scoreValues: Array<string>;
+  automaticAdmitAfterStartGame: boolean;
 }

@@ -1,20 +1,29 @@
 import { FC } from 'react';
+import { useAppSelector } from '../../hooks';
+import { selectGameStatus } from '../../redux/selectors';
+import { VALUE_COFFE } from '../../constants';
 import classes from './GameCard.module.scss';
 
-interface GameCardProps {
+interface IGameProps {
+  isCurrent: boolean;
   scoreType: string;
-  scoreValue: number | 'unknown' | 'coffe';
-  handleEditScoreValue?: VoidFunction;
+  scoreValue: string;
+  handleSelectCurrentCard: (scoreValue: string, scoreType: string) => void;
 }
 
-const GameCard: FC<GameCardProps> = ({ scoreType, scoreValue, handleEditScoreValue }) => {
-  const centerCard = scoreValue === 'coffe' ? <div className={classes.cardImg} /> : scoreType;
+const GameCard: FC<IGameProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCurrentCard }) => {
+  const gameCardClasses = isCurrent ? [classes.gameCard, classes.active].join(' ') : classes.gameCard;
+  const centerCard = scoreValue === VALUE_COFFE ? <div className={classes.cardImg} /> : scoreType;
+  const isGameStarted = useAppSelector(selectGameStatus);
+
+  const handleClick = () => {
+    handleSelectCurrentCard(scoreValue, scoreType);
+  };
 
   return (
-    <div className={classes.gameCard}>
+    <div className={gameCardClasses}>
       <div className={classes.top}>
         <span data-testid="topCard">{scoreValue}</span>
-        {handleEditScoreValue && <button className={classes.btnEdit} onClick={handleEditScoreValue}></button>}
       </div>
       <div className={classes.center} data-testid="centerCard">
         {centerCard}
@@ -22,6 +31,11 @@ const GameCard: FC<GameCardProps> = ({ scoreType, scoreValue, handleEditScoreVal
       <div className={classes.bottom}>
         <span data-testid="bottomCard">{scoreValue}</span>
       </div>
+      {isGameStarted && (
+        <div className={classes.cover} onClick={handleClick}>
+          <span className={classes.selectedCard} />
+        </div>
+      )}
     </div>
   );
 };

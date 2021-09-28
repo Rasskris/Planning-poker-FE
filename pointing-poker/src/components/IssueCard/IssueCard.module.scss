@@ -1,6 +1,7 @@
 @import '../../layout/styles-config';
 
 .issueCard {
+  position: relative;
   margin-bottom: 10px;
   padding: 20px;
   width: 100%;
@@ -10,6 +11,9 @@
   box-shadow: $card-shadow;
   border-radius: $card-radius;
   @include flex($align: center, $justify: space-between);
+  &.active {
+    background-color: #60dabf;
+  }
 }
 .issueInfo {
   overflow: hidden;
@@ -28,6 +32,7 @@
   color: grey;
 }
 .btnRemove {
+  z-index: 1;
   background-repeat: no-repeat;
   background-size: contain;
   width: 45px;
@@ -37,5 +42,17 @@
     opacity: 0.6;
     transform: rotate(90deg);
     filter: invert(31%) sepia(52%) saturate(15048%) hue-rotate(21deg) brightness(55%) contrast(103%);
+  }
+}
+.cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  &:hover {
+    cursor: pointer;
+    background-color: #60dabf;
+    opacity: 0.5;
   }
 }

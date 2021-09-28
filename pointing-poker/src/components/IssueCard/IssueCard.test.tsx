@@ -5,19 +5,28 @@ import { IssueCard } from '..';
 const ISSUE_NAME = 'Issue 345';
 const ISSUE_PRIORITY = 'Low';
 const ID = '7643nb43843';
-const IS_DEALER_TRUE = true;
-const IS_DEALER_FALSE = false;
+const GAME_ID = '34hb324j';
+const CREATOR_ID = '79c74hb324j';
+const DEALER_TRUE = true;
+const DEALER_FALSE = false;
+const CURRENT_ISSUE_FALSE = false;
+const CURRENT_ISSUE_TRUE = true;
 
-const renderComponent = (isDealer: boolean, isCurrentIssue?: boolean) => {
+const renderComponent = (isDealer: boolean, isCurrent: boolean) => {
   const handleRemoveIssue = jest.fn();
+  const handleSelectCurrentIssue = jest.fn();
+
   const utils = render(
     <IssueCard
       id={ID}
-      isCurrentIssue={isCurrentIssue}
+      gameId={GAME_ID}
+      creatorId={CREATOR_ID}
+      isCurrent={isCurrent}
       title={ISSUE_NAME}
       priority={ISSUE_PRIORITY}
       isDealer={isDealer}
       handleRemoveIssue={handleRemoveIssue}
+      handleSelectCurrentIssue={handleSelectCurrentIssue}
     />,
   );
 
@@ -29,39 +38,38 @@ const renderComponent = (isDealer: boolean, isCurrentIssue?: boolean) => {
 
 describe('IssueCard', () => {
   test('should render with current props', () => {
-    const { getByText } = renderComponent(IS_DEALER_TRUE);
+    const { getByText } = renderComponent(DEALER_TRUE, CURRENT_ISSUE_FALSE);
 
     expect(getByText(/issue 345/i)).toBeInTheDocument();
     expect(getByText(/low/i)).toBeInTheDocument();
   });
 
   test('should show that this is the current issue', () => {
-    const isCurrentIssue = true;
-    const { getByText } = renderComponent(IS_DEALER_TRUE, isCurrentIssue);
+    const { getByText } = renderComponent(DEALER_TRUE, CURRENT_ISSUE_TRUE);
 
     expect(getByText(/current/)).toBeInTheDocument();
   });
 
   test('should show that this is not the current issue', () => {
-    const { queryByText } = renderComponent(IS_DEALER_TRUE);
+    const { queryByText } = renderComponent(DEALER_TRUE, CURRENT_ISSUE_FALSE);
 
     expect(queryByText(/current/)).toBe(null);
   });
 
   test('should render delete button', () => {
-    const { getByRole } = renderComponent(IS_DEALER_TRUE);
+    const { getByRole } = renderComponent(DEALER_TRUE, CURRENT_ISSUE_FALSE);
 
     expect(getByRole('button')).toBeInTheDocument();
   });
 
   test('should not render delete button', () => {
-    const { queryByRole } = renderComponent(IS_DEALER_FALSE);
+    const { queryByRole } = renderComponent(DEALER_FALSE, CURRENT_ISSUE_FALSE);
 
     expect(queryByRole('button')).toBe(null);
   });
 
   test('should calls handleEditIssue and handleRemoveIssue', () => {
-    const { getByTestId, handleRemoveIssue } = renderComponent(IS_DEALER_TRUE);
+    const { getByTestId, handleRemoveIssue } = renderComponent(DEALER_TRUE, CURRENT_ISSUE_FALSE);
 
     const btnRemove = getByTestId(/btnRemove/);
 

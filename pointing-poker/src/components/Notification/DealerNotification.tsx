@@ -4,7 +4,7 @@ import { deleteUser } from '../../redux/thunks';
 import { BackDropModal, Button } from '..';
 import classes from './Notification.module.scss';
 
-interface Props {
+interface INotificationProps {
   currentUserId: string;
   victimData: {
     id: string;
@@ -12,7 +12,7 @@ interface Props {
   };
 }
 
-const DealerNotification: FC<Props> = ({ currentUserId, victimData }) => {
+const DealerNotification: FC<INotificationProps> = ({ currentUserId, victimData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const { id: victimId, name: victimName } = victimData;
   const dispatch = useAppDispatch();
@@ -36,7 +36,7 @@ const DealerNotification: FC<Props> = ({ currentUserId, victimData }) => {
     <>
       {isOpen && (
         <BackDropModal isBackDropOpen={isOpen}>
-          <div>
+          <div className={classes.notification}>
             <p>Kick player?</p>
             <p>Are you really want to remove player {victimName} from game session?</p>
             <div className={classes.btnContainer}>
