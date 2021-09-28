@@ -5,8 +5,6 @@ import { Timer } from './Timer';
 //https://stackoverflow.com/questions/40885923/countdown-timer-in-react
 
 const START_COUNTDOWN_SECONDS = 59;
-const DEFAULT_START_MINUTES = 0;
-const DEFAULT_START_SECONDS = 0;
 
 interface TimerContainerProps {
   initialMinute: number;
@@ -14,17 +12,29 @@ interface TimerContainerProps {
   timerStarted: boolean;
   areSettingsEdited: boolean;
   onChangeTimer?: (time: { minutes: number; seconds: number }) => void;
+  onStopTimer: () => void;
 }
 
 const TimerContainer = (props: TimerContainerProps) => {
-  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer } = props;
-  const [minutes, setMinutes] = useState<number>(DEFAULT_START_MINUTES);
-  const [seconds, setSeconds] = useState<number>(DEFAULT_START_SECONDS);
+  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer, onStopTimer } = props;
+  const [minutes, setMinutes] = useState<number>(initialMinute);
+  const [seconds, setSeconds] = useState<number>(initialSeconds);
+  const [resetTimer, setResetTimer] = useState<boolean>(false);
 
   useEffect(() => {
-    setMinutes(initialMinute);
-    setSeconds(initialSeconds);
-  }, [initialMinute, initialSeconds]);
+    if (timerStarted) {
+      setMinutes(initialMinute);
+      setSeconds(initialSeconds);
+      setResetTimer(false);
+    }
+  }, [initialMinute, initialSeconds, timerStarted]);
+
+  useEffect(() => {
+    if (minutes === 0 && seconds === 0 && !areSettingsEdited && !resetTimer) {
+      setResetTimer(true);
+      onStopTimer();
+    }
+  }, [areSettingsEdited, onStopTimer, minutes, resetTimer, seconds, timerStarted]);
 
   const handleChangeMinutes = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
@@ -50,8 +60,8 @@ const TimerContainer = (props: TimerContainerProps) => {
         if (minutes === 0) {
           clearInterval(timerInterval);
         } else {
-          setMinutes(minutes - 1);
           setSeconds(START_COUNTDOWN_SECONDS);
+          setMinutes(minutes - 1);
         }
       }
     }, 1000);
@@ -72,10 +82,9 @@ const TimerContainer = (props: TimerContainerProps) => {
 };
 
 TimerContainer.defaultProps = {
-  initialMinute: DEFAULT_START_MINUTES,
-  initialSeconds: DEFAULT_START_SECONDS,
   timerStarted: false,
   areSettingsEdited: false,
+  onStopTimer: () => {},
 };
 
 export { TimerContainer };

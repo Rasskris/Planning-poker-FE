@@ -27,7 +27,7 @@ const VoteNotification: FC = () => {
       )}
       {notAvailible && (
         <BackDropModal isBackDropOpen={notAvailible}>
-          <div>
+          <div className={classes.notification}>
             <p>{VOTE_NOT_AVAILIBLE_TEXT}</p>
             {button}
           </div>

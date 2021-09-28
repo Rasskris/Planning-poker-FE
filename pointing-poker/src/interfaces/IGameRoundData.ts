@@ -1,5 +1,5 @@
 export interface IGameRoundData {
-  timerIsStarted: boolean;
+  roundIsStarted: boolean;
   currentIssue: string;
   playerCards: {};
   roundStatistics: {};

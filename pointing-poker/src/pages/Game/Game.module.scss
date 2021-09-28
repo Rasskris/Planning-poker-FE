@@ -1,7 +1,7 @@
 @import '../../layout/styles-config';
 
 .game {
-  @include flex($align: flex-start, $justify: space-between);
+  @include flex($align: flex-start, $justify: space-between, $direction: column);
   width: 100%;
   .wrapper {
     margin-bottom: 10px;
@@ -9,6 +9,7 @@
 }
 .content {
   padding: 20px 30px;
+  width: 100vw;
   @include flex($direction: column, $align: flex-start);
   .gameControl {
     @include flex($direction: column, $align: flex-start);
@@ -16,8 +17,4 @@
       margin-bottom: 5px;
     }
   }
-}
-.chat {
-  @include flex($direction: column, $align: flex-end, $justify: flex-start);
-  height: 100vh;
 }

@@ -15,6 +15,8 @@ import {
   updateGameRoundData,
   deleteCurrentUser,
   memberJoin,
+  setRoundStatisticFromServer,
+  resetGameRoundData,
   addNewComer,
   admitToGame,
   rejectToGame,
@@ -89,6 +91,14 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('updateGameRoundData', gameRoundData => {
     dispatch(updateGameRoundData({ ...gameRoundData }));
+  });
+
+  socket.on('resetGameRoundData', () => {
+    dispatch(resetGameRoundData());
+  });
+
+  socket.on('getRoundStatistic', roundStatistic => {
+    dispatch(setRoundStatisticFromServer(roundStatistic));
   });
 
   socket.on('notifyDealer', user => {
