@@ -12,3 +12,7 @@ export const messagesAdapter = createEntityAdapter<IMessage>({
 export const usersAdapter = createEntityAdapter<IUser>({
   selectId: user => user.id!,
 });
+
+export const newComerAdapter = createEntityAdapter<IUser>({
+  selectId: newComer => newComer.id!,
+});

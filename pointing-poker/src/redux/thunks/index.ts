@@ -11,3 +11,4 @@ export {
   updateGameRoundStatistics,
   getRoundStatistic,
 } from './gameRoundThunk';
+export { admitNewComer, rejectNewComer } from './newComerThunk';

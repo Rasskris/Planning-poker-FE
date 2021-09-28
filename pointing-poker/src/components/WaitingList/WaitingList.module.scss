@@ -1,0 +1,13 @@
+@import '../../layout/styles-config';
+
+.newComerList {
+  margin-bottom: 20px;
+  padding: 10px;
+  @include flex($direction: column);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+}
+.title {
+  @include font($size: 24px, $weight: bold);
+  margin-bottom: 5px;
+}

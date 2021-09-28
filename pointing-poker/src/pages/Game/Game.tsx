@@ -24,24 +24,24 @@ import {
   TimerContainer,
   UserList,
   VoteNotification,
+  WaitingList,
 } from '../../components';
-import classes from './Game.module.scss';
 import { stopGameRound, updateRoundStatistics } from '../../redux/slices';
 import { RoundStatistics } from '../../components/RoundStatistics';
 import { roundStatiscticsCalculation } from '../../utils/roundStatisticsCalculation';
 import { checkingNumberPlayersPlayed } from '../../utils/checkingNumberPlayersPlayed';
+import classes from './Game.module.scss';
 
 interface IGameProps {
   currentUser: IUser;
 }
 
 const Game: FC<IGameProps> = ({ currentUser }) => {
-  const dispatch = useAppDispatch();
   const [victimData, setVictimData] = useState({ id: '', name: '' });
   const isVoteActive = useAppSelector(selectVoteStatus);
   const victim = useAppSelector(selectVoteVictim);
   const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
-  const userNameOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const userOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
   const isChatOpen = useAppSelector(selectChatStatus);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
@@ -54,13 +54,15 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const playersWhithoutDillerIds = useAppSelector(selectPlayersIds);
   const playersAndDillerIds = useAppSelector(selectPlayersAndDealerIds);
   const allPlayersIds = settings.scramMasterAsPlayerSetting ? playersAndDillerIds : playersWhithoutDillerIds;
+  const isDealer = currentUserRole === USER_ROLES.DEALER;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getUsers(gameId));
   }, [dispatch, gameId, players, dealer]);
 
   const handleKickUser = (id: string, name: string) => {
-    if (currentUserRole === USER_ROLES.DEALER) {
+    if (isDealer) {
       setVictimData({ id, name });
     } else {
       dispatch(addVote({ gameId, victimId: id, currentUserId }));
@@ -123,80 +125,73 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   return (
     <section className={classes.game}>
       <div className={classes.content}>
-        <div>
-          <div className={classes.wrapper}>
-            <UserList
-              isScoreVisible={!isScoreVisible}
-              users={dealer}
-              title="Dealer"
-              currentUserId={currentUserId}
-              handleKickUser={handleKickUser}
-            />
-          </div>
-          <div className={classes.wrapper}>
-            <IssueList currentUser={currentUser} />
-          </div>
+        {isDealer && <WaitingList />}
+        <div className={classes.wrapper}>
+          <UserList
+            isScoreVisible={!isScoreVisible}
+            users={dealer}
+            title="Dealer"
+            currentUserId={currentUserId}
+            handleKickUser={handleKickUser}
+          />
         </div>
-        <div>
-          <div>
-            {settings.isTimerNeededSetting && (
-              <TimerContainer
-                initialMinute={settings.timerValuesSetting.minutes}
-                initialSeconds={settings.timerValuesSetting.seconds}
-                timerStarted={gameRoundData.roundIsStarted}
-                onStopTimer={handleStopGameRound}
+        <div className={classes.wrapper}>
+          <UserList
+            isScoreVisible={isScoreVisible}
+            users={players}
+            title="Players"
+            currentUserId={currentUserId}
+            handleKickUser={handleKickUser}
+          />
+        </div>
+        <div className={classes.wrapper}>
+          <IssueList currentUser={currentUser} />
+        </div>
+        <div className={classes.wrapper}>
+          <GameCardsList />
+        </div>
+        {settings.isTimerNeededSetting && (
+          <TimerContainer
+            initialMinute={settings.timerValuesSetting.minutes}
+            initialSeconds={settings.timerValuesSetting.seconds}
+            timerStarted={gameRoundData.roundIsStarted}
+            onStopTimer={handleStopGameRound}
+          />
+        )}
+        {/* condition for displaying buttons */}
+        {currentUserRole === USER_ROLES.DEALER &&
+          (gameRoundData.roundIsStarted === gameRoundData.isActive ? (
+            <div>
+              <Button
+                type="button"
+                text="RESTART ROUND"
+                colorButton="light"
+                onClick={handleRestartRound}
+                disabled={gameRoundData.roundIsStarted ? true : false}
               />
-            )}
-            {/* condition for displaying buttons */}
-            {currentUserRole === USER_ROLES.DEALER &&
-              (gameRoundData.roundIsStarted === gameRoundData.isActive ? (
-                <div>
-                  <Button
-                    type="button"
-                    text="RESTART ROUND"
-                    colorButton="light"
-                    onClick={handleRestartRound}
-                    disabled={gameRoundData.roundIsStarted ? true : false}
-                  />
-                  <Button type="button" text="NEXT ISSUE" colorButton="dark" onClick={handleNextIssue} />
-                </div>
-              ) : (
-                <Button type="button" text="RUN ROUND" colorButton="dark" onClick={handleStartRound} />
-              ))}
-          </div>
-          <div>
-            <RoundStatistics />
-          </div>
-        </div>
-        <div>
-          {isChatOpen && (
-            <div className={classes.chat}>
-              <Chat currentUser={currentUser} />
+              <Button type="button" text="NEXT ISSUE" colorButton="dark" onClick={handleNextIssue} />
             </div>
-          )}
-          <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-          {isVoteActive && victim && userNameOpenedVote && (
-            <MemberNotification
-              isVoteActive={isVoteActive}
-              currentUserId={currentUserId}
-              victim={victim}
-              userNameOpenedVote={userNameOpenedVote.firstName}
-            />
-          )}
-          <div className={classes.wrapper}>
-            <UserList
-              isScoreVisible={isScoreVisible}
-              users={players}
-              title="Players"
-              currentUserId={currentUserId}
-              handleKickUser={handleKickUser}
-            />
-          </div>
+          ) : (
+            <Button type="button" text="RUN ROUND" colorButton="dark" onClick={handleStartRound} />
+          ))}
+        <div>
+          <RoundStatistics />
         </div>
       </div>
-      <div className={classes.wrapper}>
-        <GameCardsList />
-      </div>
+      {isChatOpen && (
+        <div className={classes.chat}>
+          <Chat currentUser={currentUser} />
+        </div>
+      )}
+      <DealerNotification currentUserId={currentUserId} victimData={victimData} />
+      {isVoteActive && victim && userOpenedVote && (
+        <MemberNotification
+          isVoteActive={isVoteActive}
+          currentUserId={currentUserId}
+          victim={victim}
+          userNameOpenedVote={userOpenedVote.firstName}
+        />
+      )}
       <VoteNotification />
     </section>
   );

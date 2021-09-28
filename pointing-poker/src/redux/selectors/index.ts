@@ -1,5 +1,5 @@
 import { RootState } from '../store';
-import { issuesAdapter, messagesAdapter, usersAdapter } from '../adapters';
+import { issuesAdapter, messagesAdapter, usersAdapter, newComerAdapter } from '../adapters';
 import { createSelector } from 'reselect';
 import { USER_ROLES } from '../../constants';
 
@@ -11,9 +11,17 @@ export const { selectAll: selectUsers, selectById: selectUserById } = usersAdapt
   state => state.users,
 );
 
+export const { selectAll: selectNewComers } = newComerAdapter.getSelectors<RootState>(state => state.newComers);
+
 export const selectCurrentUser = (state: RootState) => state.currentUser.user;
 
 export const selectLoginStatus = (state: RootState) => state.currentUser.isLogin;
+
+export const selectPendingDealerAnswer = (state: RootState) => state.currentUser.isPendingDealerAnswer;
+
+export const selectAutoAdmitedStatus = (state: RootState) => state.currentUser.isAutoAdmitedToGame;
+
+export const selectRejectedToGameStatus = (state: RootState) => state.currentUser.isAccessToGameRejected;
 
 export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 
@@ -28,6 +36,8 @@ export const selectVoteVictim = (state: RootState) => state.vote.victim;
 export const selectUserOpenedVote = (state: RootState) => state.vote.userOpenedVote;
 
 export const selectScoreValues = (state: RootState) => state.gameSettings.scoreValues;
+
+export const selectSettings = (state: RootState) => state.gameSettings;
 
 export const selectScoreTypeShort = (state: RootState) => state.gameSettings.scoreTypeShortSetting;
 

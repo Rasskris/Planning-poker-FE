@@ -10,7 +10,7 @@
 .content {
   padding: 20px 30px;
   width: 100vw;
-  @include flex($direction: row, $align: flex-start);
+  @include flex($direction: column, $align: flex-start);
   .gameControl {
     @include flex($direction: column, $align: flex-start);
     h3 {

@@ -20,6 +20,7 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
     automaticFlipCardsSetting,
     scoreTypeSetting,
     timerValuesSetting,
+    automaticAdmitAfterStartGame,
   } = useAppSelector(state => state.gameSettings);
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
@@ -55,6 +56,9 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
   const handleAutomaticFlipCardsSetting = () => {
     dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }));
   };
+  const handlerAutomaticAdmitAfterStartGame = () => {
+    dispatch(updateSettings({ automaticAdmitAfterStartGame: !automaticAdmitAfterStartGame }));
+  };
 
   return (
     <section className={classes.game_settings}>
@@ -64,6 +68,13 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
           switchState={scramMasterAsPlayerSetting}
           onChange={handleScramMasterAsPlayerSetting}
           labelText="Scram master as player"
+        />
+      </GameSettingRow>
+      <GameSettingRow>
+        <Switcher
+          switchState={automaticAdmitAfterStartGame}
+          onChange={handlerAutomaticAdmitAfterStartGame}
+          labelText="Automatic admit user after start game"
         />
       </GameSettingRow>
       <GameSettingRow>

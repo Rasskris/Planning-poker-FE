@@ -17,6 +17,9 @@ import {
   memberJoin,
   setRoundStatisticFromServer,
   resetGameRoundData,
+  addNewComer,
+  admitToGame,
+  rejectToGame,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
@@ -40,8 +43,8 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
   });
 
   socket.on('memberLeave', deletedUserId => {
-    console.log('member leave');
     if (userId === deletedUserId) {
+      dispatch({ type: updateGameStatus.fulfilled.type, payload: false });
       dispatch(deleteCurrentUser());
     } else {
       dispatch({ type: deleteUser.fulfilled.type, payload: deletedUserId });
@@ -78,10 +81,6 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch({ type: updateGameStatus.fulfilled.type, payload: status });
   });
 
-  socket.on('disconnect', reason => {
-    console.log(`socked disconnected: ${reason}`);
-  });
-
   socket.on('gameSettings', gameSettings => {
     dispatch(updateSettings({ ...gameSettings }));
   });
@@ -102,5 +101,21 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch(setRoundStatisticFromServer(roundStatistic));
   });
 
+  socket.on('notifyDealer', user => {
+    dispatch(addNewComer(user));
+  });
+
+  socket.on('admitToGame', () => {
+    dispatch(admitToGame());
+    dispatch({ type: updateGameStatus.fulfilled.type, payload: true });
+  });
+
+  socket.on('rejectToGame', () => {
+    dispatch(rejectToGame());
+  });
+
+  socket.on('disconnect', reason => {
+    console.log(`socked disconnected: ${reason}`);
+  });
   return socket;
 };
