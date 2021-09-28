@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { GameCard } from '..';
 import { useAppSelector } from '../../hooks';
-import classes from './RoundStatistics.module.scss';
 
 const RoundStatistics: FC = () => {
   const { roundStatistics } = useAppSelector(state => state.gameRound);
@@ -17,7 +16,6 @@ const RoundStatistics: FC = () => {
               isCurrent={false}
               scoreType={'FN'} //TO DO: GET VALUE FROM state.gameRound.typeCardValue
               scoreValue={scoreValue}
-              handleSelectCurrentCard={() => {}}
             />
             <div>{precent[index]}</div>
           </div>

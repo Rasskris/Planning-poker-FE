@@ -8,7 +8,7 @@ interface IProps {
   isCurrent: boolean;
   scoreType: string;
   scoreValue: string;
-  handleSelectCurrentCard: (scoreValue: string, scoreType: string) => void;
+  handleSelectCurrentCard?: (scoreValue: string, scoreType: string) => void;
 }
 
 const GameCard: FC<IProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCurrentCard }) => {
@@ -17,6 +17,7 @@ const GameCard: FC<IProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCu
   const isGameStarted = useAppSelector(selectGameStatus);
 
   const handleClick = () => {
+    if (!handleSelectCurrentCard) return;
     handleSelectCurrentCard(scoreValue, scoreType);
   };
 
