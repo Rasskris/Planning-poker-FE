@@ -16,7 +16,7 @@ const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMi
       {areSettingsEdited ? <input type="number" value={minutes} onChange={onChangeMinutes} /> : <p> {minutes}</p>}
     </div>
     <div className={styles.timer__seconds}>
-      <p>seconds</p>
+      <p className={styles.timer__seconds__word}>seconds</p>
       <p>
         <span>:</span>
         {areSettingsEdited ? (

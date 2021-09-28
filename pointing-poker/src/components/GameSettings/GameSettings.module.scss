@@ -3,18 +3,23 @@
 .game_settings {
   @include flex($direction: column, $align: space-between);
   row-gap: 20px;
-  max-width: 600px;
+  position: relative;
+  width: 100%;
 
   &_title {
-    @include font($size: 24px, $weight: bold);
+    @include font($size: 24px, $weight: bold, $align: left);
+    padding: 20px 0;
+    border-bottom: 1px dotted brown;
+    border-top: 1px dotted brown;
   }
 }
 
 select,
 input[type='text'] {
-  border: 1px solid $dark-blue;
-  border-radius: 0 0 0 10px;
-  box-shadow: inset 0 1px 0 1px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+  border: none;
+  border-radius: 0 10px;
+  box-shadow: inset 6px 6px 6px #d5d5d5, inset -6px -6px 6px $pinch-brown-light;
   @include font($size: 2.4rem, $height: 28.13px, $weight: 400, $style: normal, $align: left);
   outline: none;
 }

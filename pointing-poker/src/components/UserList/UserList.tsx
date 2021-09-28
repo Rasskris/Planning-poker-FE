@@ -12,20 +12,22 @@ interface UserListProps {
 
 const UserList: FC<UserListProps> = ({ title, users, currentUserId, handleKickUser }) => {
   return (
-    <div className={classes.userList}>
+    <div className={classes.wrapper}>
       <p className={classes.title}>{title}</p>
-      {users.map(({ id, firstName, lastName, role, image, jobPosition }) => (
-        <UserCard
-          key={id}
-          id={id}
-          currentUserId={currentUserId}
-          firstName={firstName}
-          lastName={lastName}
-          jobPosition={jobPosition}
-          handleKickUser={handleKickUser}
-          role={role}
-        />
-      ))}
+      <div className={classes.userList}>
+        {users.map(({ id, firstName, lastName, role, image, jobPosition }) => (
+          <UserCard
+            key={id}
+            id={id}
+            currentUserId={currentUserId}
+            firstName={firstName}
+            lastName={lastName}
+            jobPosition={jobPosition}
+            handleKickUser={handleKickUser}
+            role={role}
+          />
+        ))}
+      </div>
     </div>
   );
 };

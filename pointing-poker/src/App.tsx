@@ -36,7 +36,10 @@ const App: FC = () => {
         <Route exact path="/">
           {isLogin ? <Redirect to="/lobby" /> : <Main />}
         </Route>
-        <Route path="/lobby">{isLogin ? <Lobby /> : <Redirect to="/" />}</Route>
+        <Route path="/lobby">
+          {isLogin ? <Lobby /> : <Redirect to="/" />}
+          {isStartedGame && <Redirect to="/game" />}
+        </Route>
         <Route path="/game">{isStartedGame ? <Game /> : <Redirect to="/lobby" />}</Route>
       </Router>
       <Footer />

@@ -4,16 +4,56 @@
   @include font($size: 1.5rem, $height: 30.38px, $weight: 400);
   padding: 0 10px;
   cursor: pointer;
+  transition: all 0.2s linear;
 
   &_light {
-    @include button($background: $white, $color: $dark-blue);
+    @include button($background: $white, $color: $dark-brown);
+  }
+  &_light:hover {
+    @include button($background: $dark-brown, $color: $white);
   }
 
   &_dark {
-    @include button($background: $dark-blue, $color: $white);
+    @include button($background: $dark-brown, $color: $white);
+  }
+  &_dark:hover {
+    @include button($background: $white, $color: $dark-brown);
+  }
+
+  &_circle,
+  &_circle:hover {
+    @include button($border-radius: 50%);
+    width: 60px;
+    height: 60px;
+    line-height: 1.1;
+  }
+
+  &_absolute {
+    position: absolute;
+    right: 0;
+    top: 17px;
   }
 
   &:disabled {
     opacity: 0.4;
+  }
+}
+
+.button:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 5px transparent;
+  animation: pulse 1s;
+}
+
+.button:active {
+  top: 2px;
+}
+.button:hover:active {
+  transform: translateY(3px);
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 0 0 $dark-brown;
   }
 }

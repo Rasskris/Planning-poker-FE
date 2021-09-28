@@ -6,11 +6,11 @@
 
   &__minutes,
   &__seconds {
-    padding: 3px;
     font-weight: 600;
 
     > :nth-child(1) {
-      @include font($size: 10px, $align: left);
+      @include font($size: 15px, $align: left);
+      padding-left: 8px;
     }
 
     > :nth-child(2) {
@@ -20,6 +20,7 @@
     input {
       height: 40px;
       width: 60px;
+      border-radius: 5px;
       @include font(36px);
     }
   }

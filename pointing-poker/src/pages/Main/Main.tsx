@@ -56,9 +56,7 @@ const Main: FC = () => {
           <ConnectNotification onModalCloseHandler={handleCloseModal} />
         </BackDropModal>
       )}
-      <div className={classes.logo}>
-        <div className={classes.logo_icon} />
-      </div>
+      <p className={classes.logo}>Poker Planning </p>
       <h1 className={classes.header}>Start your planning:</h1>
       <div className={classes.create}>
         <p>Create session:</p>

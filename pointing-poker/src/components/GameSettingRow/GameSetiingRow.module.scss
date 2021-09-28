@@ -3,4 +3,13 @@
 .game_setting_row {
   @include flex();
   column-gap: 3%;
+  > :nth-child(1) {
+    text-align: left;
+    align-self: flex-start;
+    margin-bottom: 5px;
+  }
+}
+
+.game_setting_row:last-child {
+  @include flex($direction: column);
 }

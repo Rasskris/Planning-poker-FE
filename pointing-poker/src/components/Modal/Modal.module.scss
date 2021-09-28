@@ -8,6 +8,9 @@
   overflow: auto;
   z-index: 150;
   padding: 30px;
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: 0 0 11px $sandy-brown-ligh;
+  transition: all 1s linear;
 }
 
 .header {

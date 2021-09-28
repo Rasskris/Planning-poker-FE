@@ -12,12 +12,10 @@ const Header: FC = () => {
       <div className={classes.wrapper}>
         <div className={classes.background}>
           <div className={classes.background_darkBlue} />
-          <div className={classes.background_blue} />
+          {/*<div className={classes.background_blue} />*/}
         </div>
         <div className={classes.icons}>
-          <div className={classes.logo}>
-            <div className={classes.logo_icon} />
-          </div>
+          <div className={classes.logo} />
           {isLogin && <ChatButton />}
         </div>
       </div>

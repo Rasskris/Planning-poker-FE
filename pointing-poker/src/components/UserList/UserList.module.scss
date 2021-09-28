@@ -1,9 +1,17 @@
 @import '../../layout/styles-config';
 
+.wrapper {
+  width: 100%;
+}
+
 .userList {
-  @include flex($direction: column);
-  .title {
-    @include font($size: 24px, $weight: bold);
-    margin-bottom: 5px;
-  }
+  @include flex($direction: row, $wrap: wrap, $justify: center);
+}
+
+.title {
+  @include font($size: 24px, $weight: bold);
+  margin-bottom: 5px;
+  text-align: left;
+  border-bottom: 1px dotted brown;
+  border-top: 1px dotted brown;
 }

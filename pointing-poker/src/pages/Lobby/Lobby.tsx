@@ -56,8 +56,11 @@ const Lobby: FC = () => {
         {isDealer && (
           <div className={classes.wrapper}>
             <h3>Game ID:</h3>
-            <p>{gameId}</p>
-            <Button text="Start Game" colorButton="dark" type="button" onClick={handleStartGame} />
+            <p className={classes.tooltipContainer}>
+              {gameId}
+              <span className={classes.tooltipText}>Use this id to invite others</span>
+            </p>
+            <Button btnShape="circle" text="Start Game" colorButton="dark" type="button" onClick={handleStartGame} />
           </div>
         )}
         <div className={classes.wrapper}>
