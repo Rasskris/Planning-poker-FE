@@ -12,11 +12,11 @@ interface TimerContainerProps {
   timerStarted: boolean;
   areSettingsEdited: boolean;
   onChangeTimer?: (time: { minutes: number; seconds: number }) => void;
-  handlerStopTimer: () => void;
+  onStopTimer: () => void;
 }
 
 const TimerContainer = (props: TimerContainerProps) => {
-  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer, handlerStopTimer } = props;
+  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer, onStopTimer } = props;
   const [minutes, setMinutes] = useState<number>(initialMinute);
   const [seconds, setSeconds] = useState<number>(initialSeconds);
   const [resetTimer, setResetTimer] = useState<boolean>(false);
@@ -32,9 +32,9 @@ const TimerContainer = (props: TimerContainerProps) => {
   useEffect(() => {
     if (minutes === 0 && seconds === 0 && !areSettingsEdited && !resetTimer) {
       setResetTimer(true);
-      handlerStopTimer();
+      onStopTimer();
     }
-  }, [areSettingsEdited, handlerStopTimer, minutes, resetTimer, seconds, timerStarted]);
+  }, [areSettingsEdited, onStopTimer, minutes, resetTimer, seconds, timerStarted]);
 
   const handleChangeMinutes = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
@@ -84,7 +84,7 @@ const TimerContainer = (props: TimerContainerProps) => {
 TimerContainer.defaultProps = {
   timerStarted: false,
   areSettingsEdited: false,
-  handlerStopTimer: () => {},
+  onStopTimer: () => {},
 };
 
 export { TimerContainer };

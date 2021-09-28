@@ -67,7 +67,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     }
   };
 
-  const handlerRestartRound = () => {
+  const handleRestartRound = () => {
     dispatch(
       addGameRoundData({
         gameId,
@@ -78,7 +78,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     );
   };
 
-  const handlerStartRound = () => {
+  const handleStartRound = () => {
     dispatch(
       addGameRoundData({
         gameId,
@@ -89,11 +89,11 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     );
   };
 
-  const handlerNextIssue = () => {
+  const handleNextIssue = () => {
     dispatch(updateGameRoundStatistics({ gameId, gameRoundData, userId: currentUserId }));
   };
 
-  const handlerStopGameRound = useCallback(() => {
+  const handleStopGameRound = useCallback(() => {
     dispatch(stopGameRound());
   }, [dispatch]);
 
@@ -105,9 +105,9 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   useEffect(() => {
     if (!isActive) return;
     checkingNumberPlayersPlayedCallback()
-      .then(() => handlerStopGameRound())
+      .then(() => handleStopGameRound())
       .catch(() => {});
-  }, [checkingNumberPlayersPlayedCallback, handlerStopGameRound, isActive]);
+  }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive]);
 
   const roundStatiscticsCalculationCallback = useCallback(
     () => roundStatiscticsCalculation({ playerCards }),
@@ -144,7 +144,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
                 initialMinute={settings.timerValuesSetting.minutes}
                 initialSeconds={settings.timerValuesSetting.seconds}
                 timerStarted={gameRoundData.roundIsStarted}
-                handlerStopTimer={handlerStopGameRound}
+                onStopTimer={handleStopGameRound}
               />
             )}
             {/* condition for displaying buttons */}
@@ -155,13 +155,13 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
                     type="button"
                     text="RESTART ROUND"
                     colorButton="light"
-                    onClick={handlerRestartRound}
+                    onClick={handleRestartRound}
                     disabled={gameRoundData.roundIsStarted ? true : false}
                   />
-                  <Button type="button" text="NEXT ISSUE" colorButton="dark" onClick={handlerNextIssue} />
+                  <Button type="button" text="NEXT ISSUE" colorButton="dark" onClick={handleNextIssue} />
                 </div>
               ) : (
-                <Button type="button" text="RUN ROUND" colorButton="dark" onClick={handlerStartRound} />
+                <Button type="button" text="RUN ROUND" colorButton="dark" onClick={handleStartRound} />
               ))}
           </div>
           <div>
