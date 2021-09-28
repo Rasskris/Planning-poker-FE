@@ -27,8 +27,9 @@ import {
 } from '../../components';
 import classes from './Game.module.scss';
 import { stopGameRound, updateRoundStatistics } from '../../redux/slices';
-import { IObjectType } from '../../interfaces/IObjectType';
 import { RoundStatistics } from '../../components/RoundStatistics';
+import { roundStatiscticsCalculation } from '../../utils/roundStatisticsCalculation';
+import { checkingNumberPlayersPlayed } from '../../utils/checkingNumberPlayersPlayed';
 
 interface IGameProps {
   currentUser: IUser;
@@ -47,7 +48,9 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const isScoreVisible = true;
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const settings = useAppSelector(state => state.gameSettings);
+  const { automaticFlipCardsSetting } = settings;
   const gameRoundData = useAppSelector(state => state.gameRound);
+  const { playerCards, isActive } = gameRoundData;
   const playersWhithoutDillerIds = useAppSelector(selectPlayersIds);
   const playersAndDillerIds = useAppSelector(selectPlayersAndDealerIds);
   const allPlayersIds = settings.scramMasterAsPlayerSetting ? playersAndDillerIds : playersWhithoutDillerIds;
@@ -94,52 +97,28 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     dispatch(stopGameRound());
   }, [dispatch]);
 
-  const checkingNumberPlayersPlayed = useCallback(() => {
-    let playerCards: IObjectType = gameRoundData.playerCards;
-    if (!gameRoundData.isActive) return;
-    if (settings.automaticFlipCardsSetting) {
-      if (Object.keys(playerCards).length === 0) return;
-      for (let key in playerCards) {
-        if (!playerCards[key]) return;
-      }
-      handlerStopGameRound();
-    }
-  }, [gameRoundData.playerCards, gameRoundData.isActive, settings.automaticFlipCardsSetting, handlerStopGameRound]);
+  const checkingNumberPlayersPlayedCallback = useCallback(
+    () => checkingNumberPlayersPlayed({ playerCards, automaticFlipCardsSetting }),
+    [automaticFlipCardsSetting, playerCards],
+  );
 
   useEffect(() => {
-    checkingNumberPlayersPlayed();
-  }, [checkingNumberPlayersPlayed]);
+    if (!isActive) return;
+    checkingNumberPlayersPlayedCallback()
+      .then(() => handlerStopGameRound())
+      .catch(() => {});
+  }, [checkingNumberPlayersPlayedCallback, handlerStopGameRound, isActive]);
 
-  const roundStatiscticsCalculation = useCallback(() => {
-    if (gameRoundData.isActive) return;
-    let playerCards: IObjectType = gameRoundData.playerCards;
-    let roundStatisticsMap: Map<string | null, number> = new Map(); // key: score Card Value, value: number of identical cards
-    let numberPlayersOfRound = 0;
-    for (let key in playerCards) {
-      numberPlayersOfRound += 1;
-      let scoreCardValue = playerCards[key] ? playerCards[key] : 'unknown';
-      let numberOfIdenticalCards = roundStatisticsMap.get(scoreCardValue);
-      if (numberOfIdenticalCards) {
-        roundStatisticsMap.set(scoreCardValue, numberOfIdenticalCards + 1);
-      } else {
-        roundStatisticsMap.set(scoreCardValue, 1);
-      }
-    }
-
-    for (let key of roundStatisticsMap.keys() as any) {
-      let numberOfIdenticalCards = roundStatisticsMap.get(key);
-      if (numberOfIdenticalCards) {
-        let percentageValue = (numberOfIdenticalCards * 100) / numberPlayersOfRound;
-        roundStatisticsMap.set(key, percentageValue);
-      }
-    }
-    let roundStatisticsObj = Object.fromEntries(roundStatisticsMap);
-    dispatch(updateRoundStatistics(roundStatisticsObj));
-  }, [gameRoundData.isActive, gameRoundData.playerCards, dispatch]);
+  const roundStatiscticsCalculationCallback = useCallback(
+    () => roundStatiscticsCalculation({ playerCards }),
+    [playerCards],
+  );
 
   useEffect(() => {
-    roundStatiscticsCalculation();
-  }, [roundStatiscticsCalculation]);
+    if (isActive) return;
+    const roundStatistics = roundStatiscticsCalculationCallback();
+    dispatch(updateRoundStatistics(roundStatistics));
+  }, [dispatch, isActive, roundStatiscticsCalculationCallback]);
 
   return (
     <section className={classes.game}>
