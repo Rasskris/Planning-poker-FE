@@ -6,10 +6,10 @@ import { REDIRECT_TO_MAIN_TEXT, REJECTED_TO_GAME_TEXT } from '../../constants';
 import classes from './Notification.module.scss';
 
 interface INotificationProps {
-  isRejectedToGame: boolean;
+  isVisible: boolean;
 }
 
-const RejectedToGameNotification: FC<INotificationProps> = ({ isRejectedToGame }) => {
+const RejectedToGameNotification: FC<INotificationProps> = ({ isVisible }) => {
   const dispatch = useAppDispatch();
 
   const handleClickYes = () => {
@@ -22,7 +22,7 @@ const RejectedToGameNotification: FC<INotificationProps> = ({ isRejectedToGame }
   };
 
   return (
-    <BackDropModal isBackDropOpen={isRejectedToGame}>
+    <BackDropModal isBackDropOpen={isVisible}>
       <div className={classes.notification}>
         <p>{REJECTED_TO_GAME_TEXT}</p>
         <p>{REDIRECT_TO_MAIN_TEXT}</p>

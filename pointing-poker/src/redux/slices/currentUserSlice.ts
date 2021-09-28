@@ -7,7 +7,7 @@ const initialState: ICurrentUser = {
   user: null,
   isPendingDealerAnswer: false,
   isAutoAdmitedToGame: false,
-  isRejectedToGame: false,
+  isAccessToGameRejected: false,
 };
 
 export const currentUserSlice = createSlice({
@@ -23,10 +23,10 @@ export const currentUserSlice = createSlice({
     },
     rejectToGame: state => {
       state.isPendingDealerAnswer = false;
-      state.isRejectedToGame = true;
+      state.isAccessToGameRejected = true;
     },
     resetRejectedStatus: state => {
-      state.isRejectedToGame = false;
+      state.isAccessToGameRejected = false;
     },
     resetAdmitedToGameStatus: state => {
       state.isAutoAdmitedToGame = false;
@@ -34,7 +34,6 @@ export const currentUserSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(addUser.fulfilled, (state, { payload }) => {
-      console.log(payload);
       state.isLogin = true;
       state.user = payload.user;
       state.isPendingDealerAnswer = payload.isPendingDealerAnswer;

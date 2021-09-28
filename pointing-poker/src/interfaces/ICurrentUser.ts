@@ -5,5 +5,5 @@ export interface ICurrentUser {
   user: null | IUser;
   isPendingDealerAnswer: boolean;
   isAutoAdmitedToGame: boolean;
-  isRejectedToGame: boolean;
+  isAccessToGameRejected: boolean;
 }

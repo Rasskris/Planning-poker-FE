@@ -21,7 +21,7 @@ export const selectPendingDealerAnswer = (state: RootState) => state.currentUser
 
 export const selectAutoAdmitedStatus = (state: RootState) => state.currentUser.isAutoAdmitedToGame;
 
-export const selectRejectedToGameStatus = (state: RootState) => state.currentUser.isRejectedToGame;
+export const selectRejectedToGameStatus = (state: RootState) => state.currentUser.isAccessToGameRejected;
 
 export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 

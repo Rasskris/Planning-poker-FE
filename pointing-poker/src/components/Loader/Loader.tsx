@@ -4,12 +4,12 @@ import { PENDING_MESSAGE } from '../../constants';
 import classes from './Loader.module.scss';
 
 interface ILoaderProps {
-  isPendingDealerAnswer: boolean;
+  isVisible: boolean;
 }
 
-const Loader: FC<ILoaderProps> = ({ isPendingDealerAnswer }) => {
+const Loader: FC<ILoaderProps> = ({ isVisible }) => {
   return (
-    <BackDropModal isBackDropOpen={isPendingDealerAnswer}>
+    <BackDropModal isBackDropOpen={isVisible}>
       <div className={classes.spinner}>
         <span>{PENDING_MESSAGE}</span>
         <div className={classes.halfSpinner} />

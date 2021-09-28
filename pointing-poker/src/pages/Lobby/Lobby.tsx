@@ -49,7 +49,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
   const isPendingDealerAnswer = useAppSelector(selectPendingDealerAnswer);
-  const isRejectedToGame = useAppSelector(selectRejectedToGameStatus);
+  const isAccessToGameRejected = useAppSelector(selectRejectedToGameStatus);
   const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
 
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
@@ -82,8 +82,8 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
 
   return (
     <section className={classes.lobby}>
-      {isPendingDealerAnswer && <Loader isPendingDealerAnswer={isPendingDealerAnswer} />}
-      {isRejectedToGame && <RejectedToGameNotification isRejectedToGame={isRejectedToGame} />}
+      {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
+      {isAccessToGameRejected && <RejectedToGameNotification isVisible={isAccessToGameRejected} />}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.wrapper}>
