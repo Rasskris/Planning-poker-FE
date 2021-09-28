@@ -9,10 +9,11 @@ import {
   selectVoteStatus,
   selectVoteVictim,
 } from '../../redux/selectors';
-import { addVote, getUsers } from '../../redux/thunks';
+import { addVote, deleteUser, getUsers, updateGameStatus } from '../../redux/thunks';
 import { USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
 import {
+  Button,
   Chat,
   DealerNotification,
   GameCardsList,
@@ -22,6 +23,7 @@ import {
   VoteNotification,
   WaitingList,
 } from '../../components';
+import { logout } from '../../redux/actions';
 import classes from './Game.module.scss';
 
 interface IGameProps {
@@ -54,10 +56,21 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     }
   };
 
+  const handleStopGame = () => {
+    dispatch(updateGameStatus({ gameId, currentUserId, isStarted: false }));
+  };
+
+  const handleExitGame = () => {
+    dispatch(deleteUser({ currentUserId }));
+    dispatch(logout());
+  };
+
   return (
     <section className={classes.game}>
       <div className={classes.content}>
         {isDealer && <WaitingList />}
+        {isDealer && <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />}
+        {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList
             isScoreVisible={!isScoreVisible}
