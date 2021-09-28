@@ -1,4 +1,5 @@
 import { IObjectType } from '../interfaces/IObjectType';
+import _ from 'lodash';
 
 interface ICheckingNumberPlayersPlayedProps {
   playerCards: IObjectType;
@@ -10,7 +11,7 @@ export const checkingNumberPlayersPlayed = async ({
   automaticFlipCardsSetting,
 }: ICheckingNumberPlayersPlayedProps) => {
   if (automaticFlipCardsSetting) {
-    if (Object.keys(playerCards).length !== 0) {
+    if (_.size(playerCards) !== 0) {
       if (Object.values(playerCards).every(elem => elem !== null)) {
         return Promise.resolve();
       }
