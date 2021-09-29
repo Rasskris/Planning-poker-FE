@@ -21,3 +21,9 @@ export const updateGameStatus = createAsyncThunk(
     return status;
   },
 );
+
+export const deleteGame = createAsyncThunk('game/deleteGame', async (gameId: string) => {
+  const { id } = await clientAPI.delete(`/api/games/${gameId}`);
+
+  return id;
+});

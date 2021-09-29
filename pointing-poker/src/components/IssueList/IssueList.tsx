@@ -6,6 +6,7 @@ import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
+import { setCurrentIssue } from '../../redux/slices';
 
 interface IssueListProps {
   currentUser: IUser;
@@ -31,6 +32,7 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
     dispatch(updateIssue(issue));
+    dispatch(setCurrentIssue(issue.id));
   };
 
   return (

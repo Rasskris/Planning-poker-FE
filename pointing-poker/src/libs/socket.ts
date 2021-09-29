@@ -13,14 +13,16 @@ import {
   enableVote,
   startGameRound,
   updateGameRoundData,
-  deleteCurrentUser,
   memberJoin,
+  setRoundStatisticFromServer,
+  resetGameRoundData,
   addNewComer,
   admitToGame,
   rejectToGame,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
+import { logout } from '../redux/actions';
 
 export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): Socket => {
   const socket = io(URL, {
@@ -42,8 +44,7 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('memberLeave', deletedUserId => {
     if (userId === deletedUserId) {
-      dispatch({ type: updateGameStatus.fulfilled.type, payload: false });
-      dispatch(deleteCurrentUser());
+      dispatch(logout());
     } else {
       dispatch({ type: deleteUser.fulfilled.type, payload: deletedUserId });
     }
@@ -91,6 +92,14 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch(updateGameRoundData({ ...gameRoundData }));
   });
 
+  socket.on('resetGameRoundData', () => {
+    dispatch(resetGameRoundData());
+  });
+
+  socket.on('getRoundStatistic', roundStatistic => {
+    dispatch(setRoundStatisticFromServer(roundStatistic));
+  });
+
   socket.on('notifyDealer', user => {
     dispatch(addNewComer(user));
   });
@@ -102,6 +111,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('rejectToGame', () => {
     dispatch(rejectToGame());
+  });
+
+  socket.on('cancelGame', () => {
+    dispatch(logout());
   });
 
   socket.on('disconnect', reason => {

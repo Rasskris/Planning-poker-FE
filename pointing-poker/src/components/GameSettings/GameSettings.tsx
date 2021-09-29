@@ -1,5 +1,5 @@
 import { ChangeEvent, FC } from 'react';
-import { Button, GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
+import { GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { updateSettings } from '../../redux/slices/gameSettingsSlice';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
@@ -38,22 +38,22 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
 
     dispatch(updateSettings({ scoreTypeSetting: value, scoreValues, scoreTypeShortSetting }));
   };
-  const handlerChangeTimer = (time: { minutes: number; seconds: number }) => {
+  const handleChangeTimer = (time: { minutes: number; seconds: number }) => {
     dispatch(updateSettings({ timerValuesSetting: time }));
   };
-  const handlerScramMasterAsPlayerSetting = () => {
+  const handleScramMasterAsPlayerSetting = () => {
     dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }));
   };
-  const handlerChangingCardInRoundEndSetting = () => {
+  const handleChangingCardInRoundEndSetting = () => {
     dispatch(updateSettings({ changingCardInRoundEndSetting: !changingCardInRoundEndSetting }));
   };
-  const handlerIsTimerNeededSetting = () => {
+  const handleIsTimerNeededSetting = () => {
     dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }));
   };
-  const handlerChangeSelectionAfterFlippingCardsSetting = () => {
+  const handleChangeSelectionAfterFlippingCardsSetting = () => {
     dispatch(updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }));
   };
-  const handlerAutomaticFlipCardsSetting = () => {
+  const handleAutomaticFlipCardsSetting = () => {
     dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }));
   };
   const handlerAutomaticAdmitAfterStartGame = () => {
@@ -63,11 +63,10 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
   return (
     <section className={classes.game_settings}>
       <h2 className={classes.game_settings_title}>Game Settings</h2>
-      <Button type="button" text="Save Settings" colorButton="dark" onClick={handlerSaveSettingsButton} />
       <GameSettingRow>
         <Switcher
           switchState={scramMasterAsPlayerSetting}
-          onChange={handlerScramMasterAsPlayerSetting}
+          onChange={handleScramMasterAsPlayerSetting}
           labelText="Scram master as player"
         />
       </GameSettingRow>
@@ -81,14 +80,14 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
       <GameSettingRow>
         <Switcher
           switchState={changingCardInRoundEndSetting}
-          onChange={handlerChangingCardInRoundEndSetting}
+          onChange={handleChangingCardInRoundEndSetting}
           labelText="Changing card in round end"
         />
       </GameSettingRow>
       <GameSettingRow>
         <Switcher
           switchState={isTimerNeededSetting}
-          onChange={handlerIsTimerNeededSetting}
+          onChange={handleIsTimerNeededSetting}
           labelText="Is timer needed"
         />
       </GameSettingRow>
@@ -99,7 +98,7 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
             initialMinute={timerValuesSetting.minutes}
             initialSeconds={timerValuesSetting.seconds}
             areSettingsEdited
-            onChangeTimer={handlerChangeTimer}
+            onChangeTimer={handleChangeTimer}
           />
         </GameSettingRow>
       )}
@@ -107,14 +106,14 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
       <GameSettingRow>
         <Switcher
           switchState={changeSelectionAfterFlippingCardsSetting}
-          onChange={handlerChangeSelectionAfterFlippingCardsSetting}
+          onChange={handleChangeSelectionAfterFlippingCardsSetting}
           labelText="Сhange selection after flipping cards"
         />
       </GameSettingRow>
       <GameSettingRow>
         <Switcher
           switchState={automaticFlipCardsSetting}
-          onChange={handlerAutomaticFlipCardsSetting}
+          onChange={handleAutomaticFlipCardsSetting}
           labelText="Automatic flip of cards if everyone voted"
         />
       </GameSettingRow>
