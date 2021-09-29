@@ -31,7 +31,7 @@ export type RootState = ReturnType<typeof appReducer>;
 
 export const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
   if (action.type === logout.type) {
-    return appReducer(initialRootState, action);
+    state = initialRootState;
   }
   return appReducer(state, action);
 };
