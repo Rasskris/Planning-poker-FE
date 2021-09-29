@@ -4,11 +4,8 @@
   @include flex($direction: column, $align: flex-start);
   max-width: 1000px;
   border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
-  box-shadow: 0 0 11px #795548c2;
+  box-shadow: $card-shadow;
   padding: 25px 40px;
-  > * {
-    margin: 5px 0;
-  }
 }
 
 .form {
@@ -27,13 +24,13 @@
 
 .logo {
   text-transform: uppercase;
-  background: linear-gradient(270deg, $dark-brown, #fff, #fff);
+  background: linear-gradient(270deg, $dark-brown, $white, $white);
   letter-spacing: 5px;
   background-size: 77%;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 4px -1px 0 #d5d5d5;
+  text-shadow: 4px -1px 0 $alto;
   @include font($size: 4rem, $height: 56.25px, $weight: 700);
   animation: shine 5s linear infinite;
 }

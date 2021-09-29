@@ -4,8 +4,9 @@
   @include flex($direction: column, $align: flex-start);
   width: 100%;
   .title {
-    @include font($size: 24px, $weight: bold, $align: left);
-    margin-bottom: 5px;
+    @include font($size: 24px, $weight: bold);
+    padding: 5px 0;
+    margin-bottom: 15px;
     border-bottom: 1px dotted brown;
     border-top: 1px dotted brown;
     width: 100%;
@@ -24,8 +25,8 @@
 .btnCreate {
   background-repeat: no-repeat;
   background-size: contain;
-  width: 33px;
-  height: 33px;
+  width: 30px;
+  height: 30px;
   background-image: url(../../assets/icons/icon__create.svg);
   &:hover {
     opacity: 0.5;

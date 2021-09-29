@@ -1,0 +1,9 @@
+@import '../../layout/styles-config.scss';
+
+.wrapper {
+  @include flex($wrap: wrap, $justify: center);
+  grid-column-gap: 10px;
+  column-gap: 10px;
+  grid-row-gap: 10px;
+  row-gap: 10px;
+}

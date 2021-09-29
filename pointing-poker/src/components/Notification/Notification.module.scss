@@ -5,9 +5,8 @@
   height: 250px;
   padding: 20px;
   @include flex($direction: column, $align: center);
-  box-shadow: $card-shadow;
   border-radius: $card-radius;
-  background-color: #ffffff;
+  background-color: $white;
   button {
     padding: 2px 15px;
   }

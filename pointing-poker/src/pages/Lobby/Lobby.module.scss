@@ -16,7 +16,6 @@
       transition: all 0.2s;
       .tooltipText {
         visibility: hidden;
-        //width: 120px;
         background-color: $sandy-brown;
         color: $white;
         text-align: center;
@@ -34,7 +33,7 @@
       .tooltipText:after {
         content: ' ';
         position: absolute;
-        bottom: 100%; /* At the top of the tooltip */
+        bottom: 100%;
         left: 50%;
         margin-left: -5px;
         border-width: 5px;
@@ -45,10 +44,17 @@
     .tooltipContainer:hover .tooltipText {
       visibility: visible;
     }
+    .btnWrapper {
+      @include flex($direction: column);
+      height: 70px;
+      > * {
+        width: 100%;
+      }
+    }
   }
 }
 .content {
-  padding: 20px 30px;
+  padding: 30px;
   width: 45%;
   @include flex($direction: column, $align: flex-start);
   .gameControl {
@@ -63,7 +69,7 @@
   height: 100vh;
 }
 
-@media all and (max-width: 1350px) {
+@media all and (max-width: 1500px) {
   .content {
     padding: 20px 30px;
     width: 65%;

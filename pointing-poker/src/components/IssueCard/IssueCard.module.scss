@@ -8,16 +8,15 @@
   height: fit-content;
   word-break: break-all;
   @include flex($justify: flex-start);
-  box-shadow: $card-shadow;
   border-radius: $card-radius;
   @include flex($align: center, $justify: space-between);
+  box-shadow: $card-shadow;
   &.active {
     background-color: #60dabf;
   }
 }
 .issueInfo {
   overflow: hidden;
-  width: 90%;
   @include flex($direction: column, $justify: center, $align: flex-start);
 }
 .issueCurrent {
@@ -28,11 +27,12 @@
   font-size: 23px;
 }
 .issuePriority {
-  @include font($size: 10px, $height: 10px, $weight: 200);
+  @include font($size: 12px, $height: 10px, $weight: 200);
   color: grey;
 }
 .btnRemove {
-  z-index: 1;
+  @include flex();
+  flex-shrink: 0;
   background-repeat: no-repeat;
   background-size: contain;
   width: 45px;
@@ -41,7 +41,7 @@
   &:hover {
     opacity: 0.6;
     transform: rotate(90deg);
-    filter: invert(31%) sepia(52%) saturate(15048%) hue-rotate(21deg) brightness(55%) contrast(103%);
+    filter: invert(4%) sepia(27%) saturate(15048%) hue-rotate(21deg) brightness(52%) contrast(168%);
   }
 }
 .cover {
@@ -52,7 +52,7 @@
   height: 100%;
   &:hover {
     cursor: pointer;
-    background-color: #60dabf;
+    background-color: $viking;
     opacity: 0.5;
   }
 }

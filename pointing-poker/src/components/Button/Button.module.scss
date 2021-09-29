@@ -1,7 +1,8 @@
 @import '../../layout/styles-config.scss';
 
 .button {
-  @include font($size: 1.5rem, $height: 30.38px, $weight: 400);
+  @include font($size: 1.5rem, $height: 1.1, $weight: 400);
+  min-height: 30px;
   padding: 0 10px;
   cursor: pointer;
   transition: all 0.2s linear;
@@ -48,8 +49,17 @@
 .button:active {
   top: 2px;
 }
+
 .button:hover:active {
   transform: translateY(3px);
+}
+
+.button:disabled:hover {
+  transform: none;
+  animation: none;
+  cursor: default;
+  color: $black;
+  background-color: $white;
 }
 
 @keyframes pulse {

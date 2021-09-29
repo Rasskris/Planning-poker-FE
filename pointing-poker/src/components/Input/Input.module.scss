@@ -24,11 +24,11 @@
 }
 
 .valid .input {
-  box-shadow: inset 6px 6px 6px #a1bb4133 inset -6px -6px 6px #a1bb4133;
+  box-shadow: inset 6px 6px 6px #a1bb4133 inset -6px -6px 6px $dirty-green;
 }
 
 .invalid .input {
-  box-shadow: inset 6px 6px 6px #e42b7736, inset -6px -6px 6px #e42b7736;
+  box-shadow: inset 6px 6px 6px #e42b7736, inset -6px -6px 6px $dirty-pink;
 }
 
 .error {

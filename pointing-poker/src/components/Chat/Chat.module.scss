@@ -39,8 +39,9 @@ $whiteColor: #ffffff;
     height: 90%;
     overflow-y: auto;
     @include scrollbars(5px, $dark-brown, $white);
-    @include flex($direction: column, $align: flex-start);
+    @include flex($direction: column, $align: flex-start, $justify: flex-start);
     word-break: break-all;
+    line-height: 1;
 
     .message {
       margin-bottom: 15px;
@@ -59,11 +60,10 @@ $whiteColor: #ffffff;
       }
 
       span {
-        padding: 1rem;
-        width: 80px;
+        padding: 0.5rem;
+        width: 90px;
         @include font($size: 1.3rem, $weight: 300);
         color: $dark-brown;
-        padding-left: 0.5rem;
       }
     }
   }
