@@ -11,7 +11,14 @@ import {
   selectVoteStatus,
   selectVoteVictim,
 } from '../../redux/selectors';
-import { addGameRoundData, addVote, getUsers, updateGameRoundStatistics } from '../../redux/thunks';
+import {
+  deleteUser,
+  updateGameStatus,
+  addGameRoundData,
+  addVote,
+  getUsers,
+  updateGameRoundStatistics,
+} from '../../redux/thunks';
 import { USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
 import {
@@ -26,6 +33,7 @@ import {
   VoteNotification,
   WaitingList,
 } from '../../components';
+import { logout } from '../../redux/actions';
 import { stopGameRound, updateRoundStatistics } from '../../redux/slices';
 import { RoundStatistics } from '../../components/RoundStatistics';
 import { roundStatiscticsCalculation } from '../../utils/roundStatisticsCalculation';
@@ -67,6 +75,15 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     } else {
       dispatch(addVote({ gameId, victimId: id, currentUserId }));
     }
+  };
+
+  const handleStopGame = () => {
+    dispatch(updateGameStatus({ gameId, currentUserId, isStarted: false }));
+  };
+
+  const handleExitGame = () => {
+    dispatch(deleteUser({ currentUserId }));
+    dispatch(logout());
   };
 
   const handleRestartRound = () => {
@@ -126,6 +143,8 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     <section className={classes.game}>
       <div className={classes.content}>
         {isDealer && <WaitingList />}
+        {isDealer && <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />}
+        {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList
             isScoreVisible={!isScoreVisible}

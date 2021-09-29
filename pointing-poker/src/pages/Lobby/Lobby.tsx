@@ -26,11 +26,12 @@ import {
   Loader,
   RejectedToGameNotification,
 } from '../../components';
-import { USER_ROLES } from '../../constants';
-import { getUsers, addVote, updateGameStatus, addGameSettings } from '../../redux/thunks';
-import classes from './Lobby.module.scss';
+import { logout } from '../../redux/actions';
+import { getUsers, addVote, updateGameStatus, addGameSettings, deleteGame, deleteUser } from '../../redux/thunks';
 import { IUser } from '../../interfaces';
 import { resetAdmitedToGameStatus } from '../../redux/slices';
+import { USER_ROLES } from '../../constants';
+import classes from './Lobby.module.scss';
 
 interface ILobbyProps {
   currentUser: IUser;
@@ -80,6 +81,16 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
     dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
   };
 
+  const handleCancelGame = () => {
+    dispatch(deleteGame(gameId));
+    dispatch(logout());
+  };
+
+  const handleExitGame = () => {
+    dispatch(deleteUser({ currentUserId }));
+    dispatch(logout());
+  };
+
   return (
     <section className={classes.lobby}>
       {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
@@ -90,8 +101,10 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
             <h3>Game ID:</h3>
             <p>{gameId}</p>
             <Button text="Start Game" colorButton="dark" type="button" onClick={handleStartGame} />
+            <Button text="Cancel Game" colorButton="dark" type="button" onClick={handleCancelGame} />
           </div>
         )}
+        {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList users={dealer} title="Dealer" currentUserId={currentUserId} handleKickUser={handleKickUser} />
         </div>
