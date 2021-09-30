@@ -12,7 +12,6 @@ const Header: FC = () => {
       <div className={classes.wrapper}>
         <div className={classes.background}>
           <div className={classes.background_darkBlue} />
-          {/*<div className={classes.background_blue} />*/}
         </div>
         <div className={classes.icons}>
           <div className={classes.logo} />

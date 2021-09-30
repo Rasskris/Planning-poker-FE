@@ -182,7 +182,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
           />
         )}
         {/* condition for displaying buttons */}
-        {currentUserRole === USER_ROLES.DEALER &&
+        {isDealer &&
           (gameRoundData.roundIsStarted === gameRoundData.isActive ? (
             <div className={classes.btnWrapper}>
               <Button
