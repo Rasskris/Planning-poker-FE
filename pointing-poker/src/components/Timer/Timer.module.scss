@@ -3,24 +3,36 @@
 .timer {
   @include flex($justify: center);
   @include font(36px);
+  width: 190px;
+  height: 80px;
+  margin-bottom: 20px;
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: $card-shadow;
+  background-color: $del-rio;
+  color: $white;
 
   &__minutes,
   &__seconds {
-    padding: 3px;
     font-weight: 600;
 
     > :nth-child(1) {
-      @include font($size: 10px, $align: left);
+      @include font($size: 15px, $align: left);
+      padding-left: 8px;
     }
 
     > :nth-child(2) {
-      @include flex();
+      @include flex($justify: center);
     }
 
     input {
       height: 40px;
       width: 60px;
+      border-radius: 5px;
       @include font(36px);
     }
+  }
+
+  &__minutes {
+    @include flex($direction: column, $align: flex-end);
   }
 }

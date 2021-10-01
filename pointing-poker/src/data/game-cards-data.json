@@ -1,82 +1,82 @@
 [
-    {
-        "scoreType": "fibonacci-numbers",
-        "cards": [
-            {
-                "id": 1,
-                "scoreValue": 1,
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 2,
-                "scoreValue": 2,
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 3,
-                "scoreValue": 3,
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 4,
-                "scoreValue": 5,
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 5,
-                "scoreValue": 8,
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 6,
-                "scoreValue": "coffe",
-                "scoreTypeShort": "FN"
-            },
-            {
-                "id": 7,
-                "scoreValue": "unknown",
-                "scoreTypeShort": "FN"
-            }
-        ]
-    },
-    {
-        "scoreType": "powers-of-two",
-        "cards": [
-            {
-                "id": 1,
-                "scoreValue": 1,
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 2,
-                "scoreValue": 2,
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 3,
-                "scoreValue": 4,
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 4,
-                "scoreValue": 8,
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 5,
-                "scoreValue": 16,
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 6,
-                "scoreValue": "coffe",
-                "scoreTypeShort": "PT"
-            },
-            {
-                "id": 7,
-                "scoreValue": "unknown",
-                "scoreTypeShort": "PT"
-            }
-        ]
-    }
+  {
+    "scoreType": "fibonacci-numbers",
+    "cards": [
+      {
+        "id": 1,
+        "scoreValue": 1,
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 2,
+        "scoreValue": 2,
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 3,
+        "scoreValue": 3,
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 4,
+        "scoreValue": 5,
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 5,
+        "scoreValue": 8,
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 6,
+        "scoreValue": "coffe",
+        "scoreTypeShort": "FN"
+      },
+      {
+        "id": 7,
+        "scoreValue": "unknown",
+        "scoreTypeShort": "FN"
+      }
+    ]
+  },
+  {
+    "scoreType": "powers-of-two",
+    "cards": [
+      {
+        "id": 1,
+        "scoreValue": 1,
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 2,
+        "scoreValue": 2,
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 3,
+        "scoreValue": 4,
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 4,
+        "scoreValue": 8,
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 5,
+        "scoreValue": 16,
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 6,
+        "scoreValue": "coffe",
+        "scoreTypeShort": "PT"
+      },
+      {
+        "id": 7,
+        "scoreValue": "unknown",
+        "scoreTypeShort": "PT"
+      }
+    ]
+  }
 ]

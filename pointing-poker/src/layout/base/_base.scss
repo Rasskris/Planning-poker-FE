@@ -21,6 +21,10 @@ body {
   color: $black;
 }
 
+#root {
+  width: 100%;
+}
+
 button {
   outline: none;
   border: none;
@@ -28,4 +32,8 @@ button {
   &:hover {
     cursor: pointer;
   }
+}
+
+select {
+  cursor: pointer;
 }

@@ -142,8 +142,12 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   return (
     <section className={classes.game}>
       <div className={classes.content}>
-        {isDealer && <WaitingList />}
-        {isDealer && <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />}
+        {isDealer && (
+          <div className={classes.header}>
+            <WaitingList />
+            <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />
+          </div>
+        )}
         {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList
@@ -178,9 +182,9 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
           />
         )}
         {/* condition for displaying buttons */}
-        {currentUserRole === USER_ROLES.DEALER &&
+        {isDealer &&
           (gameRoundData.roundIsStarted === gameRoundData.isActive ? (
-            <div>
+            <div className={classes.btnWrapper}>
               <Button
                 type="button"
                 text="RESTART ROUND"

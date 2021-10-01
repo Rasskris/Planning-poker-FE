@@ -19,20 +19,22 @@ const UserList: FC<IUserListProps> = ({ isScoreVisible, title, users, currentUse
         {isScoreVisible && <p className={classes.title}>Score</p>}
         <p className={classes.title}>{title}</p>
       </div>
-      {users.map(({ id, firstName, lastName, role, avatar, jobPosition, selectedCard }) => (
-        <div className={classes.cardWrapper} key={id}>
-          {isScoreVisible && <ScoreCard scoreType={selectedCard?.scoreType} scoreValue={selectedCard?.scoreValue} />}
-          <UserCard
-            id={id}
-            currentUserId={currentUserId}
-            firstName={firstName}
-            lastName={lastName}
-            jobPosition={jobPosition}
-            handleKickUser={handleKickUser}
-            role={role}
-          />
-        </div>
-      ))}
+      <div className={classes.cardsWrapper}>
+        {users.map(({ id, firstName, lastName, role, avatar, jobPosition, selectedCard }) => (
+          <div className={classes.cardWrapper} key={id}>
+            {isScoreVisible && <ScoreCard scoreType={selectedCard?.scoreType} scoreValue={selectedCard?.scoreValue} />}
+            <UserCard
+              id={id}
+              currentUserId={currentUserId}
+              firstName={firstName}
+              lastName={lastName}
+              jobPosition={jobPosition}
+              handleKickUser={handleKickUser}
+              role={role}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,8 +1,9 @@
 @import '../../layout/styles-config';
 
 .footer {
-  background-color: $dark-blue;
-  width: 100vw;
+  border-radius: 100% 100% 0 0 / 60%;
+  background-color: $dark-brown;
+  width: 100%;
 }
 
 .wrapper {

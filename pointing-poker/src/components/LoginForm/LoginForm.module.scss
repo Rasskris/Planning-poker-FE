@@ -1,14 +1,14 @@
 @import '../../layout/styles-config';
 
 .wrapper {
-  width: 500px;
-  padding: 20px;
+  width: 420px;
+  padding: 0 20px;
   @include flex($direction: column);
-  background-color: #ffffff;
+  background-color: $white;
 }
 
 .form {
-  @include flex($direction: column, $align: flex-start);
+  @include flex($direction: column);
   width: 100%;
 
   & > * {
