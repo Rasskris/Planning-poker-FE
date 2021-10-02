@@ -1,3 +1,9 @@
+export interface IssueStatistics {
+  scoreType: string;
+  scoreValue: string;
+  percent: number;
+}
+
 export interface Issue {
   id: string;
   isCurrent: boolean;
@@ -5,5 +11,6 @@ export interface Issue {
   priority: string;
   creatorId: string;
   gameId: string;
-  done?: boolean;
+  isDone: boolean;
+  statistics?: Array<IssueStatistics>;
 }

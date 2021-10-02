@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIssues, deleteIssue, updateIssue } from '../../redux/thunks';
-import { selectIssues } from '../../redux/selectors';
+import { getIssues, deleteIssue, updateCurrentIssue, getGameSettings } from '../../redux/thunks';
+import { selectIssues, selectSettings } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
-import { setCurrentIssue } from '../../redux/slices';
+import { StatisticCard } from './StatisticCard';
 
 interface IssueListProps {
   currentUser: IUser;
@@ -14,6 +14,7 @@ interface IssueListProps {
 const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   const { id: userId, role, gameId } = currentUser;
   const isDealer = role === USER_ROLES.DEALER;
+  const settings = useAppSelector(selectSettings);
   const [isIssueFormOpen, setIsIssueFormOpen] = useState(false);
   const issues = useAppSelector(selectIssues);
   const dispatch = useAppDispatch();
@@ -31,8 +32,8 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   };
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
-    dispatch(updateIssue(issue));
-    dispatch(setCurrentIssue(issue.id));
+    dispatch(updateCurrentIssue(issue));
+    dispatch({ type: getGameSettings.fulfilled.type, payload: settings });
   };
 
   return (
@@ -50,19 +51,22 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
             <button className={classes.btnCreate} onClick={handleClick}></button>
           </div>
         )}
-        {issues.map(({ id, title, priority, gameId, isCurrent, creatorId }) => (
-          <IssueCard
-            key={id}
-            id={id}
-            title={title}
-            priority={priority}
-            gameId={gameId}
-            creatorId={creatorId}
-            isDealer={isDealer}
-            isCurrent={isCurrent}
-            handleSelectCurrentIssue={handleSelectCurrentIssue}
-            handleRemoveIssue={handleRemoveIssue}
-          />
+        {issues.map(({ id, title, priority, gameId, isCurrent, creatorId, isDone, statistics }) => (
+          <div key={id} className={classes.cardWrapper}>
+            <IssueCard
+              id={id}
+              title={title}
+              priority={priority}
+              gameId={gameId}
+              creatorId={creatorId}
+              isDealer={isDealer}
+              isCurrent={isCurrent}
+              isDone={isDone}
+              handleSelectCurrentIssue={handleSelectCurrentIssue}
+              handleRemoveIssue={handleRemoveIssue}
+            />
+            {isDone && statistics && <StatisticCard statistics={statistics} />}
+          </div>
         ))}
       </div>
     </>

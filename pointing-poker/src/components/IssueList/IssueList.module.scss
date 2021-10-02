@@ -1,7 +1,7 @@
 @import '../../layout/styles-config';
 
 .issueList {
-  @include flex($direction: column);
+  @include flex($direction: column, $align: flex-start);
   .title {
     @include font($size: 24px, $weight: bold);
     margin-bottom: 5px;
@@ -26,4 +26,7 @@
   &:hover {
     opacity: 0.5;
   }
+}
+.cardWrapper {
+  @include flex();
 }

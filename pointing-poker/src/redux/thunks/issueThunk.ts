@@ -14,8 +14,14 @@ export const addIssue = createAsyncThunk('issues/addIssue', async (issue: Partia
   return data;
 });
 
-export const updateIssue = createAsyncThunk('issues/updateIssue', async (issue: Partial<Issue>) => {
-  const data = await clientAPI.put('/api/issues', issue);
+export const updateCurrentIssue = createAsyncThunk('issues/updateCurrentIssue', async (issue: Partial<Issue>) => {
+  const data = await clientAPI.put('/api/issues/current', issue);
+
+  return data;
+});
+
+export const updateDoneIssue = createAsyncThunk('issues/updateDoneIssue', async (issue: Partial<Issue>) => {
+  const data = await clientAPI.put('/api/issues/done', issue);
 
   return data;
 });
