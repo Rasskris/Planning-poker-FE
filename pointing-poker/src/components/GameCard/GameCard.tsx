@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useAppSelector } from '../../hooks';
-import { selectGameStatus } from '../../redux/selectors';
-import { VALUE_COFFE } from '../../constants';
+import { selectRoundStatus } from '../../redux/selectors';
+import { ROUND_STATUS, VALUE_COFFE } from '../../constants';
 import classes from './GameCard.module.scss';
 
 interface IGameProps {
@@ -14,7 +14,8 @@ interface IGameProps {
 const GameCard: FC<IGameProps> = ({ isCurrent, scoreType, scoreValue, handleSelectCurrentCard }) => {
   const gameCardClasses = isCurrent ? [classes.gameCard, classes.active].join(' ') : classes.gameCard;
   const centerCard = scoreValue === VALUE_COFFE ? <div className={classes.cardImg} /> : scoreType;
-  const isGameStarted = useAppSelector(selectGameStatus);
+  const roundStatus = useAppSelector(selectRoundStatus);
+  const isRoundStarted = roundStatus === ROUND_STATUS.STARTED;
 
   const handleClick = () => {
     if (!handleSelectCurrentCard) return;
@@ -32,7 +33,7 @@ const GameCard: FC<IGameProps> = ({ isCurrent, scoreType, scoreValue, handleSele
       <div className={classes.bottom}>
         <span data-testid="bottomCard">{scoreValue}</span>
       </div>
-      {isGameStarted && (
+      {isRoundStarted && (
         <div className={classes.cover} onClick={handleClick}>
           <span className={classes.selectedCard} />
         </div>

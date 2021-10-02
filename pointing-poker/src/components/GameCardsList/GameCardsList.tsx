@@ -2,7 +2,7 @@ import { FC, useState } from 'react';
 import { GameCard } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectCurrentUser, selectScoreTypeShort, selectScoreValues } from '../../redux/selectors';
-import { updateUser, updateUserGameCard } from '../../redux/thunks';
+import { updateUser } from '../../redux/thunks';
 import classes from './GameCardList.module.scss';
 
 const GameCardsList: FC = () => {
@@ -10,7 +10,6 @@ const GameCardsList: FC = () => {
   const scoreValues = useAppSelector(selectScoreValues);
   const scoreType = useAppSelector(selectScoreTypeShort);
   const currentUser = useAppSelector(selectCurrentUser);
-  const gameRoundData = useAppSelector(state => state.gameRound);
   const dispatch = useAppDispatch();
 
   const handleSelectCurrentCard = (scoreValue: string, scoreType: string) => {
@@ -21,16 +20,6 @@ const GameCardsList: FC = () => {
 
     setCurrentGameCard(scoreValue);
     dispatch(updateUser({ ...currentUser, selectedCard }));
-
-    if (!gameRoundData.isActive || !currentUser) return; // !gameRoundData.isActive - makes maps non-clickable if the round is not active (ended)
-    dispatch(
-      updateUserGameCard({
-        gameRoundData,
-        gameId: currentUser.gameId,
-        userId: currentUser.id,
-        valueSelectedGameCard: scoreValue,
-      }),
-    );
   };
 
   return (

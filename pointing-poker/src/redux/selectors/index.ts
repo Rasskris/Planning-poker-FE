@@ -27,6 +27,8 @@ export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 
 export const selectGameStatus = (state: RootState) => state.game.isStarded;
 
+export const selectRoundStatus = (state: RootState) => state.gameRound.roundStatus;
+
 export const selectChatStatus = (state: RootState) => state.chat.isOpen;
 
 export const selectVoteStatus = (state: RootState) => state.vote.isActive;
@@ -35,15 +37,15 @@ export const selectVoteVictim = (state: RootState) => state.vote.victim;
 
 export const selectUserOpenedVote = (state: RootState) => state.vote.userOpenedVote;
 
+export const selectScoreTypeShort = (state: RootState) => state.gameSettings.scoreTypeShortSetting;
+
 export const selectScoreValues = (state: RootState) => state.gameSettings.scoreValues;
 
 export const selectSettings = (state: RootState) => state.gameSettings;
 
-export const selectScoreTypeShort = (state: RootState) => state.gameSettings.scoreTypeShortSetting;
+export const selectTimer = (state: RootState) => state.timer;
 
-export const selectDealer = createSelector([selectUsers], users =>
-  users.filter(user => user.role === USER_ROLES.DEALER),
-);
+export const selectDealer = createSelector([selectUsers], users => users.find(user => user.role === USER_ROLES.DEALER));
 
 export const selectObservers = createSelector([selectUsers], users =>
   users.filter(user => user.role === USER_ROLES.OBSERVER),
@@ -61,4 +63,15 @@ export const selectPlayersIds = createSelector([selectUsers], users => {
 export const selectPlayersAndDealerIds = createSelector([selectUsers], users => {
   const players = users.filter(user => user.role === USER_ROLES.DEALER || user.role === USER_ROLES.PLAYER);
   return players.map(player => player.id);
+});
+
+export const selectCurrentIssue = createSelector([selectIssues], issues => issues.find(issue => issue.isCurrent));
+
+export const getAllSelectedCards = createSelector([selectUsers], users => {
+  users.map(user => {
+    if (user.selectedCard) {
+      return user.selectedCard.scoreValue;
+    }
+    return 'unknown';
+  });
 });

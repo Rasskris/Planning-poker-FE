@@ -1,7 +1,5 @@
+import { ROUND_STATUS } from '../constants';
+
 export interface IGameRoundData {
-  roundIsStarted: boolean;
-  currentIssue: string;
-  playerCards: {};
-  roundStatistics: {};
-  isActive: boolean;
+  roundStatus: ROUND_STATUS;
 }

@@ -3,25 +3,17 @@ import { io, Socket } from 'socket.io-client';
 import {
   addMessage,
   addIssue,
-  updateIssue,
+  updateCurrentIssue,
   deleteIssue,
   deleteUser,
   updateGameStatus,
   updateUser,
+  updateGameSettings,
+  updateRoundStatus,
+  updateDoneIssue,
 } from '../redux/thunks';
-import {
-  enableVote,
-  startGameRound,
-  updateGameRoundData,
-  memberJoin,
-  setRoundStatisticFromServer,
-  resetGameRoundData,
-  addNewComer,
-  admitToGame,
-  rejectToGame,
-} from '../redux/slices';
+import { enableVote, memberJoin, addNewComer, admitToGame, rejectToGame, updateTimer } from '../redux/slices';
 import { URL } from '../constants';
-import { updateSettings } from '../redux/slices/gameSettingsSlice';
 import { logout } from '../redux/actions';
 
 export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): Socket => {
@@ -62,8 +54,12 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch({ type: addIssue.fulfilled.type, payload: issue });
   });
 
-  socket.on('issueUpdate', issues => {
-    dispatch({ type: updateIssue.fulfilled.type, payload: issues });
+  socket.on('issueListUpdate', issues => {
+    dispatch({ type: updateCurrentIssue.fulfilled.type, payload: issues });
+  });
+
+  socket.on('issueUpdate', issue => {
+    dispatch({ type: updateDoneIssue.fulfilled.type, payload: issue });
   });
 
   socket.on('issueDelete', issueId => {
@@ -81,23 +77,7 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
   });
 
   socket.on('gameSettings', gameSettings => {
-    dispatch(updateSettings({ ...gameSettings }));
-  });
-
-  socket.on('startGameRound', gameRoundData => {
-    dispatch(startGameRound({ ...gameRoundData }));
-  });
-
-  socket.on('updateGameRoundData', gameRoundData => {
-    dispatch(updateGameRoundData({ ...gameRoundData }));
-  });
-
-  socket.on('resetGameRoundData', () => {
-    dispatch(resetGameRoundData());
-  });
-
-  socket.on('getRoundStatistic', roundStatistic => {
-    dispatch(setRoundStatisticFromServer(roundStatistic));
+    dispatch({ type: updateGameSettings.fulfilled.type, payload: gameSettings });
   });
 
   socket.on('notifyDealer', user => {
@@ -115,6 +95,15 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('cancelGame', () => {
     dispatch(logout());
+  });
+
+  socket.on('roundStatus', status => {
+    console.log('soket', status);
+    dispatch({ type: updateRoundStatus.fulfilled.type, payload: status });
+  });
+
+  socket.on('timer', timer => {
+    dispatch(updateTimer(timer));
   });
 
   socket.on('disconnect', reason => {

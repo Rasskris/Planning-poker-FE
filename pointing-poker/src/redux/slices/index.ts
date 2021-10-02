@@ -15,14 +15,5 @@ export { gameSettingsSlice, gameSettingsReducer } from './gameSettingsSlice';
 export { enableVote, disableVote, voteReducer } from './voteSlice';
 export { gameSlice, gameReducer } from './gameSlice';
 export { chatSlice, changeChatStatus, chatReducer } from './chatSlice';
-export {
-  gameRoundSlice,
-  gameRoundReducer,
-  startGameRound,
-  updateGameRoundData,
-  stopGameRound,
-  updateRoundStatistics,
-  resetGameRoundData,
-  setRoundStatisticFromServer,
-  setCurrentIssue,
-} from './gameRoundSlice';
+export { gameRoundSlice, gameRoundReducer } from './gameRoundSlice';
+export { timerSlice, updateTimer, timerReducer } from './timerSlice';
