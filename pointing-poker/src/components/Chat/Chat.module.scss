@@ -20,25 +20,28 @@ $whiteColor: #ffffff;
   }
 }
 .chat {
-  min-width: 300px;
+  position: absolute;
+  top: 100px;
+  right: 30px;
+  width: 350px;
   height: 500px;
-  background-color: $greyColor;
+  background-color: $del-rio;
   padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  @include flex($direction: column);
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: 0 0 11px $sandy-brown-light;
   .user-name {
     text-align: start;
     width: 100%;
   }
   .chatMessage {
-    height: 80%;
-    overflow-y: auto;
-    @include scrollbars(5px, $dark-blue, $white);
-    display: flex;
-    flex-direction: column;
     width: 100%;
-    align-content: flex-start;
+    height: 90%;
+    overflow-y: auto;
+    @include scrollbars(5px, $dark-brown, $white);
+    @include flex($direction: column, $align: flex-start, $justify: flex-start);
+    word-break: break-all;
+    line-height: 1;
 
     .message {
       margin-bottom: 15px;
@@ -50,18 +53,17 @@ $whiteColor: #ffffff;
         padding: 1rem;
         width: 220px;
         @include flex();
-        @include font($size: 1rem, $weight: 300);
+        @include font($size: 1.3rem, $weight: 300, $align: start);
         background-color: $whiteColor;
-        border-radius: 10px 0px 10px 10px;
-        text-align: start;
-        color: #0c0c0c;
+        border-radius: 10px 0 10px 10px;
+        color: $black;
       }
 
       span {
-        padding: 1rem;
-        @include font($size: 1rem, $weight: 300);
-        color: $dark-blue;
-        padding-left: 0.5rem;
+        padding: 0.5rem;
+        width: 90px;
+        @include font($size: 1.3rem, $weight: 300);
+        color: $dark-brown;
       }
     }
   }
@@ -71,25 +73,22 @@ $whiteColor: #ffffff;
     height: 50px;
     display: flex;
     input {
-      width: 80%;
+      width: 100%;
       text-decoration: none;
-      background-color: #f9fbff;
-      border: none;
       padding-left: 1rem;
-      border-radius: 5px 0px 0px 5px;
       &:focus {
         outline: none;
       }
     }
     button {
       width: 20%;
-      background-color: #2b3a67;
       background-image: url(../../assets/icons/icon__send.svg);
       background-repeat: no-repeat;
       background-position: center;
-      border-radius: 0px 5px 5px 0px;
+      border-radius: 0 5px 5px 0;
       &:hover {
         cursor: pointer;
+        transform: scale(1.1);
       }
     }
   }

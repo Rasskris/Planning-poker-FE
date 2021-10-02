@@ -40,8 +40,8 @@ const Chat: FC<IChatProps> = ({ currentUser }) => {
   };
 
   return (
-    <div ref={messagesEndRef} className={classes.chat}>
-      <div className={classes.chatMessage}>
+    <div className={classes.chat}>
+      <div ref={messagesEndRef} className={classes.chatMessage}>
         {messages.map(({ id, text, sender }) => {
           return (
             <div key={id} className={classes.message}>

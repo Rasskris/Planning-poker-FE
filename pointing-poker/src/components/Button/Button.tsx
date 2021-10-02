@@ -10,11 +10,18 @@ interface ButtonProps {
   text: string;
   disabled?: boolean;
   colorButton: 'dark' | 'light';
+  shapeButton?: 'circle';
   id?: string;
+  positionButton?: 'absolute' | 'relative';
 }
 
-const Button: FC<ButtonProps> = ({ id, type, onClick, text, disabled, colorButton }) => {
-  const classes: Array<String> = [styles.button, styles[`button_${colorButton}`]];
+const Button: FC<ButtonProps> = ({ id, type, onClick, text, disabled, colorButton, shapeButton, positionButton }) => {
+  const classes: Array<String> = [
+    styles.button,
+    styles[`button_${colorButton}`],
+    styles[`button_${shapeButton}`],
+    styles[`button_${positionButton}`],
+  ];
 
   return (
     <button type={type} onClick={onClick} disabled={disabled} className={classes.join(' ')} id={id}>

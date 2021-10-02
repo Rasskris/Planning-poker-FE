@@ -3,10 +3,14 @@
 .wrapper {
   position: relative;
   @include flex($direction: column, $justify: center);
-  min-height: 487px;
+  min-height: 300px;
   overflow: auto;
   z-index: 2;
   padding: 30px;
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: 0 0 11px $sandy-brown-light;
+  transition: all 1s linear;
+  background-color: $white;
 }
 
 .header {

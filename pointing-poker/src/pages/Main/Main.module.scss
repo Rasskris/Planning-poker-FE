@@ -3,37 +3,50 @@
 .wrapper {
   @include flex($direction: column, $align: flex-start);
   max-width: 1000px;
-  border-radius: 4px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.25);
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: $card-shadow;
   padding: 25px 40px;
-  > * {
-    margin: 5px 0;
-  }
 }
+
 .form {
+  width: 100%;
   @include flex($align: flex-end);
   label {
     @include flex($direction: column, $align: flex-start);
-    font-size: 16px;
+    font-size: 18px;
   }
   input {
     padding: 2px;
+    font-size: 18px;
+    width: 280px;
   }
 }
-.logo {
-  background-image: url('../../assets/icons/icon_main-page.svg');
-  background-repeat: no-repeat;
-  background-size: contain;
 
-  &_icon {
-    width: 350px;
-    height: 150px;
+.logo {
+  text-transform: uppercase;
+  background: linear-gradient(270deg, $dark-brown, $white, $white);
+  letter-spacing: 5px;
+  background-size: 77%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 4px -1px 0 $alto;
+  @include font($size: 4rem, $height: 56.25px, $weight: 700);
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position-x: -500%;
+  }
+  100% {
+    background-position-x: 500%;
   }
 }
 
 .header {
   @include font($size: 3.8rem, $height: 56.25px, $weight: 700);
-  color: $blue;
+  color: $pinch-brown;
 }
 
 .create {
@@ -47,8 +60,10 @@
   @include flex($align: flex-end);
   width: 100%;
   font-size: 2rem;
+}
 
-  > * {
-    margin: 0 20px 0 0;
+@media all and (max-width: 550px) {
+  .wrapper {
+    width: 90%;
   }
 }
