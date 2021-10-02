@@ -34,7 +34,7 @@ const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserI
           {userNameOpenedVote} want to kick member {victimName}. Do you agree with it?{' '}
         </p>
         <div className={classes.btnContainer}>
-          <Button type="submit" text="Yes" colorButton="dark" onClick={handleClickYes} />
+          <Button type="button" text="Yes" colorButton="dark" onClick={handleClickYes} />
           <Button type="button" text="No" colorButton="light" onClick={handleClickNo} />
         </div>
       </div>
