@@ -12,6 +12,7 @@ import {
   chatReducer,
   gameRoundReducer,
   newComerReducer,
+  timerReducer,
 } from '../slices';
 
 const appReducer = combineReducers({
@@ -25,6 +26,7 @@ const appReducer = combineReducers({
   chat: chatReducer,
   gameRound: gameRoundReducer,
   newComers: newComerReducer,
+  timer: timerReducer,
 });
 
 export type RootState = ReturnType<typeof appReducer>;

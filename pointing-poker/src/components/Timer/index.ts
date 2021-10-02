@@ -1,1 +1,1 @@
-export { TimerContainer } from './TimerContainer';
+export { Timer } from './Timer';

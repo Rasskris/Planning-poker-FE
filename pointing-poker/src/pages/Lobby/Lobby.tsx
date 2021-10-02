@@ -25,12 +25,15 @@ import {
   VoteNotification,
   Loader,
   RejectedToGameNotification,
+  TimerNotification,
+  UserCard,
 } from '../../components';
 import { logout } from '../../redux/actions';
-import { getUsers, addVote, updateGameStatus, addGameSettings, deleteGame, deleteUser } from '../../redux/thunks';
+import { getUsers, addVote, updateGameStatus, updateGameSettings, deleteGame, deleteUser } from '../../redux/thunks';
 import { IUser } from '../../interfaces';
 import { resetAdmitedToGameStatus } from '../../redux/slices';
 import { USER_ROLES } from '../../constants';
+import { checkIsTimerValuesNotSetted } from '../../utils';
 import classes from './Lobby.module.scss';
 
 interface ILobbyProps {
@@ -39,6 +42,7 @@ interface ILobbyProps {
 
 const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const [victimData, setVictimData] = useState({ id: '', name: '' });
+  const [isTimerNotificationVisible, setIsTimerNotificationVisible] = useState(false);
 
   const settings = useAppSelector(selectSettings);
   const victim = useAppSelector(selectVoteVictim);
@@ -53,6 +57,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const isAccessToGameRejected = useAppSelector(selectRejectedToGameStatus);
   const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
 
+  const { minutes, seconds } = settings.timerValuesSetting;
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
@@ -77,8 +82,14 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   };
 
   const handleStartGame = () => {
-    dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
-    dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
+    const isTimerValuesNotSetted = checkIsTimerValuesNotSetted(minutes, seconds);
+
+    if (isTimerValuesNotSetted) {
+      setIsTimerNotificationVisible(true);
+    } else {
+      dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
+      dispatch(updateGameSettings({ userId: currentUserId, settings, gameId }));
+    }
   };
 
   const handleCancelGame = () => {
@@ -89,6 +100,11 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const handleExitGame = () => {
     dispatch(deleteUser({ currentUserId }));
     dispatch(logout());
+  };
+
+  const handleCloseTimerNotification = () => () => {
+    console.log('timer notify close', isTimerNotificationVisible);
+    setIsTimerNotificationVisible(false);
   };
 
   return (
@@ -106,13 +122,36 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
         )}
         {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
-          <UserList users={dealer} title="Dealer" currentUserId={currentUserId} handleKickUser={handleKickUser} />
+          <p>Dealer</p>
+          {dealer && (
+            <UserCard
+              id={dealer.id}
+              currentUserId={currentUserId}
+              firstName={dealer.firstName}
+              lastName={dealer.lastName}
+              role={dealer.role}
+              jobPosition={dealer.jobPosition}
+              handleKickUser={handleKickUser}
+            />
+          )}
         </div>
         <div className={classes.wrapper}>
-          <UserList users={players} title="Players" currentUserId={currentUserId} handleKickUser={handleKickUser} />
+          <UserList
+            users={players}
+            title="Players"
+            currentUserId={currentUserId}
+            handleKickUser={handleKickUser}
+            isScoreVisible={false}
+          />
         </div>
         <div className={classes.wrapper}>
-          <UserList users={observers} title="Observers" currentUserId={currentUserId} handleKickUser={handleKickUser} />
+          <UserList
+            users={observers}
+            title="Observers"
+            currentUserId={currentUserId}
+            handleKickUser={handleKickUser}
+            isScoreVisible={false}
+          />
         </div>
         <div className={classes.wrapper}>
           <IssueList currentUser={currentUser} />
@@ -138,6 +177,9 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
         />
       )}
       <VoteNotification />
+      {isTimerNotificationVisible && (
+        <TimerNotification isVisible={isTimerNotificationVisible} handleCloseModal={handleCloseTimerNotification} />
+      )}
     </section>
   );
 };

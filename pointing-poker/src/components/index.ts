@@ -17,7 +17,7 @@ export { GameSettingRow } from './GameSettingRow';
 export { GameSettings } from './GameSettings';
 export { Chat } from './Chat';
 export { ChatButton } from './ChatButton';
-export { TimerContainer } from './Timer';
+export { Timer } from './Timer';
 export { ImageLoader } from './ImageLoader';
 export { Loader } from './Loader';
 export { WaitingList } from './WaitingList';
@@ -27,4 +27,5 @@ export {
   ConnectNotification,
   VoteNotification,
   RejectedToGameNotification,
+  TimerNotification,
 } from './Notification';

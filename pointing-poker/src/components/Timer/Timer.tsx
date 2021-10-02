@@ -1,30 +1,21 @@
-import React, { ChangeEvent, FC } from 'react';
-import styles from './Timer.module.scss';
+import { FC } from 'react';
+import classes from './Timer.module.scss';
 
 interface TimerProps {
   minutes: number;
   seconds: number;
-  areSettingsEdited: boolean;
-  onChangeMinutes: (event: ChangeEvent<HTMLInputElement>) => void;
-  onChangeSeconds: (event: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMinutes, onChangeSeconds }) => (
-  <div className={styles.timer}>
-    <div className={styles.timer__minutes}>
+const Timer: FC<TimerProps> = ({ minutes, seconds }) => (
+  <div className={classes.timer}>
+    <div className={classes.timer__minutes}>
       <p>minutes</p>
-      {areSettingsEdited ? <input type="number" value={minutes} onChange={onChangeMinutes} /> : <p> {minutes}</p>}
+      <span>{minutes}</span>
     </div>
-    <div className={styles.timer__seconds}>
+    <span>:</span>
+    <div className={classes.timer__seconds}>
       <p>seconds</p>
-      <p>
-        <span>:</span>
-        {areSettingsEdited ? (
-          <input type="number" value={seconds} onChange={onChangeSeconds} />
-        ) : (
-          <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
-        )}
-      </p>
+      <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
     </div>
   </div>
 );
