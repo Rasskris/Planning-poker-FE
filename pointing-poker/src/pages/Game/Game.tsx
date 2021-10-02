@@ -106,25 +106,25 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
 
   const handleRestartRound = () => {
     dispatch(
-      addGameRoundData({
-        gameId,
-        currentIssue: gameRoundData.currentIssue,
-        playerCards: allPlayersIds,
-        userId: currentUserId,
-        scoreTypeValue: scoreTypeShortSetting,
-      }),
+        addGameRoundData({
+          gameId,
+          currentIssue: gameRoundData.currentIssue,
+          playerCards: allPlayersIds,
+          userId: currentUserId,
+          scoreTypeValue: scoreTypeShortSetting,
+        }),
     );
   };
 
   const handleStartRound = () => {
     dispatch(
-      addGameRoundData({
-        gameId,
-        currentIssue: gameRoundData.currentIssue,
-        playerCards: allPlayersIds,
-        userId: currentUserId,
-        scoreTypeValue: scoreTypeShortSetting,
-      }),
+        addGameRoundData({
+          gameId,
+          currentIssue: gameRoundData.currentIssue,
+          playerCards: allPlayersIds,
+          userId: currentUserId,
+          scoreTypeValue: scoreTypeShortSetting,
+        }),
     );
   };
 
@@ -134,8 +134,8 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   };
 
   const roundStatiscticsCalculationCallback = useCallback(
-    () => roundStatiscticsCalculation({ playerCards }),
-    [playerCards],
+      () => roundStatiscticsCalculation({ playerCards }),
+      [playerCards],
   );
 
   const handleStopGameRound = useCallback(() => {
@@ -148,132 +148,132 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   }, [currentIssue, currentUserId, dispatch, gameId, isDealer, roundStatiscticsCalculationCallback]);
 
   const checkingNumberPlayersPlayedCallback = useCallback(
-    () => checkingNumberPlayersPlayed({ playerCards, automaticFlipCardsSetting }),
-    [automaticFlipCardsSetting, playerCards],
+      () => checkingNumberPlayersPlayed({ playerCards, automaticFlipCardsSetting }),
+      [automaticFlipCardsSetting, playerCards],
   );
 
   useEffect(() => {
     if (isActive || settings.changingCardInRoundEndSetting) {
       checkingNumberPlayersPlayedCallback()
-        .then(() => handleStopGameRound())
-        .catch(() => {});
+          .then(() => handleStopGameRound())
+          .catch(() => {});
     }
   }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive, settings.changingCardInRoundEndSetting]);
 
   return (
-    <section className={classes.game}>
-      {/*TO DO: link to statistics page, to do only for Diller or available only if the game is completely finished */}
-      <Link to="/statistics"> Statistics Page</Link>
-      <div className={classes.content}>
-        {isDealer && (
-          <div className={classes.header}>
-            <WaitingList />
-            <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />
-          </div>
-        )}
-        {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
-        <div className={classes.wrapper}>
-          <UserList
-            isScoreVisible={isScoreVisible}
-            users={dealer}
-            title="Dealer"
-            currentUserId={currentUserId}
-            handleKickUser={handleKickUser}
-          />
-        </div>
-        <div className={classes.wrapper}>
-          <UserList
-            isScoreVisible={isScoreVisible}
-            users={players}
-            title="Players"
-            currentUserId={currentUserId}
-            handleKickUser={handleKickUser}
-          />
-        </div>
-        <div className={classes.wrapper}>
-          <div onClick={handleGameStatisticsButton} className={classes.game_statistics_bar}></div>
-          <IssueList currentUser={currentUser} />
-        </div>
-        {/* condition for displaying the field of playing cards */}
-        {((isDealer && settings.scramMasterAsPlayerSetting) || !isDealer) && (
-          <div className={classes.wrapper}>
-            {settings.changingCardInRoundEndSetting && <p>You can change the card even if the round is over</p>}
-            <GameCardsList />
-            {((!roundIsStarted && isActive) ||
-              (!settings.changingCardInRoundEndSetting && !isActive) ||
-              !isCurrentPlayerPlayedRound) && (
-              <div className={classes.game_cardlist_plug}>
-                <span>Wait for the next round</span>
+      <section className={classes.game}>
+        {/*TO DO: link to statistics page, to do only for Diller or available only if the game is completely finished */}
+        <Link to="/statistics"> Statistics Page</Link>
+        <div className={classes.content}>
+          {isDealer && (
+              <div className={classes.header}>
+                <WaitingList />
+                <Button text="Stop Game" colorButton="dark" type="button" onClick={handleStopGame} />
               </div>
-            )}
-          </div>
-        )}
-        {/* timer display condition */}
-        {settings.isTimerNeededSetting && (
-          <TimerContainer
-            initialMinute={settings.timerValuesSetting.minutes}
-            initialSeconds={settings.timerValuesSetting.seconds}
-            timerStarted={gameRoundData.roundIsStarted}
-            onStopTimer={handleStopGameRound}
-            isRoundActive={isActive}
-          />
-        )}
-        {/* condition for displaying buttons */}
-        {isDealer &&
-          (gameRoundData.roundIsStarted || currentIssueIsDone ? (
-            <div className={classes.btnWrapper}>
-              <Button
-                type="button"
-                text="RESTART ROUND"
-                colorButton="dark"
-                onClick={handleRestartRound}
-                disabled={gameRoundData.roundIsStarted || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
-              />
-            </div>
-          ) : (
-            <Button
-              type="button"
-              text="RUN ROUND"
-              colorButton="dark"
-              onClick={handleStartRound}
-              disabled={!Boolean(currentIssue) || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
+          )}
+          {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
+          <div className={classes.wrapper}>
+            <UserList
+                isScoreVisible={isScoreVisible}
+                users={dealer}
+                title="Dealer"
+                currentUserId={currentUserId}
+                handleKickUser={handleKickUser}
             />
+          </div>
+          <div className={classes.wrapper}>
+            <UserList
+                isScoreVisible={isScoreVisible}
+                users={players}
+                title="Players"
+                currentUserId={currentUserId}
+                handleKickUser={handleKickUser}
+            />
+          </div>
+          <div className={classes.wrapper}>
+            <div onClick={handleGameStatisticsButton} className={classes.game_statistics_bar}></div>
+            <IssueList currentUser={currentUser} />
+          </div>
+          {/* condition for displaying the field of playing cards */}
+          {((isDealer && settings.scramMasterAsPlayerSetting) || !isDealer) && (
+              <div className={classes.wrapper}>
+                {settings.changingCardInRoundEndSetting && <p>You can change the card even if the round is over</p>}
+                <GameCardsList />
+                {((!roundIsStarted && isActive) ||
+                    (!settings.changingCardInRoundEndSetting && !isActive) ||
+                    !isCurrentPlayerPlayedRound) && (
+                    <div className={classes.game_cardlist_plug}>
+                      <span>Wait for the next round</span>
+                    </div>
+                )}
+              </div>
+          )}
+          {/* timer display condition */}
+          {settings.isTimerNeededSetting && (
+              <TimerContainer
+                  initialMinute={settings.timerValuesSetting.minutes}
+                  initialSeconds={settings.timerValuesSetting.seconds}
+                  timerStarted={gameRoundData.roundIsStarted}
+                  onStopTimer={handleStopGameRound}
+                  isRoundActive={isActive}
+              />
+          )}
+          {/* condition for displaying buttons */}
+          {isDealer &&
+          (gameRoundData.roundIsStarted || currentIssueIsDone ? (
+              <div className={classes.btnWrapper}>
+                <Button
+                    type="button"
+                    text="RESTART ROUND"
+                    colorButton="dark"
+                    onClick={handleRestartRound}
+                    disabled={gameRoundData.roundIsStarted || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
+                />
+              </div>
+          ) : (
+              <Button
+                  type="button"
+                  text="RUN ROUND"
+                  colorButton="dark"
+                  onClick={handleStartRound}
+                  disabled={!Boolean(currentIssue) || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
+              />
           ))}
-        {/* Number of players WARNING */}
-        {_.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS && (
-          <p>The round can be started if the number of players is at least two</p>
-        )}
-        {/* condition for displaying statistics */}
-        {_.size(roundStatistics) !== 0 && isCurrentPlayerPlayedRound ? <RoundStatistics /> : null}
-      </div>
-      {isChatOpen && (
-        <div className={classes.chat}>
-          <Chat currentUser={currentUser} />
+          {/* Number of players WARNING */}
+          {_.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS && (
+              <p>The round can be started if the number of players is at least two</p>
+          )}
+          {/* condition for displaying statistics */}
+          {_.size(roundStatistics) !== 0 && isCurrentPlayerPlayedRound ? <RoundStatistics /> : null}
         </div>
-      )}
-      <DealerNotification currentUserId={currentUserId} victimData={victimData} />
-      {isVoteActive && victim && userOpenedVote && (
-        <MemberNotification
-          isVoteActive={isVoteActive}
-          currentUserId={currentUserId}
-          victim={victim}
-          userNameOpenedVote={userOpenedVote.firstName}
-        />
-      )}
-      <VoteNotification />
-      {/* game round status */}
-      <div className={classes.game_round_status}>
-        {roundIsStarted ? (
-          <p className={classes.game_round_status_active}>Active</p>
-        ) : (
-          <p className={classes.game_round_status_inactive}>Inactive</p>
+        {isChatOpen && (
+            <div className={classes.chat}>
+              <Chat currentUser={currentUser} />
+            </div>
         )}
-      </div>
-      {/* statistics side-bar */}
-      <BackDropModal isBackDropOpen={gameStatistics}>
-        <GameStatistics onClickCancel={handleGameStatisticsButton} />
-      </BackDropModal>
-    </section>
+        <DealerNotification currentUserId={currentUserId} victimData={victimData} />
+        {isVoteActive && victim && userOpenedVote && (
+            <MemberNotification
+                isVoteActive={isVoteActive}
+                currentUserId={currentUserId}
+                victim={victim}
+                userNameOpenedVote={userOpenedVote.firstName}
+            />
+        )}
+        <VoteNotification />
+        {/* game round status */}
+        <div className={classes.game_round_status}>
+          {roundIsStarted ? (
+              <p className={classes.game_round_status_active}>Active</p>
+          ) : (
+              <p className={classes.game_round_status_inactive}>Inactive</p>
+          )}
+        </div>
+        {/* statistics side-bar */}
+        <BackDropModal isBackDropOpen={gameStatistics}>
+          <GameStatistics onClickCancel={handleGameStatisticsButton} />
+        </BackDropModal>
+      </section>
   );
 };
 
