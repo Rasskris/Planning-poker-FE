@@ -1,27 +1,16 @@
 import { ChangeEvent, FC } from 'react';
-import { GameCardsList, GameSettingRow, Switcher, TimerContainer } from '..';
+import { GameCardsList, GameSettingRow, Switcher } from '..';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { updateSettings } from '../../redux/slices/gameSettingsSlice';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
 import { SCORE_VALUES_PT, SCORE_VALUES_FN, SCORE_TYPE_SHORT_FN, SCORE_TYPE_SHORT_PT } from '../../constants';
+import { updateGameSettings } from '../../redux/thunks';
 import classes from './GameSettings.module.scss';
 
-interface GameSettingsProps {
-  handlerSaveSettingsButton?: () => void; //DELETE ?
-}
-
-const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
+const GameSettings: FC = () => {
+  const { scramMasterAsPlayerSetting, scoreTypeSetting, automaticAdmitAfterStartGame, timerValuesSetting } =
+    useAppSelector(state => state.gameSettings);
+  const { minutes, seconds } = timerValuesSetting;
   const dispatch = useAppDispatch();
-  const {
-    scramMasterAsPlayerSetting,
-    changingCardInRoundEndSetting,
-    isTimerNeededSetting,
-    changeSelectionAfterFlippingCardsSetting,
-    automaticFlipCardsSetting,
-    scoreTypeSetting,
-    timerValuesSetting,
-    automaticAdmitAfterStartGame,
-  } = useAppSelector(state => state.gameSettings);
 
   const handleChangeScoreType = (event: ChangeEvent<HTMLSelectElement>) => {
     const { value } = event.target;
@@ -36,28 +25,34 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
       scoreTypeShortSetting = SCORE_TYPE_SHORT_PT;
     }
 
-    dispatch(updateSettings({ scoreTypeSetting: value, scoreValues, scoreTypeShortSetting }));
+    dispatch({
+      type: updateGameSettings.fulfilled.type,
+      payload: { scoreTypeSetting: value, scoreValues, scoreTypeShortSetting },
+    });
   };
-  const handleChangeTimer = (time: { minutes: number; seconds: number }) => {
-    dispatch(updateSettings({ timerValuesSetting: time }));
+
+  const handleChangeTimer = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = target;
+    const newTimerValue = { [name]: Number(value) };
+
+    dispatch({
+      type: updateGameSettings.fulfilled.type,
+      payload: { timerValuesSetting: { ...timerValuesSetting, ...newTimerValue } },
+    });
   };
+
   const handleScramMasterAsPlayerSetting = () => {
-    dispatch(updateSettings({ scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting }));
+    dispatch({
+      type: updateGameSettings.fulfilled.type,
+      payload: { scramMasterAsPlayerSetting: !scramMasterAsPlayerSetting },
+    });
   };
-  const handleChangingCardInRoundEndSetting = () => {
-    dispatch(updateSettings({ changingCardInRoundEndSetting: !changingCardInRoundEndSetting }));
-  };
-  const handleIsTimerNeededSetting = () => {
-    dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }));
-  };
-  const handleChangeSelectionAfterFlippingCardsSetting = () => {
-    dispatch(updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }));
-  };
-  const handleAutomaticFlipCardsSetting = () => {
-    dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }));
-  };
+
   const handlerAutomaticAdmitAfterStartGame = () => {
-    dispatch(updateSettings({ automaticAdmitAfterStartGame: !automaticAdmitAfterStartGame }));
+    dispatch({
+      type: updateGameSettings.fulfilled.type,
+      payload: { automaticAdmitAfterStartGame: !automaticAdmitAfterStartGame },
+    });
   };
 
   return (
@@ -70,6 +65,7 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
           labelText="Scram master as player"
         />
       </GameSettingRow>
+
       <GameSettingRow>
         <Switcher
           switchState={automaticAdmitAfterStartGame}
@@ -77,46 +73,14 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
           labelText="Automatic admit user after start game"
         />
       </GameSettingRow>
-      <GameSettingRow>
-        <Switcher
-          switchState={changingCardInRoundEndSetting}
-          onChange={handleChangingCardInRoundEndSetting}
-          labelText="Changing card in round end"
-        />
-      </GameSettingRow>
-      <GameSettingRow>
-        <Switcher
-          switchState={isTimerNeededSetting}
-          onChange={handleIsTimerNeededSetting}
-          labelText="Is timer needed"
-        />
+
+      <GameSettingRow settingName="Timer settings">
+        <div>
+          <input type="number" name="minutes" min="0" max="10" value={minutes} onChange={handleChangeTimer} />
+          <input type="number" name="seconds" min="0" max="59" value={seconds} onChange={handleChangeTimer} />
+        </div>
       </GameSettingRow>
 
-      {isTimerNeededSetting && (
-        <GameSettingRow settingName="Round Time">
-          <TimerContainer
-            initialMinute={timerValuesSetting.minutes}
-            initialSeconds={timerValuesSetting.seconds}
-            areSettingsEdited
-            onChangeTimer={handleChangeTimer}
-          />
-        </GameSettingRow>
-      )}
-
-      <GameSettingRow>
-        <Switcher
-          switchState={changeSelectionAfterFlippingCardsSetting}
-          onChange={handleChangeSelectionAfterFlippingCardsSetting}
-          labelText="Сhange selection after flipping cards"
-        />
-      </GameSettingRow>
-      <GameSettingRow>
-        <Switcher
-          switchState={automaticFlipCardsSetting}
-          onChange={handleAutomaticFlipCardsSetting}
-          labelText="Automatic flip of cards if everyone voted"
-        />
-      </GameSettingRow>
       <GameSettingRow settingName="Score type">
         <select value={scoreTypeSetting} onChange={handleChangeScoreType}>
           <option value={ITypesScoreCards.fibonacciNumbers}>Fibonacci numbers</option>

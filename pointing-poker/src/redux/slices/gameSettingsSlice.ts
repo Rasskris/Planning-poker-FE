@@ -1,15 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IGameSettings } from '../../interfaces/IGameSettings';
 import { ITypesScoreCards } from '../../interfaces/ITypesScoreCards';
-import { addGameSettings, getGameSettings } from '../thunks';
+import { updateGameSettings, getGameSettings } from '../thunks';
 import { SCORE_VALUES_FN, SCORE_TYPE_SHORT_FN } from '../../constants';
 
-const initialGameSettingsState: IGameSettings = {
+const initialState: IGameSettings = {
   scramMasterAsPlayerSetting: false,
-  changingCardInRoundEndSetting: false,
-  isTimerNeededSetting: false,
-  changeSelectionAfterFlippingCardsSetting: false,
-  automaticFlipCardsSetting: false,
   scoreTypeSetting: ITypesScoreCards.fibonacciNumbers,
   scoreTypeShortSetting: SCORE_TYPE_SHORT_FN,
   timerValuesSetting: {
@@ -22,24 +18,21 @@ const initialGameSettingsState: IGameSettings = {
 
 export const gameSettingsSlice = createSlice({
   name: 'gameSettings',
-  initialState: initialGameSettingsState,
-  reducers: {
-    updateSettings(state, action) {
-      const newState = { ...state, ...action.payload };
-      return newState;
-    },
-  },
+  initialState,
+  reducers: {},
   extraReducers: builder => {
-    builder.addCase(addGameSettings.fulfilled, (state, action) => {
-      const newState = { ...state, ...action.payload };
-      return newState;
-    });
-    builder.addCase(getGameSettings.fulfilled, (state, action) => {
-      const newState = { ...state, ...action.payload };
-      return newState;
-    });
+    builder
+      .addCase(updateGameSettings.fulfilled, (state, { payload }) => {
+        const newState = { ...state, ...payload };
+
+        return newState;
+      })
+      .addCase(getGameSettings.fulfilled, (state, { payload }) => {
+        const newState = { ...state, ...payload };
+
+        return newState;
+      });
   },
 });
 
-export const { updateSettings } = gameSettingsSlice.actions;
 export const gameSettingsReducer = gameSettingsSlice.reducer;
