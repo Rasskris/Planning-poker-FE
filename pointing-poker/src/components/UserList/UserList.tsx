@@ -1,27 +1,37 @@
 import { FC } from 'react';
 import { UserCard } from '..';
+import { useAppSelector } from '../../hooks';
 import { IUser } from '../../interfaces';
+import { selectGameStatus } from '../../redux/selectors';
 import { ScoreCard } from './ScoreCard';
 import classes from './UserList.module.scss';
 
 interface IUserListProps {
   title: string;
   users: IUser[];
-  isScoreVisible?: boolean;
+  isScoreVisible: boolean;
   currentUserId: string;
   handleKickUser: (id: string, name: string) => void;
 }
 
 const UserList: FC<IUserListProps> = ({ isScoreVisible, title, users, currentUserId, handleKickUser }) => {
+  const isGameStarted = useAppSelector(selectGameStatus);
+
   return (
     <div className={classes.userList}>
       <div className={classes.titleWrapper}>
-        {isScoreVisible && <p className={classes.title}>Score</p>}
+        {isGameStarted && <p className={classes.title}>Score</p>}
         <p className={classes.title}>{title}</p>
       </div>
       {users.map(({ id, firstName, lastName, role, avatar, jobPosition, selectedCard }) => (
         <div className={classes.cardWrapper} key={id}>
-          {isScoreVisible && <ScoreCard scoreType={selectedCard?.scoreType} scoreValue={selectedCard?.scoreValue} />}
+          {isGameStarted && (
+            <ScoreCard
+              scoreType={selectedCard?.scoreType}
+              scoreValue={selectedCard?.scoreValue}
+              isScoreVisible={isScoreVisible}
+            />
+          )}
           <UserCard
             id={id}
             currentUserId={currentUserId}
