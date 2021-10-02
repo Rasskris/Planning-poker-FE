@@ -16,6 +16,8 @@ export const SCORE_TYPE_SHORT_PT = 'PT';
 
 export const VALUE_COFFE = 'coffee';
 
+export const VALUE_UNKNOWN = 'unknown';
+
 export const PENDING_MESSAGE = 'Pending access admit to game from dealer...';
 
 export const WAITING_LIST_TITLE = 'Newcomer waiting list:';
@@ -28,8 +30,16 @@ export const REJECTED_TO_GAME_TEXT = 'Sorry, you cannot access the game because 
 
 export const REDIRECT_TO_MAIN_TEXT = 'Maybe you want to go back to main page?';
 
+export const TOOLTIP_TEXT = 'Please, select current issue';
+
 export enum USER_ROLES {
   PLAYER = 'player',
   DEALER = 'dealer',
   OBSERVER = 'observer',
+}
+
+export enum ROUND_STATUS {
+  NOT_STARTED = 'not started',
+  STARTED = 'started',
+  FINISHED = 'finished',
 }
