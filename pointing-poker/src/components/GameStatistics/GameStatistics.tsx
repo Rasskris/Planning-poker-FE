@@ -5,10 +5,10 @@ import { selectIssues } from '../../redux/selectors';
 import classes from './GameStatistics.module.scss';
 
 interface IGameStatisticsProps {
-  onClickCanceButton?: () => void;
+  onClickCancel?: () => void;
 }
 
-const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCanceButton }) => {
+const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
   const gameStatistics = useAppSelector(state => state.gameStatistics.gameStatistics);
   const allIssues = useAppSelector(selectIssues);
 
@@ -43,7 +43,7 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCanceButton }) => {
 
   return (
     <div>
-      <div className={classes.cancel_button} onClick={onClickCanceButton}></div>
+      {onClickCancel && <div className={classes.cancel_button} onClick={onClickCancel}></div>}
       {gameStatistics.length !== 0 ? getRoundData() : <div>No statistics</div>}
     </div>
   );
