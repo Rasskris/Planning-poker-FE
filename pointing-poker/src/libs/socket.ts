@@ -89,8 +89,8 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch(startGameRound({ ...gameRoundData }));
   });
 
-  socket.on('updateGameRoundData', gameRoundData => {
-    dispatch(updateGameRoundData({ ...gameRoundData }));
+  socket.on('updateGameRoundData', playerCards => {
+    dispatch(updateGameRoundData(playerCards));
   });
 
   socket.on('resetGameRoundData', () => {

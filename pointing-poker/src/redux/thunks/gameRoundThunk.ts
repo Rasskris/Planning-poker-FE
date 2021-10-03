@@ -40,7 +40,6 @@ interface IResetGameRoundData {
 export const addGameRoundData = createAsyncThunk(
   'gameRound/addGameRoundData',
   async ({ gameId, currentIssue, playerCards, scoreTypeValue, userId }: IAddGameRoundData) => {
-    console.log('palyers:', playerCards);
     const data = await clientAPI.post(`/api/gameround/${gameId}`, {
       scoreTypeValue,
       currentIssue,

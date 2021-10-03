@@ -29,8 +29,7 @@ export const gameRoundSlice = createSlice({
     },
     // only used when called by socket
     updateGameRoundData(state, action) {
-      const newState = { ...state, ...action.payload };
-      return newState;
+      state.playerCards = action.payload;
     },
     // only used when called by socket
     setRoundStatisticFromServer(state, action) {
@@ -60,8 +59,7 @@ export const gameRoundSlice = createSlice({
   },
   extraReducers: builder => {
     builder.addCase(updateUserGameCard.fulfilled, (state, action) => {
-      const newState = { ...state, ...action.payload };
-      return newState;
+      state.playerCards = action.payload;
     });
     builder.addCase(addGameRoundData.fulfilled, (state, action) => {
       const newState = { ...action.payload };
@@ -70,9 +68,7 @@ export const gameRoundSlice = createSlice({
     builder.addCase(updateGameRoundStatistics.fulfilled, (state, action) => {
       state.roundStatistics = action.payload;
     });
-    builder.addCase(deleteGameRoundData.fulfilled, (state, action) => {
-      // state.roundStatistics = action.payload;
-    });
+    builder.addCase(deleteGameRoundData.fulfilled, (state, action) => {});
     builder.addCase(resetGameRoundDataThunk.fulfilled, state => {
       const currentIssue = state.currentIssue;
       return { ...initialGameRoundState, currentIssue };
