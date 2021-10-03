@@ -4,8 +4,8 @@
   position: relative;
   margin-bottom: 10px;
   padding: 20px;
-  width: 100%;
-  height: fit-content;
+  width: 300px;
+  height: 75px;
   word-break: break-all;
   @include flex($justify: flex-start);
   border-radius: $card-radius;
@@ -25,6 +25,10 @@
 }
 .issueName {
   font-size: 23px;
+  white-space: nowrap;
+  font-family: sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .issuePriority {
   @include font($size: 12px, $height: 10px, $weight: 200);
@@ -38,6 +42,7 @@
   width: 45px;
   height: 45px;
   background-image: url(../../assets/icons/icon__remove.svg);
+  z-index: 1;
   &:hover {
     opacity: 0.6;
     transform: rotate(90deg);
@@ -50,6 +55,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: $card-radius;
   &:hover {
     cursor: pointer;
     background-color: $viking;

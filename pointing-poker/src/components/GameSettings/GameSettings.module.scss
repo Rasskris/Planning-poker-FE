@@ -15,7 +15,8 @@
 }
 
 select,
-input[type='text'] {
+input[type='text'],
+input[type='number'] {
   padding: 5px;
   border: none;
   border-radius: 0 10px;

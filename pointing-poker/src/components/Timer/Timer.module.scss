@@ -11,6 +11,9 @@
   background-color: $del-rio;
   color: $white;
 
+  .colon {
+    margin-top: 20px;
+  }
   &__minutes,
   &__seconds {
     font-weight: 600;
@@ -33,6 +36,6 @@
   }
 
   &__minutes {
-    @include flex($direction: column, $align: flex-end);
+    @include flex($direction: column, $align: center);
   }
 }

@@ -8,6 +8,8 @@
     align-self: flex-start;
     margin-bottom: 5px;
   }
+  @include font($size: 24px, $weight: 400);
+  font-family: sans-serif;
 }
 
 .game_setting_row:last-child {

@@ -1,12 +1,12 @@
 @import '../../layout/styles-config';
 
 .statisticCard {
+  @include flex($align: center, $justify: space-between);
   margin-bottom: 10px;
   padding: 20px;
   width: 300px;
   height: 75px;
-  @include flex($justify: flex-start);
   box-shadow: $card-shadow;
   border-radius: $card-radius;
-  @include flex($align: center, $justify: space-between);
+  font-size: 12px;
 }

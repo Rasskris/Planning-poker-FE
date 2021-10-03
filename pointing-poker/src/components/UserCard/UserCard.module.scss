@@ -29,7 +29,6 @@
 }
 .userCurrent {
   @include font($size: 12px, $weight: 900, $height: 15px, $align: right);
-  position: absolute;
   top: 3px;
   right: 6px;
   text-transform: uppercase;
