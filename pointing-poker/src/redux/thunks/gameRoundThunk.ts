@@ -8,14 +8,14 @@ interface IRound {
   roundStatus: ROUND_STATUS;
 }
 
-export const getRoundStatus = createAsyncThunk('gameRound/getRoundStatus', async (gameId: string) => {
+export const getRoundStatus = createAsyncThunk('round/getRoundStatus', async (gameId: string) => {
   const { status } = await clientAPI.get(`/api/round/${gameId}`);
 
   return status;
 });
 
 export const updateRoundStatus = createAsyncThunk(
-  'gameRound/updateRound',
+  'round/updateRound',
   async ({ gameId, userId, roundStatus }: IRound) => {
     const { status } = await clientAPI.put(`/api/round/${gameId}`, { userId, roundStatus });
 
@@ -23,7 +23,7 @@ export const updateRoundStatus = createAsyncThunk(
   },
 );
 
-export const stopTimer = createAsyncThunk('gameRound/stopTimer', async (gameId: string) => {
+export const stopTimer = createAsyncThunk('round/stopTimer', async (gameId: string) => {
   const data = await clientAPI.get(`/api/round/timer/${gameId}`);
 
   return data;

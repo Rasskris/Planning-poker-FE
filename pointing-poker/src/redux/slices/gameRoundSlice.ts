@@ -8,7 +8,7 @@ const initialState: IGameRoundData = {
 };
 
 export const gameRoundSlice = createSlice({
-  name: 'gameRound',
+  name: 'round',
   initialState,
   reducers: {},
   extraReducers: builder => {
