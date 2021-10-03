@@ -24,7 +24,7 @@ const appReducer = combineReducers({
   gameSettings: gameSettingsReducer,
   vote: voteReducer,
   chat: chatReducer,
-  gameRound: gameRoundReducer,
+  round: gameRoundReducer,
   newComers: newComerReducer,
   timer: timerReducer,
 });
