@@ -25,4 +25,7 @@ export {
   resetGameRoundData,
   setRoundStatisticFromServer,
   setCurrentIssue,
+  deleteCurrentIssue,
+  resetGameRoundStatistics,
 } from './gameRoundSlice';
+export { gameStatisticsReducer } from './gameStatisticsSlice';
