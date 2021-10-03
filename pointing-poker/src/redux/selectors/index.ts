@@ -27,7 +27,7 @@ export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 
 export const selectGameStatus = (state: RootState) => state.game.isStarded;
 
-export const selectRoundStatus = (state: RootState) => state.gameRound.roundStatus;
+export const selectRoundStatus = (state: RootState) => state.round.roundStatus;
 
 export const selectChatStatus = (state: RootState) => state.chat.isOpen;
 
@@ -67,11 +67,4 @@ export const selectPlayersAndDealerIds = createSelector([selectUsers], users => 
 
 export const selectCurrentIssue = createSelector([selectIssues], issues => issues.find(issue => issue.isCurrent));
 
-export const getAllSelectedCards = createSelector([selectUsers], users => {
-  users.map(user => {
-    if (user.selectedCard) {
-      return user.selectedCard.scoreValue;
-    }
-    return 'unknown';
-  });
-});
+export const selectDoneIssues = createSelector([selectIssues], issues => issues.filter(issue => issue.isDone));
