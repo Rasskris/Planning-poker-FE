@@ -22,7 +22,7 @@ const UserList: FC<IUserListProps> = ({ isScoreVisible, title, users, currentUse
       <div className={classes.cardsWrapper}>
         {users.map(({ id, firstName, lastName, role, avatar, jobPosition, selectedCard }) => (
           <div className={classes.cardWrapper} key={id}>
-            {isScoreVisible && <ScoreCard scoreType={selectedCard?.scoreType} scoreValue={selectedCard?.scoreValue} />}
+            <ScoreCard scoreType={selectedCard?.scoreType} scoreValue={selectedCard?.scoreValue} />
             <UserCard
               id={id}
               currentUserId={currentUserId}

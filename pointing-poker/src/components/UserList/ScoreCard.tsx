@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import { useAppSelector } from '../../hooks';
 import classes from './UserList.module.scss';
 
 interface IProps {
@@ -7,10 +8,17 @@ interface IProps {
 }
 
 const ScoreCard: FC<IProps> = ({ scoreType, scoreValue }) => {
+  const roundIsActive = useAppSelector(state => state.gameRound.isActive);
   return (
     <div className={classes.scoreCard}>
-      <span>{scoreValue}</span>
-      <span>{scoreType}</span>
+      {roundIsActive ? (
+        <p>In progress</p>
+      ) : (
+        <p>
+          <span>{scoreValue}</span>
+          <span>{scoreType}</span>
+        </p>
+      )}
     </div>
   );
 };
