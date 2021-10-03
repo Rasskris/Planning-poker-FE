@@ -19,6 +19,7 @@ import {
   addNewComer,
   admitToGame,
   rejectToGame,
+  updateRoundStatistics,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
@@ -98,6 +99,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('getRoundStatistic', roundStatistic => {
     dispatch(setRoundStatisticFromServer(roundStatistic));
+  });
+
+  socket.on('updateGameRoundStatistics', roundStatistics => {
+    dispatch(updateRoundStatistics(roundStatistics));
   });
 
   socket.on('notifyDealer', user => {
