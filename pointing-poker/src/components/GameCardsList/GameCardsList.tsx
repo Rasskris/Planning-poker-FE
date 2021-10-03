@@ -10,7 +10,7 @@ const GameCardsList: FC = () => {
   const scoreValues = useAppSelector(selectScoreValues);
   const scoreType = useAppSelector(selectScoreTypeShort);
   const currentUser = useAppSelector(selectCurrentUser);
-  const gameRoundData = useAppSelector(state => state.gameRound);
+  const { isActive: roundIsActive, currentIssue } = useAppSelector(state => state.gameRound);
   const dispatch = useAppDispatch();
 
   const handleSelectCurrentCard = (scoreValue: string, scoreType: string) => {
@@ -22,10 +22,10 @@ const GameCardsList: FC = () => {
     setCurrentGameCard(scoreValue);
     dispatch(updateUser({ ...currentUser, selectedCard }));
 
-    if (!gameRoundData.isActive || !currentUser) return; // !gameRoundData.isActive - makes maps non-clickable if the round is not active (ended)
+    if (!roundIsActive || !currentUser) return; // !gameRoundData.isActive - makes maps non-clickable if the round is not active (ended)
     dispatch(
       updateUserGameCard({
-        gameRoundData,
+        currentIssue,
         gameId: currentUser.gameId,
         userId: currentUser.id,
         valueSelectedGameCard: scoreValue,

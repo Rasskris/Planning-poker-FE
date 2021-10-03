@@ -1,5 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { IGameRoundData } from '../../interfaces';
+import { IObjectType } from '../../interfaces/IObjectType';
 import { clientAPI } from '../../libs';
 
 interface IAddGameRoundData {
@@ -7,41 +8,54 @@ interface IAddGameRoundData {
   userId: string;
   currentIssue: string;
   playerCards: string[];
+  scoreTypeValue: string;
 }
 
 interface IUpdateUserGameCard {
   gameId: string;
-  gameRoundData: IGameRoundData;
+  currentIssue: string;
   valueSelectedGameCard: string;
   userId: string;
 }
 
 interface IUpdateGameRoundStatistics {
   gameId: string;
-  gameRoundData: IGameRoundData;
   userId: string;
+  roundStatistics: IObjectType;
+  currentIssue: string;
 }
 
-interface IGetRoundStatistic {
+interface IDeleteGameRoundData {
   gameId: string;
   userId: string;
   currentIssue: string;
 }
 
+interface IResetGameRoundData {
+  gameId: string;
+  userId: string;
+}
+
 // add data to the server. After processing, the server sends a response with the round data and starts the round
 export const addGameRoundData = createAsyncThunk(
   'gameRound/addGameRoundData',
-  async ({ gameId, currentIssue, playerCards, userId }: IAddGameRoundData) => {
-    const data = await clientAPI.post(`/api/gameround/${gameId}`, { currentIssue, playerCards, userId });
+  async ({ gameId, currentIssue, playerCards, scoreTypeValue, userId }: IAddGameRoundData) => {
+    console.log('palyers:', playerCards);
+    const data = await clientAPI.post(`/api/gameround/${gameId}`, {
+      scoreTypeValue,
+      currentIssue,
+      playerCards,
+      userId,
+    });
     return data;
   },
 );
 
 export const updateUserGameCard = createAsyncThunk(
   'gameRound/updateUserGameCard',
-  async ({ gameRoundData, gameId, userId, valueSelectedGameCard }: IUpdateUserGameCard) => {
+  async ({ currentIssue, gameId, userId, valueSelectedGameCard }: IUpdateUserGameCard) => {
     const data = await clientAPI.put(`/api/gameround/usersUpdate/${gameId}`, {
-      gameRoundData,
+      currentIssue,
       valueSelectedGameCard,
       userId,
     });
@@ -49,8 +63,8 @@ export const updateUserGameCard = createAsyncThunk(
   },
 );
 
-// get data of all rooms of the current game
-export const getDataAllRoomsOfGame = createAsyncThunk('gameRound/getDataAllRoomsOfGame', async (gameId: string) => {
+// get data of all rounds of the current game
+export const getDataAllRoundsOfGame = createAsyncThunk('gameRound/getDataAllRoundsOfGame', async (gameId: string) => {
   const data = await clientAPI.get(`/api/gameround/${gameId}`);
   return data;
 });
@@ -58,16 +72,31 @@ export const getDataAllRoomsOfGame = createAsyncThunk('gameRound/getDataAllRooms
 //writing the results of round statistics to the server
 export const updateGameRoundStatistics = createAsyncThunk(
   'gameRound/updateGameRoundStatistics',
-  async ({ gameId, gameRoundData, userId }: IUpdateGameRoundStatistics) => {
-    const data = await clientAPI.put(`/api/gameround/roundStatistics/${gameId}`, { gameRoundData, userId });
+  async ({ gameId, userId, roundStatistics, currentIssue }: IUpdateGameRoundStatistics) => {
+    const data = await clientAPI.put(`/api/gameround/roundStatistics/${gameId}`, {
+      roundStatistics,
+      userId,
+      currentIssue,
+    });
     return data;
   },
 );
 
-export const getRoundStatistic = createAsyncThunk(
-  'gameRound/getRoundStatistic',
-  async ({ gameId, currentIssue, userId }: IGetRoundStatistic) => {
-    const data = await clientAPI.get(`/api/gameround/roundStatistics/${gameId}`, { currentIssue, userId });
+export const deleteGameRoundData = createAsyncThunk(
+  'gameRound/deleteGameRoundData',
+  async ({ gameId, userId, currentIssue }: IDeleteGameRoundData) => {
+    const data = await clientAPI.delete(`/api/gameround/${gameId}`, {
+      userId,
+      currentIssue,
+    });
+    return data;
+  },
+);
+
+export const resetGameRoundDataThunk = createAsyncThunk(
+  'gameRound/resetGameRoundDataThunk',
+  async ({ gameId, userId }: IResetGameRoundData) => {
+    const data = await clientAPI.delete(`/api/gameround/reset/${gameId}`, { userId });
     return data;
   },
 );
