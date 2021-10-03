@@ -33,8 +33,8 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   };
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
-    dispatch(setCurrentIssue(issue.id));
     dispatch(updateIssue(issue));
+    dispatch(setCurrentIssue(issue.id));
     dispatch(resetGameRoundDataThunk({ gameId, userId }));
   };
 
