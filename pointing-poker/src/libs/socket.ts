@@ -12,7 +12,15 @@ import {
   updateRoundStatus,
   updateDoneIssue,
 } from '../redux/thunks';
-import { enableVote, memberJoin, addNewComer, admitToGame, rejectToGame, updateTimer } from '../redux/slices';
+import {
+  enableVote,
+  memberJoin,
+  addNewComer,
+  admitToGame,
+  rejectToGame,
+  updateTimer,
+  resetSelectedCards,
+} from '../redux/slices';
 import { URL } from '../constants';
 import { logout } from '../redux/actions';
 
@@ -104,6 +112,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('timer', timer => {
     dispatch(updateTimer(timer));
+  });
+
+  socket.on('resetSelectedCard', scoreType => {
+    dispatch(resetSelectedCards(scoreType));
   });
 
   socket.on('disconnect', reason => {

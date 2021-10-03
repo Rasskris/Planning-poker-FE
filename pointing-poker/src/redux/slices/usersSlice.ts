@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUser } from '../../interfaces';
+import { getChangesForResetCard } from '../../utils';
 import { usersAdapter } from '../adapters';
 import { getUsers, addUser, deleteUser, putVoteForKick, updateUser } from '../thunks';
 
@@ -11,6 +12,12 @@ export const usersSlice = createSlice({
   reducers: {
     memberJoin: (state, { payload }: PayloadAction<IUser>) => {
       usersAdapter.addOne(state, payload);
+    },
+    resetSelectedCards: (state, { payload }) => {
+      const ids = state.ids;
+      const changes = getChangesForResetCard(ids, payload);
+
+      usersAdapter.updateMany(state, changes);
     },
   },
   extraReducers: builder => {
@@ -35,5 +42,5 @@ export const usersSlice = createSlice({
   },
 });
 
-export const { memberJoin } = usersSlice.actions;
+export const { memberJoin, resetSelectedCards } = usersSlice.actions;
 export const usersReducer = usersSlice.reducer;
