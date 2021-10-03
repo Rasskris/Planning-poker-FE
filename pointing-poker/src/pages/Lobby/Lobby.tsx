@@ -1,4 +1,6 @@
 import { FC, useEffect, useState } from 'react';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   selectAutoAdmitedStatus,
@@ -60,6 +62,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const { minutes, seconds } = settings.timerValuesSetting;
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
+  const [isCopied, setIsCopied] = useState({ value: gameId, copied: false });
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -103,25 +106,36 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   };
 
   const handleCloseTimerNotification = () => () => {
-    console.log('timer notify close', isTimerNotificationVisible);
     setIsTimerNotificationVisible(false);
+  };
+
+  const handleCopy = () => {
+    setIsCopied({
+      value: gameId,
+      copied: true,
+    });
   };
 
   return (
     <section className={classes.lobby}>
       {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
-      {isAccessToGameRejected && <RejectedToGameNotification isVisible={isAccessToGameRejected} />}
+      {isAccessToGameRejected && (
+        <RejectedToGameNotification isVisible={isAccessToGameRejected} currentUserId={currentUserId} />
+      )}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.wrapper}>
-            <h3>Game ID:</h3>
-            <p className={classes.tooltipContainer}>
-              {gameId}
+            <h3 className={classes.title}>Game ID:</h3>
+            <div className={classes.tooltipContainer}>
+              <p className={classes.gameId}>{gameId}</p>
+              <CopyToClipboard text={isCopied.value} onCopy={handleCopy}>
+                <Button type="button" text="Copy" colorButton="light" />
+              </CopyToClipboard>
               <span className={classes.tooltipText}>Use this id to invite others</span>
-            </p>
+            </div>
             <div className={classes.btnWrapper}>
               <Button text="Start Game" colorButton="dark" type="button" onClick={handleStartGame} />
-              <Button text="Cancel Game" colorButton="dark" type="button" onClick={handleCancelGame} />
+              <Button text="Cancel Game" colorButton="light" type="button" onClick={handleCancelGame} />
             </div>
           </div>
         )}
@@ -131,7 +145,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
           </div>
         )}
         <div className={classes.wrapper}>
-          <p>Dealer</p>
+          <p className={classes.title}>Dealer</p>
           {dealer && (
             <UserCard
               id={dealer.id}

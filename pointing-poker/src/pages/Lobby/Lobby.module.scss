@@ -5,13 +5,17 @@
   @include flex($align: center, $justify: center);
   .wrapper {
     margin-bottom: 15px;
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-    align-items: center;
+    @include flex($direction: column, $align: flex-start);
+    .gameId {
+      margin-right: 5px;
+      padding: 3px;
+      font-size: 16px;
+      border: 1px #cccccc solid;
+    }
     .tooltipContainer {
       position: relative;
-      display: inline-block;
+      margin-bottom: 10px;
+      display: flex;
       word-break: break-all;
       transition: all 0.2s;
       .tooltipText {
@@ -26,7 +30,7 @@
         width: 100%;
         top: 100%;
         left: 0;
-        font-size: 1.7rem;
+        font-size: 1.5rem;
         line-height: 1.1;
         border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
       }
@@ -45,14 +49,19 @@
       visibility: visible;
     }
     .btnWrapper {
-      @include flex($direction: column);
+      width: 100%;
+      @include flex();
       height: 70px;
+      :first-child {
+        margin-right: 5px;
+      }
       > * {
         width: 100%;
       }
     }
   }
 }
+
 .content {
   padding: 30px;
   width: 45%;
@@ -81,4 +90,18 @@
     padding: 20px 30px;
     width: 90%;
   }
+}
+
+.title {
+  width: 50%;
+  font-size: 24px;
+  font-style: normal;
+  line-height: auto;
+  font-weight: bold;
+  text-align: start;
+  margin-bottom: 5px;
+  margin-right: 20px;
+  padding: 5px 0;
+  border-bottom: 1px dotted brown;
+  border-top: 1px dotted brown;
 }
