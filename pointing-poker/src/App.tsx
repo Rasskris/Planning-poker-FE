@@ -5,7 +5,7 @@ import { initSocket } from './libs';
 import { useAppDispatch, useAppSelector } from './hooks';
 import { selectCurrentUser, selectLoginStatus, selectGameStatus } from './redux/selectors';
 import { Header, Footer } from './components';
-import { Main, Lobby, Game } from './pages';
+import { Main, Lobby, Game, Statistics } from './pages';
 import classes from './App.module.scss';
 
 const App: FC = () => {
@@ -43,6 +43,9 @@ const App: FC = () => {
         <Route path="/game">
           {isGameStarted && currentUser ? <Game currentUser={currentUser} /> : <Redirect to="/lobby" />}
           {!isLogin && <Main />}
+        </Route>
+        <Route path="/statistics">
+          <Statistics />
         </Route>
       </Router>
       <Footer />

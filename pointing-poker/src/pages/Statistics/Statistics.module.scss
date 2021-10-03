@@ -1,0 +1,35 @@
+@import '../../layout/styles-config';
+
+.statistics {
+  width: 90%;
+}
+.link {
+  margin: 5px;
+  @include font($size: 1.5rem, $weight: 400);
+  @include button($background: $dark-brown, $color: $white);
+  min-height: 30px;
+  padding: 0 10px;
+  text-decoration: none;
+  transition: all 0.2s linear;
+  &:hover {
+    @include button($background: $white, $color: $dark-brown);
+  }
+}
+.wrapper {
+  @include flex($direction: column, $align: flex-start);
+}
+.issueTitle {
+  @include font($size: 24px, $weight: bold);
+  padding: 5px 0;
+  margin-bottom: 15px;
+  border-bottom: 1px dotted brown;
+  border-top: 1px dotted brown;
+  width: 100%;
+}
+.cardsContainer {
+  @include flex();
+}
+.card {
+  margin-right: 10px;
+  @include flex($direction: column);
+}
