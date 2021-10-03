@@ -8,10 +8,10 @@ interface IProps {
 }
 
 const ScoreCard: FC<IProps> = ({ scoreType, scoreValue }) => {
-  const roundIsActive = useAppSelector(state => state.gameRound.isActive);
+  const isRoundActive = useAppSelector(state => state.gameRound.isActive);
   return (
     <div className={classes.scoreCard}>
-      {roundIsActive ? (
+      {isRoundActive ? (
         <p>In progress</p>
       ) : (
         <p>
