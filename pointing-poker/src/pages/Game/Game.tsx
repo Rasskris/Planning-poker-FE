@@ -1,8 +1,10 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
+import _ from 'lodash';
 import {
   selectChatStatus,
   selectDealer,
+  selectDoneIssues,
   selectPlayers,
   selectPlayersAndDealerIds,
   selectPlayersIds,
@@ -18,14 +20,18 @@ import {
   addVote,
   getUsers,
   updateGameRoundStatistics,
+  getDataAllRoundsOfGame,
+  updateIssueStatus,
 } from '../../redux/thunks';
 import { USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
 import {
+  BackDropModal,
   Button,
   Chat,
   DealerNotification,
   GameCardsList,
+  GameStatistics,
   IssueList,
   MemberNotification,
   TimerContainer,
@@ -34,7 +40,7 @@ import {
   WaitingList,
 } from '../../components';
 import { logout } from '../../redux/actions';
-import { stopGameRound, updateRoundStatistics } from '../../redux/slices';
+import { stopGameRound } from '../../redux/slices';
 import { RoundStatistics } from '../../components/RoundStatistics';
 import { roundStatiscticsCalculation } from '../../utils/roundStatisticsCalculation';
 import { checkingNumberPlayersPlayed } from '../../utils/checkingNumberPlayersPlayed';
@@ -53,17 +59,21 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const isChatOpen = useAppSelector(selectChatStatus);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
-  const isScoreVisible = true;
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const settings = useAppSelector(state => state.gameSettings);
-  const { automaticFlipCardsSetting } = settings;
+  const { automaticFlipCardsSetting, scoreTypeShortSetting } = settings;
   const gameRoundData = useAppSelector(state => state.gameRound);
-  const { playerCards, isActive } = gameRoundData;
+  const { playerCards, isActive, roundStatistics, currentIssue, roundIsStarted } = gameRoundData;
   const playersWhithoutDillerIds = useAppSelector(selectPlayersIds);
   const playersAndDillerIds = useAppSelector(selectPlayersAndDealerIds);
   const allPlayersIds = settings.scramMasterAsPlayerSetting ? playersAndDillerIds : playersWhithoutDillerIds;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
+  const readyIssues = useAppSelector(selectDoneIssues);
+  const currentIssueIsDone = readyIssues.find(issue => issue.id === currentIssue);
+  const isScoreVisible = !isActive;
   const dispatch = useAppDispatch();
+
+  const [gameStatistics, setGameStatistics] = useState(false);
 
   useEffect(() => {
     dispatch(getUsers(gameId));
@@ -93,6 +103,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         currentIssue: gameRoundData.currentIssue,
         playerCards: allPlayersIds,
         userId: currentUserId,
+        scoreTypeValue: scoreTypeShortSetting,
       }),
     );
   };
@@ -104,17 +115,29 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         currentIssue: gameRoundData.currentIssue,
         playerCards: allPlayersIds,
         userId: currentUserId,
+        scoreTypeValue: scoreTypeShortSetting,
       }),
     );
   };
 
-  const handleNextIssue = () => {
-    dispatch(updateGameRoundStatistics({ gameId, gameRoundData, userId: currentUserId }));
+  const handleGameStatisticsButton = () => {
+    if (!gameStatistics) dispatch(getDataAllRoundsOfGame(gameId));
+    setGameStatistics(prev => !prev);
   };
 
+  const roundStatiscticsCalculationCallback = useCallback(
+    () => roundStatiscticsCalculation({ playerCards }),
+    [playerCards],
+  );
+
   const handleStopGameRound = useCallback(() => {
+    dispatch(updateIssueStatus({ id: currentIssue, gameId, creatorId: currentUserId }));
     dispatch(stopGameRound());
-  }, [dispatch]);
+    if (isDealer) {
+      const roundStatistics = roundStatiscticsCalculationCallback();
+      dispatch(updateGameRoundStatistics({ gameId, roundStatistics, userId: currentUserId, currentIssue }));
+    }
+  }, [currentIssue, currentUserId, dispatch, gameId, isDealer, roundStatiscticsCalculationCallback]);
 
   const checkingNumberPlayersPlayedCallback = useCallback(
     () => checkingNumberPlayersPlayed({ playerCards, automaticFlipCardsSetting }),
@@ -128,17 +151,6 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
       .catch(() => {});
   }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive]);
 
-  const roundStatiscticsCalculationCallback = useCallback(
-    () => roundStatiscticsCalculation({ playerCards }),
-    [playerCards],
-  );
-
-  useEffect(() => {
-    if (isActive) return;
-    const roundStatistics = roundStatiscticsCalculationCallback();
-    dispatch(updateRoundStatistics(roundStatistics));
-  }, [dispatch, isActive, roundStatiscticsCalculationCallback]);
-
   return (
     <section className={classes.game}>
       <div className={classes.content}>
@@ -151,7 +163,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList
-            isScoreVisible={!isScoreVisible}
+            isScoreVisible={isScoreVisible}
             users={dealer}
             title="Dealer"
             currentUserId={currentUserId}
@@ -172,6 +184,11 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         </div>
         <div className={classes.wrapper}>
           <GameCardsList />
+          {!roundIsStarted && (
+            <div className={classes.game_cardlist_plug}>
+              <span>Wait for the next round</span>
+            </div>
+          )}
         </div>
         {settings.isTimerNeededSetting && (
           <TimerContainer
@@ -179,27 +196,31 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
             initialSeconds={settings.timerValuesSetting.seconds}
             timerStarted={gameRoundData.roundIsStarted}
             onStopTimer={handleStopGameRound}
+            roundIsActive={isActive}
           />
         )}
         {/* condition for displaying buttons */}
         {isDealer &&
-          (gameRoundData.roundIsStarted === gameRoundData.isActive ? (
+          (gameRoundData.roundIsStarted || currentIssueIsDone ? (
             <div className={classes.btnWrapper}>
               <Button
                 type="button"
                 text="RESTART ROUND"
-                colorButton="light"
+                colorButton="dark"
                 onClick={handleRestartRound}
                 disabled={gameRoundData.roundIsStarted ? true : false}
               />
-              <Button type="button" text="NEXT ISSUE" colorButton="dark" onClick={handleNextIssue} />
             </div>
           ) : (
-            <Button type="button" text="RUN ROUND" colorButton="dark" onClick={handleStartRound} />
+            <Button
+              type="button"
+              text="RUN ROUND"
+              colorButton="dark"
+              onClick={handleStartRound}
+              disabled={!Boolean(currentIssue) || _.size(allPlayersIds) === 0}
+            />
           ))}
-        <div>
-          <RoundStatistics />
-        </div>
+        {_.size(roundStatistics) !== 0 ? <RoundStatistics /> : null}
       </div>
       {isChatOpen && (
         <div className={classes.chat}>
@@ -216,6 +237,13 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         />
       )}
       <VoteNotification />
+      <div onClick={handleGameStatisticsButton} className={classes.game_statistics_bar}></div>
+      <div className={classes.game_round_status}>
+        {roundIsStarted ? <p>Round is started</p> : <p>The round hasn't started yet</p>}
+      </div>
+      <BackDropModal isBackDropOpen={gameStatistics}>
+        <GameStatistics onClickCanceButton={handleGameStatisticsButton} />
+      </BackDropModal>
     </section>
   );
 };
