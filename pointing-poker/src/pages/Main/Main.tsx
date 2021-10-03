@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { selectExistGameStatus } from '../../redux/selectors';
 import { checkExistGame } from '../../redux/thunks';
 import classes from './Main.module.scss';
+import { PieChartComponent } from '../../components/PieChart';
 
 const Main: FC = () => {
   const isExistGame = useAppSelector(selectExistGameStatus);
