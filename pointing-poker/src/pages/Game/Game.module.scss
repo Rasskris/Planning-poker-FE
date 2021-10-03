@@ -1,46 +1,73 @@
 @import '../../layout/styles-config';
 
 .game {
-  @include flex($align: flex-start, $justify: space-between, $direction: column);
-  width: 45%;
+  width: 90%;
+  margin: 40px 0;
+  .container {
+    width: 100%;
+    @include flex($direction: column);
+  }
+  .wrapperRow {
+    width: 100%;
+    @include flex($align: flex-start);
+  }
+  .wrapperColumn {
+    width: 40%;
+    @include flex($direction: column, $align: center);
+  }
   .wrapper {
-    margin-bottom: 10px;
+    @include flex($direction: column, $align: center);
+    margin: 10px 0;
+    width: 100%;
+  }
+  .title {
+    @include font($size: 24px, $weight: bold);
+    padding: 5px 0;
+    margin-bottom: 15px;
+    border-bottom: 1px dotted brown;
+    border-top: 1px dotted brown;
     width: 100%;
   }
 }
-
-.content {
-  padding: 30px;
+.link {
+  margin: 5px;
+  @include font($size: 1.5rem, $weight: 400);
+  @include button($background: $dark-brown, $color: $white);
+  min-height: 30px;
+  padding: 0 10px;
+  text-decoration: none;
+  transition: all 0.2s linear;
+  &:hover {
+    @include button($background: $white, $color: $dark-brown);
+  }
+}
+.header {
+  @include flex();
   width: 100%;
-  @include flex($direction: column);
-  .header {
-    @include flex();
-    width: 100%;
+}
+.gameControl {
+  @include flex($direction: column, $align: flex-start);
+  h3 {
+    margin-bottom: 5px;
   }
-  .gameControl {
-    @include flex($direction: column, $align: flex-start);
-    h3 {
-      margin-bottom: 5px;
-    }
-  }
-  > *:first-child {
-    margin-bottom: 10px;
-    align-self: flex-start;
-  }
-  .btnWrapper {
-    @include flex();
-    width: 270px;
-    position: relative;
-    right: 10px;
-    margin-bottom: 20px;
-  }
+}
+> *:first-child {
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+.btnWrapper {
+  @include flex();
+  width: 270px;
+  position: relative;
+  right: 10px;
+  margin-bottom: 20px;
 }
 
-@media all and (max-width: 1500px) {
-  .game {
-    width: 65%;
-  }
-}
+// @media all and (max-width: 1500px) {
+//   .game {
+//     width: 65%;
+//   }
+// }
 
 @media all and (max-width: 900px) {
   .game {
