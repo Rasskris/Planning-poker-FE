@@ -22,7 +22,7 @@ const WaitingList: FC = () => {
   return (
     <div className={classes.newComerList}>
       <p className={classes.title}>{WAITING_LIST_TITLE}</p>
-      {isNewComerListEmpty ? <p>{NEWCOMER_LIST_EMPTY}</p> : <p>{WAITING_LIST_TEXT}</p>}
+      <p className={classes.newComer}>{isNewComerListEmpty ? NEWCOMER_LIST_EMPTY : WAITING_LIST_TEXT}</p>
       {newComers.map(({ id, firstName, gameId }) => (
         <div key={id}>
           <span className={classes.name}>{firstName}</span>
