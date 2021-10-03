@@ -11,21 +11,22 @@ interface IUserListProps {
   users: IUser[];
   isScoreVisible: boolean;
   currentUserId: string;
+  isPlayer?: boolean;
   handleKickUser: (id: string, name: string) => void;
 }
 
-const UserList: FC<IUserListProps> = ({ isScoreVisible, title, users, currentUserId, handleKickUser }) => {
+const UserList: FC<IUserListProps> = ({ isScoreVisible, isPlayer, title, users, currentUserId, handleKickUser }) => {
   const isGameStarted = useAppSelector(selectGameStatus);
 
   return (
     <div className={classes.userList}>
       <div className={classes.titleWrapper}>
-        {isGameStarted && <p className={classes.title}>Score</p>}
+        {isGameStarted && isPlayer && <p className={classes.title}>Score</p>}
         <p className={classes.title}>{title}</p>
       </div>
       {users.map(({ id, firstName, lastName, role, avatar, jobPosition, selectedCard }) => (
         <div className={classes.cardWrapper} key={id}>
-          {isGameStarted && (
+          {isGameStarted && isPlayer && (
             <ScoreCard
               scoreType={selectedCard?.scoreType}
               scoreValue={selectedCard?.scoreValue}
