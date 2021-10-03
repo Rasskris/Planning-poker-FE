@@ -11,23 +11,25 @@ interface TimerContainerProps {
   initialSeconds: number;
   timerStarted: boolean;
   areSettingsEdited: boolean;
+  roundIsActive?: boolean;
   onChangeTimer?: (time: { minutes: number; seconds: number }) => void;
   onStopTimer: () => void;
 }
 
 const TimerContainer = (props: TimerContainerProps) => {
-  const { initialMinute, initialSeconds, timerStarted, areSettingsEdited, onChangeTimer, onStopTimer } = props;
+  const { initialMinute, initialSeconds, timerStarted, roundIsActive, areSettingsEdited, onChangeTimer, onStopTimer } =
+    props;
   const [minutes, setMinutes] = useState<number>(initialMinute);
   const [seconds, setSeconds] = useState<number>(initialSeconds);
   const [resetTimer, setResetTimer] = useState<boolean>(false);
 
   useEffect(() => {
-    if (timerStarted) {
+    if (roundIsActive) {
       setMinutes(initialMinute);
       setSeconds(initialSeconds);
       setResetTimer(false);
     }
-  }, [initialMinute, initialSeconds, timerStarted]);
+  }, [initialMinute, initialSeconds, timerStarted, roundIsActive]);
 
   useEffect(() => {
     if (minutes === 0 && seconds === 0 && !areSettingsEdited && !resetTimer) {
