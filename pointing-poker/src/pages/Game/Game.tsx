@@ -1,4 +1,5 @@
 import { FC, useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import _ from 'lodash';
 import {
@@ -22,8 +23,9 @@ import {
   updateGameRoundStatistics,
   getDataAllRoundsOfGame,
   updateIssueStatus,
+  getGameSettings,
 } from '../../redux/thunks';
-import { USER_ROLES } from '../../constants';
+import { MINIMUM_NUMBER_OF_PLAYERS, USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
 import {
   BackDropModal,
@@ -70,6 +72,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const readyIssues = useAppSelector(selectDoneIssues);
   const currentIssueIsDone = readyIssues.find(issue => issue.id === currentIssue);
+  const isCurrentPlayerPlayedRound = playerCards.hasOwnProperty(currentUserId);
   const isScoreVisible = !isActive;
   const dispatch = useAppDispatch();
 
@@ -77,7 +80,12 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
 
   useEffect(() => {
     dispatch(getUsers(gameId));
+    dispatch(getGameSettings(gameId));
   }, [dispatch, gameId, players, dealer]);
+
+  useEffect(() => {
+    dispatch(getGameSettings(gameId));
+  }, [dispatch, gameId]);
 
   const handleKickUser = (id: string, name: string) => {
     if (isDealer) {
@@ -145,14 +153,17 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   );
 
   useEffect(() => {
-    if (!isActive) return;
-    checkingNumberPlayersPlayedCallback()
-      .then(() => handleStopGameRound())
-      .catch(() => {});
-  }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive]);
+    if (isActive || settings.changingCardInRoundEndSetting) {
+      checkingNumberPlayersPlayedCallback()
+        .then(() => handleStopGameRound())
+        .catch(() => {});
+    }
+  }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive, settings.changingCardInRoundEndSetting]);
 
   return (
     <section className={classes.game}>
+      {/*TO DO: link to statistics page, to do only for Diller or available only if the game is completely finished */}
+      <Link to="/statistics"> Statistics Page</Link>
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.header}>
@@ -180,23 +191,31 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
           />
         </div>
         <div className={classes.wrapper}>
+          <div onClick={handleGameStatisticsButton} className={classes.game_statistics_bar}></div>
           <IssueList currentUser={currentUser} />
         </div>
-        <div className={classes.wrapper}>
-          <GameCardsList />
-          {!roundIsStarted && (
-            <div className={classes.game_cardlist_plug}>
-              <span>Wait for the next round</span>
-            </div>
-          )}
-        </div>
+        {/* condition for displaying the field of playing cards */}
+        {((isDealer && settings.scramMasterAsPlayerSetting) || !isDealer) && (
+          <div className={classes.wrapper}>
+            {settings.changingCardInRoundEndSetting && <p>You can change the card even if the round is over</p>}
+            <GameCardsList />
+            {((!roundIsStarted && isActive) ||
+              (!settings.changingCardInRoundEndSetting && !isActive) ||
+              !isCurrentPlayerPlayedRound) && (
+              <div className={classes.game_cardlist_plug}>
+                <span>Wait for the next round</span>
+              </div>
+            )}
+          </div>
+        )}
+        {/* timer display condition */}
         {settings.isTimerNeededSetting && (
           <TimerContainer
             initialMinute={settings.timerValuesSetting.minutes}
             initialSeconds={settings.timerValuesSetting.seconds}
             timerStarted={gameRoundData.roundIsStarted}
             onStopTimer={handleStopGameRound}
-            roundIsActive={isActive}
+            isRoundActive={isActive}
           />
         )}
         {/* condition for displaying buttons */}
@@ -208,7 +227,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
                 text="RESTART ROUND"
                 colorButton="dark"
                 onClick={handleRestartRound}
-                disabled={gameRoundData.roundIsStarted ? true : false}
+                disabled={gameRoundData.roundIsStarted || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
               />
             </div>
           ) : (
@@ -217,10 +236,15 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
               text="RUN ROUND"
               colorButton="dark"
               onClick={handleStartRound}
-              disabled={!Boolean(currentIssue) || _.size(allPlayersIds) === 0}
+              disabled={!Boolean(currentIssue) || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
             />
           ))}
-        {_.size(roundStatistics) !== 0 ? <RoundStatistics /> : null}
+        {/* Number of players WARNING */}
+        {_.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS && (
+          <p>The round can be started if the number of players is at least two</p>
+        )}
+        {/* condition for displaying statistics */}
+        {_.size(roundStatistics) !== 0 && isCurrentPlayerPlayedRound ? <RoundStatistics /> : null}
       </div>
       {isChatOpen && (
         <div className={classes.chat}>
@@ -237,12 +261,17 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         />
       )}
       <VoteNotification />
-      <div onClick={handleGameStatisticsButton} className={classes.game_statistics_bar}></div>
+      {/* game round status */}
       <div className={classes.game_round_status}>
-        {roundIsStarted ? <p>Round is started</p> : <p>The round hasn't started yet</p>}
+        {roundIsStarted ? (
+          <p className={classes.game_round_status_active}>Active</p>
+        ) : (
+          <p className={classes.game_round_status_inactive}>Inactive</p>
+        )}
       </div>
+      {/* statistics side-bar */}
       <BackDropModal isBackDropOpen={gameStatistics}>
-        <GameStatistics onClickCanceButton={handleGameStatisticsButton} />
+        <GameStatistics onClickCancel={handleGameStatisticsButton} />
       </BackDropModal>
     </section>
   );
