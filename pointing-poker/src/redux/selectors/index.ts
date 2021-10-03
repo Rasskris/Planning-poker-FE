@@ -64,5 +64,5 @@ export const selectPlayersAndDealerIds = createSelector([selectUsers], users => 
 });
 
 export const selectDoneIssues = createSelector([selectIssues], issues => {
-  return issues.filter(issue => issue.done === true);
+  return issues.filter(issue => issue.done);
 });
