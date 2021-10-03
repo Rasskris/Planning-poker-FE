@@ -45,7 +45,6 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastName, setLastName] = useState('');
   const [jobPosition, setJobPosition] = useState('');
-  const [userRole, setUserRole] = useState(role);
   const [isObserver, setIsObserver] = useState(false);
   const [imageLink, setImageLink] = useState('');
   const isDealer = role === USER_ROLES.DEALER;
@@ -67,7 +66,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
       firstName,
       lastName,
       jobPosition,
-      role: userRole,
+      role: isObserver ? USER_ROLES.OBSERVER : role,
       image: imageLink,
       gameId,
     };
@@ -105,7 +104,6 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
 
   const handleSwitcher = () => {
     setIsObserver(prevState => !prevState);
-    setUserRole(isObserver ? USER_ROLES.OBSERVER : role);
   };
 
   return (
@@ -126,7 +124,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
           value={firstName}
           validate={firstNameValid}
           touched={firstNameTouched}
-          messageError="Enter your name. Min length: 2 symbols"
+          messageError="Min length: 2 symbols"
           onChangeInputHandler={handleFormChange}
         />
         <Input
