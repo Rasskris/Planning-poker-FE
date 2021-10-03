@@ -12,7 +12,7 @@ const Timer: FC<TimerProps> = ({ minutes, seconds }) => (
       <p>minutes</p>
       <span>{minutes}</span>
     </div>
-    <span>:</span>
+    <span className={classes.colon}>:</span>
     <div className={classes.timer__seconds}>
       <p>seconds</p>
       <span>{seconds < 10 ? `0${seconds}` : seconds}</span>
