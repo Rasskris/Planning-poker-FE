@@ -14,7 +14,7 @@ const StatisticCard: FC<IStatisticCardProps> = ({ statistics }) => {
         <div key={scoreValue}>
           <span>{scoreValue}</span>
           {scoreValue === VALUE_UNKNOWN || scoreValue === VALUE_COFFE ? null : <span>{scoreType}</span>}
-          <span>-{percent}%</span>
+          <span>-{percent.toFixed(0)}%</span>
         </div>
       ))}
     </div>
