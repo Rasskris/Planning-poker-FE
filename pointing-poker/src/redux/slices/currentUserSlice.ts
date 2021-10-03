@@ -14,19 +14,12 @@ export const currentUserSlice = createSlice({
   name: 'currentUser',
   initialState,
   reducers: {
-    deleteCurrentUser: state => {
-      state.isLogin = false;
-      state.user = null;
-    },
     admitToGame: state => {
       state.isPendingDealerAnswer = false;
     },
     rejectToGame: state => {
       state.isPendingDealerAnswer = false;
       state.isAccessToGameRejected = true;
-    },
-    resetRejectedStatus: state => {
-      state.isAccessToGameRejected = false;
     },
     resetAdmitedToGameStatus: state => {
       state.isAutoAdmitedToGame = false;
@@ -42,6 +35,5 @@ export const currentUserSlice = createSlice({
   },
 });
 
-export const { deleteCurrentUser, admitToGame, rejectToGame, resetRejectedStatus, resetAdmitedToGameStatus } =
-  currentUserSlice.actions;
+export const { admitToGame, rejectToGame, resetAdmitedToGameStatus } = currentUserSlice.actions;
 export const currentUserReducer = currentUserSlice.reducer;
