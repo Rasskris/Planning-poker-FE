@@ -25,3 +25,9 @@ export const deleteIssue = createAsyncThunk('issues/deleteIssue', async (issueId
 
   return id;
 });
+
+export const updateIssueStatus = createAsyncThunk('issues/updateIssueStatus', async (issue: Partial<Issue>) => {
+  const data = await clientAPI.put('/api/issues/status', issue);
+
+  return data;
+});

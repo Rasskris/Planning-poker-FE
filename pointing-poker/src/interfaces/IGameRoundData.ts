@@ -4,4 +4,5 @@ export interface IGameRoundData {
   playerCards: {};
   roundStatistics: {};
   isActive: boolean;
+  scoreTypeValue: string;
 }

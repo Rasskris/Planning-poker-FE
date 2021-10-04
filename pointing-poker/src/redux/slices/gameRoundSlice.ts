@@ -1,16 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { IGameRoundData } from '../../interfaces';
+import { IObjectType } from '../../interfaces/IObjectType';
 import {
   addGameRoundData,
-  getDataAllRoomsOfGame,
-  getRoundStatistic,
+  deleteGameRoundData,
+  resetGameRoundDataThunk,
   updateGameRoundStatistics,
   updateUserGameCard,
 } from '../thunks';
-
-interface IObjectType {
-  [index: string]: string | null;
-}
 
 const initialGameRoundState: IGameRoundData = {
   roundIsStarted: false,
@@ -18,7 +15,7 @@ const initialGameRoundState: IGameRoundData = {
   playerCards: {} as IObjectType,
   roundStatistics: {} as IObjectType,
   isActive: true,
-  //TO DO: add cardTypeValue
+  scoreTypeValue: '',
 };
 
 export const gameRoundSlice = createSlice({
@@ -27,47 +24,54 @@ export const gameRoundSlice = createSlice({
   reducers: {
     // only used when called by socket
     startGameRound(state, action) {
-      const newState = { ...state, ...action.payload };
+      const newState = { ...action.payload };
       return newState;
     },
     // only used when called by socket
     updateGameRoundData(state, action) {
-      const newState = { ...state, ...action.payload };
-      return newState;
+      state.playerCards = action.payload;
     },
     // only used when called by socket
     setRoundStatisticFromServer(state, action) {
       state.roundStatistics = { ...action.payload };
+    },
+    // only used when called by socket
+    resetGameRoundData(state) {
+      const newState = { ...initialGameRoundState };
+      return newState;
     },
     stopGameRound(state) {
       state.isActive = false;
       state.roundIsStarted = false;
     },
     updateRoundStatistics(state, action) {
-      state.roundStatistics = { ...action.payload };
-    },
-    resetGameRoundData(state) {
-      return { ...initialGameRoundState };
+      state.roundStatistics = action.payload;
     },
     setCurrentIssue(state, action) {
       state.currentIssue = action.payload;
     },
+    deleteCurrentIssue(state, action) {
+      if (state.currentIssue === action.payload) state.currentIssue = '';
+    },
+    resetGameRoundStatistics(state) {
+      state.roundStatistics = initialGameRoundState.roundStatistics;
+    },
   },
   extraReducers: builder => {
     builder.addCase(updateUserGameCard.fulfilled, (state, action) => {
-      const newState = { ...state, ...action.payload };
-      return newState;
+      state.playerCards = action.payload;
     });
     builder.addCase(addGameRoundData.fulfilled, (state, action) => {
-      const newState = { ...state, ...action.payload };
+      const newState = { ...action.payload };
       return newState;
     });
-    builder.addCase(getDataAllRoomsOfGame.fulfilled, (state, action) => {});
-    builder.addCase(updateGameRoundStatistics.fulfilled, state => {
-      return { ...initialGameRoundState };
+    builder.addCase(updateGameRoundStatistics.fulfilled, (state, action) => {
+      state.roundStatistics = action.payload;
     });
-    builder.addCase(getRoundStatistic.fulfilled, (state, action) => {
-      state.roundStatistics = { ...action.payload };
+    builder.addCase(deleteGameRoundData.fulfilled, (state, action) => {});
+    builder.addCase(resetGameRoundDataThunk.fulfilled, state => {
+      const currentIssue = state.currentIssue;
+      return { ...initialGameRoundState, currentIssue };
     });
   },
 });
@@ -80,5 +84,7 @@ export const {
   resetGameRoundData,
   setRoundStatisticFromServer,
   setCurrentIssue,
+  deleteCurrentIssue,
+  resetGameRoundStatistics,
 } = gameRoundSlice.actions;
 export const gameRoundReducer = gameRoundSlice.reducer;

@@ -33,3 +33,5 @@ export enum USER_ROLES {
   DEALER = 'dealer',
   OBSERVER = 'observer',
 }
+
+export const MINIMUM_NUMBER_OF_PLAYERS = 2;

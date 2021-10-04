@@ -21,9 +21,9 @@ export const roundStatiscticsCalculation = ({ playerCards }: IRoundStatiscticsCa
   for (let key of roundStatisticsMap.keys() as any) {
     let numberOfIdenticalCards = roundStatisticsMap.get(key);
     if (numberOfIdenticalCards) {
-      let percentageValue = (numberOfIdenticalCards * 100) / numberPlayersOfRound;
+      let percentageValue = +((numberOfIdenticalCards * 100) / numberPlayersOfRound).toFixed(2);
       roundStatisticsMap.set(key, percentageValue);
     }
-    return Object.fromEntries(roundStatisticsMap);
   }
+  return Object.fromEntries(roundStatisticsMap);
 };

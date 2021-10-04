@@ -77,6 +77,7 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   };
 
   const handleStartGame = () => {
+    if (settings.isTimerNeededSetting === false && settings.automaticFlipCardsSetting === false) return;
     dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
     dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
   };

@@ -28,3 +28,4 @@ export {
   VoteNotification,
   RejectedToGameNotification,
 } from './Notification';
+export { GameStatistics } from './GameStatistics';

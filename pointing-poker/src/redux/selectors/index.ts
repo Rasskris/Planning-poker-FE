@@ -62,3 +62,7 @@ export const selectPlayersAndDealerIds = createSelector([selectUsers], users => 
   const players = users.filter(user => user.role === USER_ROLES.DEALER || user.role === USER_ROLES.PLAYER);
   return players.map(player => player.id);
 });
+
+export const selectDoneIssues = createSelector([selectIssues], issues => {
+  return issues.filter(issue => issue.done);
+});

@@ -1,12 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIssues, deleteIssue, updateIssue } from '../../redux/thunks';
+import { getIssues, deleteIssue, updateIssue, deleteGameRoundData, resetGameRoundDataThunk } from '../../redux/thunks';
 import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
-import { setCurrentIssue } from '../../redux/slices';
+import { deleteCurrentIssue, setCurrentIssue } from '../../redux/slices';
 
 interface IssueListProps {
   currentUser: IUser;
@@ -28,11 +28,14 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
 
   const handleRemoveIssue = (id: string) => {
     dispatch(deleteIssue(id));
+    dispatch(deleteCurrentIssue(id));
+    dispatch(deleteGameRoundData({ gameId, userId, currentIssue: id }));
   };
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
     dispatch(updateIssue(issue));
     dispatch(setCurrentIssue(issue.id));
+    dispatch(resetGameRoundDataThunk({ gameId, userId }));
   };
 
   return (
