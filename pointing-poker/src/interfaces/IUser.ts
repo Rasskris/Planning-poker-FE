@@ -7,7 +7,7 @@ export interface IUser {
   lastName?: string;
   jobPosition?: string;
   role: USER_ROLES;
-  avatar?: string;
+  avatar?: string | File;
   selectedCard?: {
     scoreType: string;
     scoreValue: string;

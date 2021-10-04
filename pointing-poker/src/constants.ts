@@ -28,6 +28,8 @@ export const REJECTED_TO_GAME_TEXT = 'Sorry, you cannot access the game because 
 
 export const REDIRECT_TO_MAIN_TEXT = 'Maybe you want to go back to main page?';
 
+export const SETTINGS_NOTIFICATION_TEXT = 'Please, set timer or select automatic flipping cards';
+
 export enum USER_ROLES {
   PLAYER = 'player',
   DEALER = 'dealer',

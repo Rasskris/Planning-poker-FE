@@ -13,8 +13,8 @@ export const getUsers = createAsyncThunk('user/getUsers', async (gameId: string)
   return data;
 });
 
-export const addUser = createAsyncThunk('user/addUser', async (user: Partial<IUser>) => {
-  const data = await clientAPI.post(`/api/users`, user);
+export const addUser = createAsyncThunk('user/addUser', async (user: Omit<IUser, 'id' | 'gameId'>) => {
+  const data = await clientAPI.postUserData(`/api/users`, user);
 
   return data;
 });
