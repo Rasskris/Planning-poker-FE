@@ -14,9 +14,24 @@
 
 .game_statistics_issue {
   @include flex($direction: column);
+  margin-bottom: 20px;
+  .game_statistics_title {
+    margin-bottom: 10px;
+  }
 }
 
 .game_statistics_cards {
-  @include flex($direction: row);
-  column-gap: 3px;
+  @include flex($direction: row, $wrap: wrap);
+  column-gap: 5px;
+}
+
+@media print {
+  .game_statistics_issue, {
+    padding: 20px;
+    page-break-after: avoid;
+    page-break-before: avoid;
+    .game_statistics_title {
+      word-break: break-all;
+    }
+  }
 }

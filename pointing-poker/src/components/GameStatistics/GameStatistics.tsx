@@ -23,7 +23,7 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
 
           return (
             <div key={issueName?.id} className={classes.game_statistics_issue}>
-              <p>{issueName?.title}</p>
+              <p className={classes.game_statistics_title}>{issueName?.title}</p>
               <div className={classes.game_statistics_cards}>
                 {cardScoreValue.map((scoreValue, index) => {
                   return (

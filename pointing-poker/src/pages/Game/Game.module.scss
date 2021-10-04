@@ -108,14 +108,3 @@
     @include flex($direction: column);
   }
 }
-
-@media print {
-  html,
-  .game,
-  body {
-    height: 100px;
-    border: 1px solid white;
-    page-break-after: avoid;
-    page-break-before: avoid;
-  }
-}

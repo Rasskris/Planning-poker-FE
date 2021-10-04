@@ -1,8 +1,9 @@
-import { FC, useEffect } from 'react';
-import { GameStatistics } from '../../components';
+import { FC, useEffect, useRef } from 'react';
+import {Button, GameStatistics} from '../../components';
 import { useAppDispatch } from '../../hooks';
 import { IUser } from '../../interfaces';
 import { getDataAllRoundsOfGame } from '../../redux/thunks';
+import ReactToPrint from 'react-to-print';
 
 interface IGameStatisticsPageProps {
   currentUser?: IUser | null;
@@ -17,7 +18,22 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
     dispatch(getDataAllRoundsOfGame(gameId));
   });
 
-  return <GameStatistics />;
+  const componentRef = useRef<HTMLDivElement>(null);
+
+  return (
+      <>
+        <ReactToPrint
+            trigger={() => <Button text="Print Results" colorButton="dark" type="button"></Button>}
+            content={() => {
+              return componentRef.current;
+            }}
+            documentTitle="Results"
+        />
+          <div ref={componentRef}>
+              <GameStatistics />
+          </div>
+      </>
+  );
 };
 
 export { GameStatisticsPage };
