@@ -2,8 +2,6 @@
 
 .gameCard {
   position: relative;
-  width: 100px;
-  height: 160px;
   @include flex($direction: column);
   box-shadow: $card-shadow;
   border-radius: $card-radius;
