@@ -1,10 +1,9 @@
 import React, { ChangeEvent } from 'react';
 import { useState, useEffect } from 'react';
+import { useAppSelector } from '../../hooks';
 import { Timer } from './Timer';
 
 //https://stackoverflow.com/questions/40885923/countdown-timer-in-react
-
-const START_COUNTDOWN_SECONDS = 59;
 
 interface TimerContainerProps {
   initialMinute: number;
@@ -22,6 +21,7 @@ const TimerContainer = (props: TimerContainerProps) => {
   const [minutes, setMinutes] = useState<number>(initialMinute);
   const [seconds, setSeconds] = useState<number>(initialSeconds);
   const [resetTimer, setResetTimer] = useState<boolean>(false);
+  const { minutes: timeLeftMinutes, seconds: timeLeftSeconds } = useAppSelector(state => state.gameRound.timeLeft);
 
   useEffect(() => {
     if (isRoundActive) {
@@ -54,23 +54,9 @@ const TimerContainer = (props: TimerContainerProps) => {
 
   useEffect(() => {
     if (!timerStarted || areSettingsEdited) return;
-    let timerInterval = setInterval(() => {
-      if (seconds > 0) {
-        setSeconds(seconds - 1);
-      }
-      if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(timerInterval);
-        } else {
-          setSeconds(START_COUNTDOWN_SECONDS);
-          setMinutes(minutes - 1);
-        }
-      }
-    }, 1000);
-    return () => {
-      clearInterval(timerInterval);
-    };
-  });
+    setMinutes(timeLeftMinutes);
+    setSeconds(timeLeftSeconds);
+  }, [areSettingsEdited, timeLeftMinutes, timeLeftSeconds, timerStarted]);
 
   return (
     <Timer
