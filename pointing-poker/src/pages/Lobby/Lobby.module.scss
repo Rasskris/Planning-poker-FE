@@ -11,9 +11,15 @@
     align-items: center;
     .tooltipContainer {
       position: relative;
-      display: inline-block;
+      display: flex;
       word-break: break-all;
       transition: all 0.2s;
+      .gameId {
+        margin-right: 5px;
+        padding: 3px;
+        @include font($size: 16px, $weight: 700);
+        border: 1px #cccccc solid;
+      }
       .tooltipText {
         visibility: hidden;
         background-color: $sandy-brown;
