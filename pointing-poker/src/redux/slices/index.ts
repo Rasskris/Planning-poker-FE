@@ -27,5 +27,6 @@ export {
   setCurrentIssue,
   deleteCurrentIssue,
   resetGameRoundStatistics,
+  updateTimer,
 } from './gameRoundSlice';
 export { gameStatisticsReducer } from './gameStatisticsSlice';
