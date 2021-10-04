@@ -6,6 +6,7 @@ import {
   selectChatStatus,
   selectDealer,
   selectDoneIssues,
+  selectObservers,
   selectPlayers,
   selectPlayersAndDealerIds,
   selectPlayersIds,
@@ -61,9 +62,16 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const isChatOpen = useAppSelector(selectChatStatus);
   const dealer = useAppSelector(selectDealer);
   const players = useAppSelector(selectPlayers);
+  const observers = useAppSelector(selectObservers);
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const settings = useAppSelector(state => state.gameSettings);
-  const { automaticFlipCardsSetting, scoreTypeShortSetting } = settings;
+  const {
+    automaticFlipCardsSetting,
+    scoreTypeShortSetting,
+    scramMasterAsPlayerSetting,
+    changingCardInRoundEndSetting,
+    timerValuesSetting,
+  } = settings;
   const gameRoundData = useAppSelector(state => state.gameRound);
   const { playerCards, isActive, roundStatistics, currentIssue, roundIsStarted } = gameRoundData;
   const playersWhithoutDillerIds = useAppSelector(selectPlayersIds);
@@ -74,6 +82,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const currentIssueIsDone = readyIssues.find(issue => issue.id === currentIssue);
   const isCurrentPlayerPlayedRound = playerCards.hasOwnProperty(currentUserId);
   const isScoreVisible = !isActive;
+  const isDoneIssuesExist = readyIssues.length > 0;
   const dispatch = useAppDispatch();
 
   const [gameStatistics, setGameStatistics] = useState(false);
@@ -153,17 +162,21 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   );
 
   useEffect(() => {
-    if (isActive || settings.changingCardInRoundEndSetting) {
+    if (isActive || changingCardInRoundEndSetting) {
       checkingNumberPlayersPlayedCallback()
         .then(() => handleStopGameRound())
         .catch(() => {});
     }
-  }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive, settings.changingCardInRoundEndSetting]);
+  }, [checkingNumberPlayersPlayedCallback, handleStopGameRound, isActive, changingCardInRoundEndSetting]);
 
   return (
     <section className={classes.game}>
       {/*TO DO: link to statistics page, to do only for Diller or available only if the game is completely finished */}
-      <Link to="/statistics"> Statistics Page</Link>
+      {isDoneIssuesExist && (
+        <Link className={classes.link} to="/statistics">
+          Statistics
+        </Link>
+      )}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.header}>
@@ -174,7 +187,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         {!isDealer && <Button text="Exit" colorButton="dark" type="button" onClick={handleExitGame} />}
         <div className={classes.wrapper}>
           <UserList
-            isScoreVisible={isScoreVisible}
+            isScoreVisible={false}
             users={dealer}
             title="Dealer"
             currentUserId={currentUserId}
@@ -184,8 +197,18 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         <div className={classes.wrapper}>
           <UserList
             isScoreVisible={isScoreVisible}
-            users={players}
+            isPlayer
+            users={scramMasterAsPlayerSetting ? players.concat(dealer) : players}
             title="Players"
+            currentUserId={currentUserId}
+            handleKickUser={handleKickUser}
+          />
+        </div>
+        <div className={classes.wrapper}>
+          <UserList
+            isScoreVisible={isScoreVisible}
+            users={observers}
+            title="Observers"
             currentUserId={currentUserId}
             handleKickUser={handleKickUser}
           />
@@ -197,10 +220,10 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         {/* condition for displaying the field of playing cards */}
         {((isDealer && settings.scramMasterAsPlayerSetting) || !isDealer) && (
           <div className={classes.wrapper}>
-            {settings.changingCardInRoundEndSetting && <p>You can change the card even if the round is over</p>}
+            {changingCardInRoundEndSetting && <p>You can change the card even if the round is over</p>}
             <GameCardsList />
             {((!roundIsStarted && isActive) ||
-              (!settings.changingCardInRoundEndSetting && !isActive) ||
+              (!changingCardInRoundEndSetting && !isActive) ||
               !isCurrentPlayerPlayedRound) && (
               <div className={classes.game_cardlist_plug}>
                 <span>Wait for the next round</span>
@@ -211,8 +234,8 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         {/* timer display condition */}
         {settings.isTimerNeededSetting && (
           <TimerContainer
-            initialMinute={settings.timerValuesSetting.minutes}
-            initialSeconds={settings.timerValuesSetting.seconds}
+            initialMinute={timerValuesSetting.minutes}
+            initialSeconds={timerValuesSetting.seconds}
             timerStarted={gameRoundData.roundIsStarted}
             onStopTimer={handleStopGameRound}
             isRoundActive={isActive}
