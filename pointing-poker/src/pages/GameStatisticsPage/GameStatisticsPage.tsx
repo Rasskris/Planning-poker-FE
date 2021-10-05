@@ -24,7 +24,7 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
   return (
     <div className={classes.statisticsWrapper}>
       <ReactToPrint
-        trigger={() => <Button text="Print Results" colorButton="dark" type="button"></Button>}
+        trigger={() => <Button text="Download PDF Results" colorButton="dark" type="button"></Button>}
         content={() => {
           return componentRef.current;
         }}

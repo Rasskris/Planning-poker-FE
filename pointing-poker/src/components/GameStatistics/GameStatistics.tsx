@@ -1,10 +1,11 @@
 import { FC } from 'react';
-import { GameCard } from '..';
+import {Button, GameCard} from '..';
 import { useAppSelector } from '../../hooks';
 import { selectIssues } from '../../redux/selectors';
 import classes from './GameStatistics.module.scss';
 import { PieChartComponent } from '../PieChart';
 import { IStatistics } from '../PieChart/PieChart';
+import { CSVLink } from 'react-csv';
 
 interface IGameStatisticsProps {
   onClickCancel?: () => void;
@@ -15,11 +16,13 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
   const allIssues = useAppSelector(selectIssues);
 
   const getRoundData = () => {
+    const csvData: Array<string[]> = [];
     return (
       <div className={classes.game_statistics_wrapper}>
+        <Button type="button" text='Download CSV Results' colorButton="dark"> <CSVLink data={csvData} /> </Button>
         {gameStatistics.map(round => {
           const scoreTypeValue = round.scoreTypeValue;
-          const precent: string[] = Object.values(round.roundStatistics);
+          const percent: string[] = Object.values(round.roundStatistics);
           const cardScoreValue = Object.keys(round.roundStatistics);
           const issueName = allIssues.find(issue => issue.id === round.currentIssue);
           const votesByIssues = Object.values<string>(round.playerCards).reduce<Record<string, number>>((acc, item) => {
@@ -32,6 +35,7 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
           const pieChartData: Array<IStatistics> = Object.entries(votesByIssues).map(item => {
             return { name: item[0], value: item[1] };
           });
+          if (issueName) csvData.push([issueName.title]);
 
           return (
             <div key={issueName?.id} className={classes.game_statistics_issue}>
@@ -39,10 +43,11 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
               <div className={classes.game_statistics_content}>
                 <div className={classes.game_statistics_cards}>
                   {cardScoreValue.map((scoreValue, index) => {
+                    csvData.push([scoreValue, `${percent[index]}%`]);
                     return (
                       <div key={scoreValue}>
                         <GameCard isCurrent={false} scoreType={scoreTypeValue} scoreValue={scoreValue} />
-                        <div>{precent[index]}%</div>
+                        <div>{percent[index]}%</div>
                       </div>
                     );
                   })}
