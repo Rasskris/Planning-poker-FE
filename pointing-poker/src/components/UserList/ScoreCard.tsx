@@ -4,7 +4,7 @@ import classes from './UserList.module.scss';
 
 interface IProps {
   scoreType?: string;
-  scoreValue?: string;
+  scoreValue?: string | null;
 }
 
 const ScoreCard: FC<IProps> = ({ scoreType, scoreValue }) => {
