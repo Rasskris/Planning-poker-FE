@@ -1,12 +1,14 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, RefObject, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIssues, deleteIssue, updateIssue, deleteGameRoundData, resetGameRoundDataThunk } from '../../redux/thunks';
+import { getIssues, deleteIssue, updateIssue, resetGameRoundDataThunk, addIssue } from '../../redux/thunks';
 import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
 import { Issue, IUser } from '../../interfaces';
 import classes from './IssueList.module.scss';
 import { deleteCurrentIssue, setCurrentIssue } from '../../redux/slices';
+import { ReadIssueList } from '../../utils/readIssueListFromFile';
+import React from 'react';
 
 interface IssueListProps {
   currentUser: IUser;
@@ -29,13 +31,25 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   const handleRemoveIssue = (id: string) => {
     dispatch(deleteIssue(id));
     dispatch(deleteCurrentIssue(id));
-    dispatch(deleteGameRoundData({ gameId, userId, currentIssue: id }));
+    // dispatch(deleteGameRoundData({ gameId, userId, currentIssue: id }));
   };
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
     dispatch(updateIssue(issue));
     dispatch(setCurrentIssue(issue.id));
     dispatch(resetGameRoundDataThunk({ gameId, userId }));
+  };
+
+  const handleLoadFromFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+    ReadIssueList.readIssueListFromFile({ event });
+    setTimeout(() => {
+      const newIssueList = ReadIssueList.resultReader.split('\n');
+      newIssueList.forEach(issueName => {
+        const issue = { gameId, creatorId: userId, ...{ title: issueName, priority: 'Low' } };
+        dispatch(addIssue(issue));
+      });
+    }, 1000);
+    event.target.value = '';
   };
 
   return (
@@ -48,10 +62,22 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
       <div className={classes.issueList}>
         <p className={classes.title}>Issues:</p>
         {isDealer && (
-          <div className={classes.issueCard}>
-            <p>Create New Issue</p>
-            <button className={classes.btnCreate} onClick={handleClick}></button>
-          </div>
+          <>
+            <div className={classes.issueCard}>
+              <p>Create New Issue</p>
+              <button className={classes.btnCreate} onClick={handleClick}></button>
+            </div>
+            <label htmlFor="download_issue_list" className={classes.issueCard}>
+              Load Issue List from file
+              <input
+                type="file"
+                name="download_issue_list"
+                id="download_issue_list"
+                className={classes.download_issue_list}
+                onChange={handleLoadFromFile}
+              />
+            </label>
+          </>
         )}
         {issues.map(({ id, title, priority, gameId, isCurrent, creatorId }) => (
           <IssueCard
