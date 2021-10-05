@@ -1,5 +1,4 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { IGameRoundData } from '../../interfaces';
 import { IObjectType } from '../../interfaces/IObjectType';
 import { clientAPI } from '../../libs';
 

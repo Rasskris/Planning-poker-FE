@@ -3,18 +3,10 @@ import { PieChart, Pie, Cell, Tooltip } from 'recharts';
 import classes from './PieChart.module.scss';
 import { getRandomLightColor } from '../../utils/getRandomLightColor';
 
-interface IStatistics {
+export interface IStatistics {
   name: string;
   value: number;
 }
-
-//TODO: add results data when results page finished
-const data = [
-  { name: 'coffee', value: 1 },
-  { name: 'unknown', value: 2 },
-  { name: '2', value: 1 },
-  { name: '13', value: 1 },
-];
 
 const getColors = (data: Array<IStatistics>) => {
   return data.map(() => getRandomLightColor());
@@ -45,7 +37,7 @@ const renderLabel: FC<labelValues> = ({ cx, cy, midAngle, innerRadius, outerRadi
   );
 };
 
-const PieChartComponent: FC = () => {
+const PieChartComponent: FC<{ data: Array<IStatistics> }> = ({ data }) => {
   return (
     <PieChart width={PIE_SIZE} height={PIE_SIZE}>
       <Pie data={data} labelLine={false} label={renderLabel} dataKey="value">

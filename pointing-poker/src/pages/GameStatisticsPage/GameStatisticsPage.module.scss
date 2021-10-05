@@ -1,8 +1,14 @@
 @import '../../layout/styles-config';
 
-.statistics {
+.statisticsWrapper {
+  padding: 20px 0;
   width: 90%;
+  @include flex($direction: column, $justify: center);
+  > :first-child {
+    margin-bottom: 10px;
+  }
 }
+
 .link {
   margin: 5px;
   min-height: 30px;
