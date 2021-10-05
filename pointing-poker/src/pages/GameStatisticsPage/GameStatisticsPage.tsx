@@ -24,9 +24,9 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
 
   return (
     <div className={classes.statisticsWrapper}>
-        <Link className={classes.link} to="/game">
-            Back to Game
-        </Link>
+      <Link className={classes.link} to="/game">
+        Back to Game
+      </Link>
       <ReactToPrint
         trigger={() => <Button text="Download PDF Results" colorButton="dark" type="button"></Button>}
         content={() => {
@@ -38,7 +38,7 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
         <GameStatistics />
       </div>
     </div>
-  )
+  );
 };
 
 export { GameStatisticsPage };

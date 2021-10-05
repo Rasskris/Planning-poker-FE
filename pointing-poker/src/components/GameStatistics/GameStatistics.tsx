@@ -1,11 +1,11 @@
 import { FC } from 'react';
-import { Button, GameCard } from '..';
+import { CSVLink } from 'react-csv';
 import { useAppSelector } from '../../hooks';
+import { Button, GameCard } from '..';
 import { selectIssues } from '../../redux/selectors';
-import classes from './GameStatistics.module.scss';
 import { PieChartComponent } from '../PieChart';
 import { IStatistics } from '../PieChart/PieChart';
-import { CSVLink } from 'react-csv';
+import classes from './GameStatistics.module.scss';
 
 interface IGameStatisticsProps {
   onClickCancel?: () => void;
@@ -19,9 +19,10 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
     const csvData: Array<string[]> = [];
     return (
       <div className={classes.game_statistics_wrapper}>
-        <Button type="button" text="Download CSV Results" colorButton="dark">
-          {' '}
-          <CSVLink data={csvData} />{' '}
+        <Button type="button" text="" colorButton="dark">
+          <CSVLink data={csvData} className={classes.game_statistics_download}>
+            Download CSV Results
+          </CSVLink>
         </Button>
         {gameStatistics.map(round => {
           const scoreTypeValue = round.scoreTypeValue;

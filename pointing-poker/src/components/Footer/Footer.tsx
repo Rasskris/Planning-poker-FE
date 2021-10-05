@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Footer.module.scss';
 
-const PROJECT_MEMBERS: string[] = ['elenaniksy', 'nine-eleven', 'rasskris'];
+const PROJECT_MEMBERS: string[] = ['an-zaz', 'nine-eleven', 'rasskris'];
 
 const Footer: React.FC = (): JSX.Element => {
   return (

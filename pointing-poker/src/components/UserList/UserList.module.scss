@@ -9,32 +9,36 @@
   width: 100%;
 }
 
-.title {
-  @include font($size: 24px, $weight: bold);
-  margin-bottom: 5px;
-  padding: 5px 0;
-  border-bottom: 1px dotted brown;
-  border-top: 1px dotted brown;
-  @include flex($direction: column);
+.titleWrapper {
+  width: 100%;
+  @include flex($justify: space-around);
+  .title {
+    @include flex($direction: column);
+    margin-bottom: 5px;
+    margin-right: 20px;
+    padding: 5px 0;
+    @include font($size: 24px, $weight: bold);
+    border-bottom: 1px dotted brown;
+    border-top: 1px dotted brown;
+  }
 }
 
 .scoreCard {
   padding: 10px;
-  width: 300px;
+  width: 120px;
   height: 75px;
   @include flex($justify: center);
   box-shadow: $card-shadow;
   border-radius: $card-radius;
+  span {
+    font-size: 16px;
+  }
 }
 
 .cardWrapper {
-  @include flex($justify: center, $wrap: wrap);
+  @include flex($justify: center);
 }
 
 .cardsWrapper {
   @include flex($wrap: wrap, $justify: center);
-}
-
-.titleWrapper {
-  width: 100%;
 }

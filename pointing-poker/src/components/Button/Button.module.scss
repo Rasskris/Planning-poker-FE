@@ -2,6 +2,7 @@
 
 .button {
   @include font($size: 1.5rem, $height: 1.1, $weight: 400);
+  font-family: inherit;
   min-height: 30px;
   padding: 0 10px;
   cursor: pointer;
@@ -34,16 +35,18 @@
     right: 0;
     top: 17px;
   }
-
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 0 0 5px transparent;
+    animation: pulse 1s;
+  }
   &:disabled {
     opacity: 0.4;
+    cursor: not-allowed;
+    animation: none;
+    transform: none;
   }
-}
-
-.button:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 0 5px transparent;
-  animation: pulse 1s;
 }
 
 .button:active {
@@ -52,14 +55,6 @@
 
 .button:hover:active {
   transform: translateY(3px);
-}
-
-.button:disabled:hover {
-  transform: none;
-  animation: none;
-  cursor: default;
-  color: $black;
-  background-color: $white;
 }
 
 @keyframes pulse {

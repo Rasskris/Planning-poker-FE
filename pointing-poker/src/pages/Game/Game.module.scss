@@ -1,7 +1,7 @@
 @import '../../layout/styles-config';
 
 .game_page {
-  @include flex($align: flex-start, $justify: flex-start, $direction: row);
+  @include flex($align: flex-start, $justify: flex-start);
   margin: 30px 0;
   width: 95vw;
   height: calc(100% - 190px);
@@ -12,12 +12,13 @@
     height: 100%;
     row-gap: 20px;
     background-color: $alto;
-    padding: 10px;
+    padding: 20px;
     position: sticky;
+    border-radius: $card-radius;
   }
 
   &__content_wrapper {
-    @include flex($align: center, $justify: space-between, $direction: row);
+    @include flex($align: flex-start);
     height: 100%;
     column-gap: 10px;
 
@@ -38,9 +39,6 @@
   }
 
   &__issue_list {
-    height: 60%;
-    overflow-y: auto;
-    background-color: $light-green;
     padding: 8px;
   }
 
@@ -54,17 +52,11 @@
     background-color: $alto;
     padding: 10px;
   }
-
-  &__players,
-  &__observers {
-    height: 300px;
-    overflow-y: auto;
-  }
 }
 .link {
   margin: 5px;
   @include font($size: 1.5rem, $weight: 400);
-  @include button($background: $dark-brown, $color: $white);
+  @include button($background: $white, $color: $dark-brown);
   min-height: 30px;
   padding: 0 10px;
   text-decoration: none;
@@ -124,12 +116,12 @@
   @include flex($justify: center);
   width: 100%;
   height: 100%;
-  // transform: scale(1.03);
-  z-index: 5;
   background-color: #795548;
   color: $white;
   opacity: 0.9;
-  font-size: 45px;
+  @include font($size: 30px);
+  font-family: sans-serif;
+  z-index: 5;
 }
 
 // @media all and (max-width: 1500px) {

@@ -40,7 +40,7 @@ const GameCardsList: FC = () => {
       {scoreValues.map(value => (
         <GameCard
           key={value}
-          isCurrent={currentGameCard === value}
+          isCurrent={roundIsActive && currentGameCard === value}
           scoreType={scoreType}
           scoreValue={value}
           handleSelectCurrentCard={handleSelectCurrentCard}

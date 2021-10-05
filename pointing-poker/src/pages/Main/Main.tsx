@@ -1,11 +1,13 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { BackDropModal, Button, LoginForm, ConnectNotification } from '../../components/index';
-import { USER_ROLES } from '../../constants';
+import { USER_LEAVING__TEXT, USER_ROLES } from '../../constants';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectExistGameStatus } from '../../redux/selectors';
+import { selectExistGameStatus, selectLogoutSuccessStatus } from '../../redux/selectors';
+import { resetLogoutSuccessStatus } from '../../redux/slices';
 import { checkExistGame } from '../../redux/thunks';
 import classes from './Main.module.scss';
-import { PieChartComponent } from '../../components/PieChart';
 
 const Main: FC = () => {
   const isExistGame = useAppSelector(selectExistGameStatus);
@@ -13,15 +15,27 @@ const Main: FC = () => {
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [role, setRole] = useState<USER_ROLES | null>(null);
+  const isLogoutStatusSuccess = useAppSelector(selectLogoutSuccessStatus);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (isExistGame === false) {
       setIsNotificationOpen(true);
+      setGameId('');
     } else if (isExistGame === true) {
       setIsLoginFormOpen(true);
     }
   }, [isExistGame]);
+
+  useEffect(() => {
+    if (isLogoutStatusSuccess) {
+      toast(USER_LEAVING__TEXT, {
+        position: 'top-center',
+        theme: 'colored',
+      });
+      dispatch(resetLogoutSuccessStatus());
+    }
+  });
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setGameId(target.value);
@@ -47,6 +61,7 @@ const Main: FC = () => {
 
   return (
     <div className={classes.wrapper}>
+      <ToastContainer />
       {isLoginFormOpen && (
         <BackDropModal isBackDropOpen={isLoginFormOpen} titleModal="Connect to lobby">
           <LoginForm gameId={gameId} onModalCloseHandler={handleCloseModal} role={role as USER_ROLES} />

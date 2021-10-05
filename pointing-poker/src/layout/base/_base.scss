@@ -33,7 +33,9 @@ button {
     cursor: pointer;
   }
 }
-
+input {
+  outline: none;
+}
 select {
   cursor: pointer;
 }

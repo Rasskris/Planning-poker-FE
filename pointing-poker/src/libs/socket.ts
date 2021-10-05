@@ -21,6 +21,9 @@ import {
   rejectToGame,
   updateRoundStatistics,
   updateTimer,
+  setLogoutSuccessStatus,
+  setNewUserJoinedStatus,
+  setNewUserLeftStatus,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
@@ -42,13 +45,16 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('memberJoin', user => {
     dispatch(memberJoin(user));
+    dispatch(setNewUserJoinedStatus());
   });
 
   socket.on('memberLeave', deletedUserId => {
     if (userId === deletedUserId) {
       dispatch(logout());
+      dispatch(setLogoutSuccessStatus());
     } else {
       dispatch({ type: deleteUser.fulfilled.type, payload: deletedUserId });
+      dispatch(setNewUserLeftStatus());
     }
   });
 

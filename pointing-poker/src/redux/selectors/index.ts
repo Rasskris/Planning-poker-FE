@@ -17,6 +17,10 @@ export const selectCurrentUser = (state: RootState) => state.currentUser.user;
 
 export const selectLoginStatus = (state: RootState) => state.currentUser.isLogin;
 
+export const selectLoginSuccessStatus = (state: RootState) => state.currentUser.isLoginSuccess;
+
+export const selectLogoutSuccessStatus = (state: RootState) => state.currentUser.isLogoutSuccess;
+
 export const selectPendingDealerAnswer = (state: RootState) => state.currentUser.isPendingDealerAnswer;
 
 export const selectAutoAdmitedStatus = (state: RootState) => state.currentUser.isAutoAdmitedToGame;
@@ -26,6 +30,10 @@ export const selectRejectedToGameStatus = (state: RootState) => state.currentUse
 export const selectExistGameStatus = (state: RootState) => state.game.isExist;
 
 export const selectGameStatus = (state: RootState) => state.game.isStarded;
+
+export const selectNewUserJoinedStatus = (state: RootState) => state.game.isNewUserJoined;
+
+export const selectNewUserLeftStatus = (state: RootState) => state.game.isNewUserLeft;
 
 export const selectChatStatus = (state: RootState) => state.chat.isOpen;
 

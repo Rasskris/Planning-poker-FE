@@ -1,11 +1,15 @@
 import { FC, useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import _ from 'lodash';
 import {
   selectChatStatus,
   selectDealer,
   selectDoneIssues,
+  selectNewUserJoinedStatus,
+  selectNewUserLeftStatus,
   selectObservers,
   selectPlayers,
   selectPlayersAndDealerIds,
@@ -26,7 +30,7 @@ import {
   updateIssueStatus,
   getGameSettings,
 } from '../../redux/thunks';
-import { MINIMUM_NUMBER_OF_PLAYERS, USER_ROLES } from '../../constants';
+import { MINIMUM_NUMBER_OF_PLAYERS, NEW_USER_JOINED_TEXT, NEW_USER_LEFT_TEXT, USER_ROLES } from '../../constants';
 import { IUser } from '../../interfaces';
 import {
   BackDropModal,
@@ -43,7 +47,12 @@ import {
   WaitingList,
 } from '../../components';
 import { logout } from '../../redux/actions';
-import { stopGameRound } from '../../redux/slices';
+import {
+  resetNewUserJoinedStatus,
+  resetNewUserLeftStatus,
+  setLogoutSuccessStatus,
+  stopGameRound,
+} from '../../redux/slices';
 import { RoundStatistics } from '../../components/RoundStatistics';
 import { roundStatiscticsCalculation } from '../../utils/roundStatisticsCalculation';
 import { checkingNumberPlayersPlayed } from '../../utils/checkingNumberPlayersPlayed';
@@ -72,6 +81,8 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
     changingCardInRoundEndSetting,
     timerValuesSetting,
   } = settings;
+  const isNewUserJoined = useAppSelector(selectNewUserJoinedStatus);
+  const isNewUserLeft = useAppSelector(selectNewUserLeftStatus);
   const gameRoundData = useAppSelector(state => state.gameRound);
   const { playerCards, isActive, roundStatistics, currentIssue, roundIsStarted } = gameRoundData;
   const playersWhithoutDillerIds = useAppSelector(selectPlayersIds);
@@ -86,6 +97,23 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const dispatch = useAppDispatch();
 
   const [gameStatistics, setGameStatistics] = useState(false);
+
+  useEffect(() => {
+    if (isNewUserJoined) {
+      toast.info(NEW_USER_JOINED_TEXT, {
+        position: 'top-center',
+        theme: 'colored',
+      });
+      dispatch(resetNewUserJoinedStatus());
+    }
+    if (isNewUserLeft) {
+      toast.info(NEW_USER_LEFT_TEXT, {
+        position: 'top-center',
+        theme: 'light',
+      });
+      dispatch(resetNewUserLeftStatus());
+    }
+  });
 
   useEffect(() => {
     dispatch(getUsers(gameId));
@@ -111,6 +139,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   const handleExitGame = () => {
     dispatch(deleteUser({ currentUserId }));
     dispatch(logout());
+    dispatch(setLogoutSuccessStatus());
   };
 
   const handleRestartRound = () => {
@@ -171,6 +200,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
 
   return (
     <main className={classes.game_page}>
+      <ToastContainer />
       <aside className={classes.game_page__side_bar}>
         {/* game round status */}
         <div className={classes.game_round_status}>
@@ -217,6 +247,11 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
               disabled={!Boolean(currentIssue) || _.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS}
             />
           ))}
+        {isDoneIssuesExist && (
+          <Link className={classes.link} to="/statistics">
+            Statistics
+          </Link>
+        )}
       </aside>
       <section className={classes.game_page__content_wrapper}>
         <article className={classes.game_page__content_block}>
@@ -284,12 +319,6 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
           </div>
         </article>
       </section>
-      {/* TO DO: link to statistics page, to do only for Diller or available only if the game is completely finished
-      {isDoneIssuesExist && (
-        <Link className={classes.link} to="/statistics">
-          Statistics
-        </Link>
-      )} */}
       {isChatOpen && (
         <div className={classes.chat}>
           <Chat currentUser={currentUser} />

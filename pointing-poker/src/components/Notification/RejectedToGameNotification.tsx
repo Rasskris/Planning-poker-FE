@@ -3,20 +3,19 @@ import { useAppDispatch } from '../../hooks';
 import { BackDropModal, Button } from '..';
 import { REJECTED_TO_GAME_TEXT } from '../../constants';
 import { logout } from '../../redux/actions';
-import { deleteUser } from '../../redux/thunks';
 import classes from './Notification.module.scss';
+import { setLogoutSuccessStatus } from '../../redux/slices';
 
 interface INotificationProps {
   isVisible: boolean;
-  currentUserId: string;
 }
 
-const RejectedToGameNotification: FC<INotificationProps> = ({ isVisible, currentUserId }) => {
+const RejectedToGameNotification: FC<INotificationProps> = ({ isVisible }) => {
   const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    dispatch(deleteUser({ currentUserId }));
     dispatch(logout());
+    dispatch(setLogoutSuccessStatus());
   };
 
   return (

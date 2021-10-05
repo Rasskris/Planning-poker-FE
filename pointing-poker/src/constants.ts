@@ -37,3 +37,11 @@ export enum USER_ROLES {
 }
 
 export const MINIMUM_NUMBER_OF_PLAYERS = 2;
+
+export const USER_GREETING_TEXT = 'Welcome to Pointing Poker!';
+
+export const USER_LEAVING__TEXT = 'GoodBye! See you soon!';
+
+export const NEW_USER_JOINED_TEXT = 'New member joined to game';
+
+export const NEW_USER_LEFT_TEXT = 'Member left this game';

@@ -1,9 +1,14 @@
 import { FC, useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   selectAutoAdmitedStatus,
   selectChatStatus,
   selectDealer,
+  selectLoginSuccessStatus,
+  selectNewUserJoinedStatus,
+  selectNewUserLeftStatus,
   selectObservers,
   selectPendingDealerAnswer,
   selectPlayers,
@@ -30,10 +35,16 @@ import {
 import { logout } from '../../redux/actions';
 import { getUsers, addVote, updateGameStatus, addGameSettings, deleteGame, deleteUser } from '../../redux/thunks';
 import { IUser } from '../../interfaces';
-import { resetAdmitedToGameStatus } from '../../redux/slices';
-import { USER_ROLES } from '../../constants';
+import {
+  resetAdmitedToGameStatus,
+  resetLoginSuccessStatus,
+  setLogoutSuccessStatus,
+  resetNewUserLeftStatus,
+} from '../../redux/slices';
+import { NEW_USER_JOINED_TEXT, NEW_USER_LEFT_TEXT, USER_GREETING_TEXT, USER_ROLES } from '../../constants';
 import classes from './Lobby.module.scss';
 import CopyToClipboard from 'react-copy-to-clipboard';
+import { resetNewUserJoinedStatus } from '../../redux/slices/gameSlice';
 
 interface ILobbyProps {
   currentUser: IUser;
@@ -54,16 +65,43 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const isPendingDealerAnswer = useAppSelector(selectPendingDealerAnswer);
   const isAccessToGameRejected = useAppSelector(selectRejectedToGameStatus);
   const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
+  const isLoginSuccessStatus = useAppSelector(selectLoginSuccessStatus);
+  const isNewUserJoined = useAppSelector(selectNewUserJoinedStatus);
+  const isNewUserLeft = useAppSelector(selectNewUserLeftStatus);
 
   const [isSettingsNotificationVisible, setIsSettingsNotificationVisible] = useState(false);
-  const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
+  const { id: currentUserId, role: currentUserRole, gameId, firstName } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const [isCopied, setIsCopied] = useState({ value: gameId, copied: false });
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    if (isNewUserJoined) {
+      toast.info(NEW_USER_JOINED_TEXT, {
+        position: 'top-center',
+        theme: 'colored',
+      });
+      dispatch(resetNewUserJoinedStatus());
+    }
+    if (isNewUserLeft) {
+      toast.info(NEW_USER_LEFT_TEXT, {
+        position: 'top-center',
+        theme: 'light',
+      });
+      dispatch(resetNewUserLeftStatus());
+    }
+  });
+
+  useEffect(() => {
+    if (isLoginSuccessStatus) {
+      toast.success(`Hello, ${firstName}! ${USER_GREETING_TEXT}`, {
+        position: 'top-center',
+        theme: 'colored',
+      });
+      dispatch(resetLoginSuccessStatus());
+    }
     dispatch(getUsers(gameId));
-  }, [dispatch, gameId, observers, players, dealer]);
+  }, [dispatch, gameId, observers, players, dealer, isLoginSuccessStatus, firstName]);
 
   useEffect(() => {
     if (isAutoAdmitedToGame) {
@@ -92,11 +130,13 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const handleCancelGame = () => {
     dispatch(deleteGame(gameId));
     dispatch(logout());
+    dispatch(setLogoutSuccessStatus());
   };
 
   const handleExitGame = () => {
     dispatch(deleteUser({ currentUserId }));
     dispatch(logout());
+    dispatch(setLogoutSuccessStatus());
   };
 
   const handleCloseSettingsNotification = () => () => {
@@ -112,10 +152,9 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
 
   return (
     <section className={classes.lobby}>
+      <ToastContainer />
       {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
-      {isAccessToGameRejected && (
-        <RejectedToGameNotification isVisible={isAccessToGameRejected} currentUserId={currentUserId} />
-      )}
+      {isAccessToGameRejected && <RejectedToGameNotification isVisible={isAccessToGameRejected} />}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.wrapper}>
