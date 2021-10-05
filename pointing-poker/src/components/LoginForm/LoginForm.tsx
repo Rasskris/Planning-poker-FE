@@ -45,9 +45,9 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
   const [firstNameTouched, setFirstNameTouched] = useState(false);
   const [lastName, setLastName] = useState('');
   const [jobPosition, setJobPosition] = useState('');
-  const [userRole, setUserRole] = useState(role);
   const [isObserver, setIsObserver] = useState(false);
   const [imageLink, setImageLink] = useState('');
+  const [imageFile, setImageFile] = useState<File | string>('');
   const isDealer = role === USER_ROLES.DEALER;
 
   const isValid = (id: string, value: string) => {
@@ -55,20 +55,15 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
     setFirstNameValid(isFirstNameValid);
   };
 
-  const onImageLoadHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const file = target.files ? target.files[0] : null;
-    setImageLink(URL.createObjectURL(file));
-  };
-
-  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const user = {
       firstName,
       lastName,
       jobPosition,
-      role: userRole,
-      image: imageLink,
+      role: isObserver ? USER_ROLES.OBSERVER : role,
+      avatar: imageFile,
       gameId,
     };
 
@@ -78,7 +73,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
     }
   };
 
-  const handleFormChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     const value = target.value;
     const match = target.id.match(REGEX);
     const id = match ? match.join('').toLowerCase() : null;
@@ -105,7 +100,12 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
 
   const handleSwitcher = () => {
     setIsObserver(prevState => !prevState);
-    setUserRole(isObserver ? USER_ROLES.OBSERVER : role);
+  };
+
+  const handleLoadImage = ({ target }: ChangeEvent<HTMLInputElement>) => {
+    const file = target.files ? target.files[0] : '';
+    setImageLink(URL.createObjectURL(file));
+    setImageFile(file);
   };
 
   return (
@@ -118,7 +118,7 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
           onChange={handleSwitcher}
         />
       )}
-      <form className={classes.form} onSubmit={onFormSubmit}>
+      <form className={classes.form} onSubmit={handleSubmit}>
         <Input
           layout={InputLayoutTypes.column}
           type={USER_INIT.firstName.type}
@@ -126,24 +126,24 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
           value={firstName}
           validate={firstNameValid}
           touched={firstNameTouched}
-          messageError="Enter your name. Min length: 2 symbols"
-          onChangeInputHandler={handleFormChange}
+          messageError="Min length: 2 symbols"
+          onChangeInputHandler={handleChange}
         />
         <Input
           layout={InputLayoutTypes.column}
           type={USER_INIT.lastName.type}
           label={USER_INIT.lastName.text}
           value={lastName}
-          onChangeInputHandler={handleFormChange}
+          onChangeInputHandler={handleChange}
         />
         <Input
           layout={InputLayoutTypes.column}
           type={USER_INIT.jobPosition.type}
           label={USER_INIT.jobPosition.text}
           value={jobPosition}
-          onChangeInputHandler={handleFormChange}
+          onChangeInputHandler={handleChange}
         />
-        <ImageLoader onLoadImage={onImageLoadHandler} imgLink={imageLink} />
+        <ImageLoader onLoadImage={handleLoadImage} imgLink={imageLink} />
         <div className={classes.buttons}>
           <Button text="Confirm" colorButton="dark" type="submit" />
           <Button text="Cancel" colorButton="light" type="button" onClick={onModalCloseHandler} />

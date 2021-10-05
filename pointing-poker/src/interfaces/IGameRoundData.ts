@@ -5,4 +5,8 @@ export interface IGameRoundData {
   roundStatistics: {};
   isActive: boolean;
   scoreTypeValue: string;
+  timeLeft: {
+    minutes: number;
+    seconds: number;
+  };
 }

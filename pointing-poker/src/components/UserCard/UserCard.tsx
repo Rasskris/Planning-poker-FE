@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import classes from './UserCard.module.scss';
 import { getNameInitials } from '../../utils';
-import { USER_ROLES } from '../../constants';
+import { URL, USER_ROLES } from '../../constants';
 
 interface UserCardProps {
   id: string;
@@ -9,7 +9,7 @@ interface UserCardProps {
   firstName: string;
   lastName?: string;
   jobPosition?: string;
-  imgURL?: string;
+  avatar?: string;
   role: string;
   handleKickUser: (id: string, name: string) => void;
 }
@@ -19,7 +19,7 @@ const UserCard: FC<UserCardProps> = ({
   currentUserId,
   firstName,
   lastName,
-  imgURL,
+  avatar,
   jobPosition,
   role,
   handleKickUser,
@@ -27,9 +27,12 @@ const UserCard: FC<UserCardProps> = ({
   const nameInitials = getNameInitials(firstName, lastName);
   const isCurrentUser = currentUserId === id;
   const isDealer = role === USER_ROLES.DEALER;
-  const avatarStyle = {
-    backgroundImage: `url(${imgURL})`,
-  };
+
+  const avatarStyle = avatar
+    ? {
+        backgroundImage: `url(${URL}/images/${avatar})`,
+      }
+    : undefined;
 
   const handleClick = () => {
     handleKickUser(id, firstName);
@@ -38,7 +41,7 @@ const UserCard: FC<UserCardProps> = ({
   return (
     <div className={classes.userCard}>
       <div className={classes.userAvatar} style={avatarStyle} data-testid="initialsName">
-        {nameInitials}
+        {!avatar && nameInitials}
       </div>
       <div className={classes.userInfo}>
         {isCurrentUser && <p className={classes.userCurrent}>it's you</p>}

@@ -25,6 +25,7 @@ import {
   VoteNotification,
   Loader,
   RejectedToGameNotification,
+  SettingsNotification,
 } from '../../components';
 import { logout } from '../../redux/actions';
 import { getUsers, addVote, updateGameStatus, addGameSettings, deleteGame, deleteUser } from '../../redux/thunks';
@@ -32,6 +33,7 @@ import { IUser } from '../../interfaces';
 import { resetAdmitedToGameStatus } from '../../redux/slices';
 import { USER_ROLES } from '../../constants';
 import classes from './Lobby.module.scss';
+import CopyToClipboard from 'react-copy-to-clipboard';
 
 interface ILobbyProps {
   currentUser: IUser;
@@ -53,8 +55,10 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   const isAccessToGameRejected = useAppSelector(selectRejectedToGameStatus);
   const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
 
+  const [isSettingsNotificationVisible, setIsSettingsNotificationVisible] = useState(false);
   const { id: currentUserId, role: currentUserRole, gameId } = currentUser;
   const isDealer = currentUserRole === USER_ROLES.DEALER;
+  const [isCopied, setIsCopied] = useState({ value: gameId, copied: false });
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -77,9 +81,12 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
   };
 
   const handleStartGame = () => {
-    if (settings.isTimerNeededSetting === false && settings.automaticFlipCardsSetting === false) return;
-    dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
-    dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
+    if (!settings.isTimerNeededSetting && !settings.automaticFlipCardsSetting) {
+      setIsSettingsNotificationVisible(true);
+    } else {
+      dispatch(updateGameStatus({ gameId, currentUserId, isStarted: true }));
+      dispatch(addGameSettings({ userId: currentUserId, settings, gameId }));
+    }
   };
 
   const handleCancelGame = () => {
@@ -92,18 +99,34 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
     dispatch(logout());
   };
 
+  const handleCloseSettingsNotification = () => () => {
+    setIsSettingsNotificationVisible(false);
+  };
+
+  const handleCopy = () => {
+    setIsCopied({
+      value: gameId,
+      copied: true,
+    });
+  };
+
   return (
     <section className={classes.lobby}>
       {isPendingDealerAnswer && <Loader isVisible={isPendingDealerAnswer} />}
-      {isAccessToGameRejected && <RejectedToGameNotification isVisible={isAccessToGameRejected} />}
+      {isAccessToGameRejected && (
+        <RejectedToGameNotification isVisible={isAccessToGameRejected} currentUserId={currentUserId} />
+      )}
       <div className={classes.content}>
         {isDealer && (
           <div className={classes.wrapper}>
             <h3>Game ID:</h3>
-            <p className={classes.tooltipContainer}>
-              {gameId}
+            <div className={classes.tooltipContainer}>
+              <p className={classes.gameId}>{gameId}</p>
+              <CopyToClipboard text={isCopied.value} onCopy={handleCopy}>
+                <Button type="button" text="Copy" colorButton="light" />
+              </CopyToClipboard>
               <span className={classes.tooltipText}>Use this id to invite others</span>
-            </p>
+            </div>
             <div className={classes.btnWrapper}>
               <Button text="Start Game" colorButton="dark" type="button" onClick={handleStartGame} />
               <Button text="Cancel Game" colorButton="dark" type="button" onClick={handleCancelGame} />
@@ -148,6 +171,12 @@ const Lobby: FC<ILobbyProps> = ({ currentUser }) => {
         />
       )}
       <VoteNotification />
+      {isSettingsNotificationVisible && (
+        <SettingsNotification
+          isVisible={isSettingsNotificationVisible}
+          handleCloseModal={handleCloseSettingsNotification}
+        />
+      )}
     </section>
   );
 };

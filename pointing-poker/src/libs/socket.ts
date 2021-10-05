@@ -20,6 +20,7 @@ import {
   admitToGame,
   rejectToGame,
   updateRoundStatistics,
+  updateTimer,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { updateSettings } from '../redux/slices/gameSettingsSlice';
@@ -125,5 +126,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
   socket.on('disconnect', reason => {
     console.log(`socked disconnected: ${reason}`);
   });
+
+  socket.on('timer', timer => {
+    dispatch(updateTimer(timer));
+  });
+
   return socket;
 };

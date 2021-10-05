@@ -16,6 +16,10 @@ const initialGameRoundState: IGameRoundData = {
   roundStatistics: {} as IObjectType,
   isActive: true,
   scoreTypeValue: '',
+  timeLeft: {
+    minutes: 0,
+    seconds: 0,
+  },
 };
 
 export const gameRoundSlice = createSlice({
@@ -24,7 +28,7 @@ export const gameRoundSlice = createSlice({
   reducers: {
     // only used when called by socket
     startGameRound(state, action) {
-      const newState = { ...action.payload };
+      const newState = { ...state, ...action.payload };
       return newState;
     },
     // only used when called by socket
@@ -56,13 +60,16 @@ export const gameRoundSlice = createSlice({
     resetGameRoundStatistics(state) {
       state.roundStatistics = initialGameRoundState.roundStatistics;
     },
+    updateTimer(state, action) {
+      state.timeLeft = action.payload;
+    },
   },
   extraReducers: builder => {
     builder.addCase(updateUserGameCard.fulfilled, (state, action) => {
       state.playerCards = action.payload;
     });
     builder.addCase(addGameRoundData.fulfilled, (state, action) => {
-      const newState = { ...action.payload };
+      const newState = { ...state, ...action.payload };
       return newState;
     });
     builder.addCase(updateGameRoundStatistics.fulfilled, (state, action) => {
@@ -86,5 +93,6 @@ export const {
   setCurrentIssue,
   deleteCurrentIssue,
   resetGameRoundStatistics,
+  updateTimer,
 } = gameRoundSlice.actions;
 export const gameRoundReducer = gameRoundSlice.reducer;

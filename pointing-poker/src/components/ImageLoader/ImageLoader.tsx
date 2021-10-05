@@ -19,7 +19,7 @@ const ImageLoader: FC<ImageProps> = ({ imgLink, onLoadImage }) => {
           className={classes.input}
           type="file"
           id="button-image"
-          name="upload"
+          name="avatar"
           placeholder="Choose file"
           onChange={onLoadImage}
         />

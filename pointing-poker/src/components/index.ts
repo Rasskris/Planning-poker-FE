@@ -27,5 +27,6 @@ export {
   ConnectNotification,
   VoteNotification,
   RejectedToGameNotification,
+  SettingsNotification,
 } from './Notification';
 export { GameStatistics } from './GameStatistics';

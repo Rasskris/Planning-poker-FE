@@ -4,6 +4,7 @@ import { useAppDispatch } from '../../hooks';
 import { IUser } from '../../interfaces';
 import { getDataAllRoundsOfGame } from '../../redux/thunks';
 import ReactToPrint from 'react-to-print';
+import { Link } from 'react-router-dom';
 import classes from './GameStatisticsPage.module.scss';
 
 interface IGameStatisticsPageProps {
@@ -23,6 +24,9 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
 
   return (
     <div className={classes.statisticsWrapper}>
+        <Link className={classes.link} to="/game">
+            Back to Game
+        </Link>
       <ReactToPrint
         trigger={() => <Button text="Download PDF Results" colorButton="dark" type="button"></Button>}
         content={() => {
@@ -34,7 +38,7 @@ const GameStatisticsPage: FC<IGameStatisticsPageProps> = ({ currentUser }) => {
         <GameStatistics />
       </div>
     </div>
-  );
+  )
 };
 
 export { GameStatisticsPage };

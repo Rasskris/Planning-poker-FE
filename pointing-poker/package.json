@@ -16,6 +16,7 @@
     "node-sass": "^6.0.1",
     "react": "^17.0.2",
     "react-csv": "^2.0.3",
+    "react-copy-to-clipboard": "^5.0.4",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.1",
@@ -61,6 +62,7 @@
   "devDependencies": {
     "@types/lodash": "^4.14.172",
     "@types/react-csv": "^1.1.2",
+    "@types/react-copy-to-clipboard": "^5.0.1",
     "@types/react-router-dom": "^5.1.8",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",

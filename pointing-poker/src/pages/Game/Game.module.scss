@@ -1,39 +1,76 @@
 @import '../../layout/styles-config';
 
-.game {
-  @include flex($align: flex-start, $justify: space-between, $direction: column);
-  width: 45%;
-  .wrapper {
-    position: relative;
-    margin-bottom: 10px;
-    width: 100%;
-  }
-}
+.game_page {
+  @include flex($align: flex-start, $justify: flex-start, $direction: row);
+  margin: 30px 0;
+  width: 95vw;
+  height: calc(100% - 190px);
+  column-gap: 30px;
 
-.content {
-  padding: 30px;
-  width: 100%;
-  @include flex($direction: column);
-  .header {
-    @include flex();
-    width: 100%;
+  &__side_bar {
+    @include flex($align: center, $justify: flex-start, $direction: column);
+    height: 100%;
+    row-gap: 20px;
+    background-color: $alto;
+    padding: 10px;
+    position: sticky;
   }
-  .gameControl {
-    @include flex($direction: column, $align: flex-start);
-    h3 {
-      margin-bottom: 5px;
+
+  &__content_wrapper {
+    @include flex($align: center, $justify: space-between, $direction: row);
+    height: 100%;
+    column-gap: 10px;
+
+    > * {
+      flex-basis: calc(100% / 4);
+    }
+
+    > :nth-child(3) {
+      flex-grow: 3;
     }
   }
-  > *:first-child {
-    margin-bottom: 10px;
-    align-self: flex-start;
+
+  &__content_block {
+    @include flex($align: center, $justify: space-between, $direction: column);
+    row-gap: 20px;
+    height: 100%;
+    padding: 10px;
   }
-  .btnWrapper {
-    @include flex();
-    width: 270px;
+
+  &__issue_list {
+    height: 60%;
+    overflow-y: auto;
+    background-color: $light-green;
+    padding: 8px;
+  }
+
+  &__cards_list {
+    max-height: 80%;
     position: relative;
-    right: 10px;
-    margin-bottom: 20px;
+    overflow-y: auto;
+  }
+
+  &__statistics_cards {
+    background-color: $alto;
+    padding: 10px;
+  }
+
+  &__players,
+  &__observers {
+    height: 300px;
+    overflow-y: auto;
+  }
+}
+.link {
+  margin: 5px;
+  @include font($size: 1.5rem, $weight: 400);
+  @include button($background: $dark-brown, $color: $white);
+  min-height: 30px;
+  padding: 0 10px;
+  text-decoration: none;
+  transition: all 0.2s linear;
+  &:hover {
+    @include button($background: $white, $color: $dark-brown);
   }
 }
 
@@ -53,11 +90,11 @@
 .game_round_status {
   width: 100px;
   height: 100px;
-  position: fixed;
-  bottom: 200px;
-  left: 50px;
+  color: white;
+  font-weight: 600;
   font-size: 20px;
   line-height: 100px;
+  letter-spacing: 2px;
   opacity: 0.7;
 
   &_active,
@@ -72,36 +109,41 @@
   }
 
   &_inactive {
-    background-color: red;
+    background-color: rgb(255, 0, 0);
   }
+}
+
+.game_round_status:hover {
+  opacity: 1;
 }
 
 .game_cardlist_plug {
-  @include flex($justify: center);
   position: absolute;
-  width: 100%;
-  height: 100%;
-  transform: scale(1.03);
   left: 0;
   top: 0;
+  @include flex($justify: center);
+  width: 100%;
+  height: 100%;
+  // transform: scale(1.03);
   z-index: 5;
-  background-color: aqua;
-  opacity: 0.8;
+  background-color: #795548;
+  color: $white;
+  opacity: 0.9;
   font-size: 45px;
 }
 
-@media all and (max-width: 1500px) {
-  .game {
-    width: 65%;
-  }
-}
+// @media all and (max-width: 1500px) {
+//   .game {
+//     width: 65%;
+//   }
+// }
 
-@media all and (max-width: 900px) {
-  .game {
-    width: 90%;
-  }
+// @media all and (max-width: 900px) {
+//   .game {
+//     width: 90%;
+//   }
 
-  .content > *:first-child {
-    @include flex($direction: column);
-  }
-}
+//   .content > *:first-child {
+//     @include flex($direction: column);
+//   }
+// }

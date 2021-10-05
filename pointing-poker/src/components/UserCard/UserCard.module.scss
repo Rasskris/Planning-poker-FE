@@ -15,11 +15,12 @@
   width: 70px;
   height: 70px;
   @include flex($justify: center);
-  border-radius: 50%;
-  background-color: $sandy-brown;
+  background: $sandy-brown no-repeat center;
+  background-size: cover;
   text-transform: uppercase;
   color: white;
   @include font($size: 33px, $weight: 900);
+  border-radius: 50%;
   text-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 }
 .userInfo {
