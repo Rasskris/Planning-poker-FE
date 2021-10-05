@@ -3,6 +3,7 @@
 .statisticsWrapper {
   padding: 20px 0;
   width: 90%;
+  @include flex($direction: column, $justify: center);
   > :first-child {
     margin-bottom: 10px;
   }
