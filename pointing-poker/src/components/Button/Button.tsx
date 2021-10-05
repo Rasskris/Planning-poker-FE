@@ -15,7 +15,17 @@ interface ButtonProps {
   positionButton?: 'absolute' | 'relative';
 }
 
-const Button: FC<ButtonProps> = ({ id, type, onClick, text, disabled, colorButton, shapeButton, positionButton }) => {
+const Button: FC<ButtonProps> = ({
+  id,
+  type,
+  onClick,
+  text,
+  disabled,
+  colorButton,
+  shapeButton,
+  positionButton,
+  children,
+}) => {
   const classes: Array<String> = [
     styles.button,
     styles[`button_${colorButton}`],
@@ -26,6 +36,7 @@ const Button: FC<ButtonProps> = ({ id, type, onClick, text, disabled, colorButto
   return (
     <button type={type} onClick={onClick} disabled={disabled} className={classes.join(' ')} id={id}>
       {text}
+      {children}
     </button>
   );
 };
