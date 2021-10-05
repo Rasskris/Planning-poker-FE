@@ -3,10 +3,13 @@
 .game_setting_row {
   @include flex();
   column-gap: 3%;
-  > :nth-child(1) {
-    text-align: left;
-    align-self: flex-start;
+  label,
+  p {
+    @include font($size: 2.4rem, $height: 28.13px, $weight: 400, $style: normal, $align: left);
     margin-bottom: 5px;
+    align-self: flex-start;
+    text-align: left;
+    font-family: sans-serif;
   }
 }
 

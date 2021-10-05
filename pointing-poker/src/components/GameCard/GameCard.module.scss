@@ -2,9 +2,11 @@
 
 .gameCard {
   position: relative;
+  width: 100px;
+  height: 160px;
   @include flex($direction: column);
   box-shadow: $card-shadow;
-  border-radius: $card-radius;
+  border-radius: 5px;
   margin-bottom: 5px;
   span {
     font-size: 14px;
@@ -16,6 +18,9 @@
 .top {
   width: 90%;
   @include flex($justify: flex-start);
+  span {
+    padding-left: 2px;
+  }
 }
 .btnEdit {
   width: 15px;
