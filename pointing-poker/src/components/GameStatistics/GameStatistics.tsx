@@ -66,10 +66,10 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
   };
 
   return (
-    <div>
+    <>
       {onClickCancel && <div className={classes.cancel_button} onClick={onClickCancel}></div>}
       {gameStatistics.length !== 0 ? getRoundData() : <div>No statistics</div>}
-    </div>
+    </>
   );
 };
 

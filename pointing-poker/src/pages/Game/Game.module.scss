@@ -52,6 +52,10 @@
     background-color: $alto;
     padding: 10px;
   }
+
+  &__statistics_pop_up {
+    overflow-y: scroll;
+  }
 }
 .link {
   margin: 5px;
