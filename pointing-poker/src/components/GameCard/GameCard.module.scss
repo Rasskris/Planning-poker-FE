@@ -54,3 +54,10 @@
     opacity: 0.5;
   }
 }
+
+@media print {
+  .gameCard {
+    border: 1px solid $dark-brown;
+    box-shadow: none;
+  }
+}

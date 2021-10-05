@@ -1,5 +1,11 @@
 @import '../../layout/styles-config';
 
+.game_statistics_wrapper {
+  > :first-child {
+    margin-bottom: 20px;
+  }
+}
+
 .cancel_button {
   width: 50px;
   height: 50px;
@@ -14,9 +20,37 @@
 
 .game_statistics_issue {
   @include flex($direction: column);
+  padding: 20px 0;
+  border-top: 1px dotted brown;
+  .game_statistics_title {
+    margin-bottom: 10px;
+    word-break: break-all;
+  }
+  .game_statistics_content {
+    @include flex($justify: center, $wrap: wrap);
+  }
 }
 
 .game_statistics_cards {
-  @include flex($direction: row);
-  column-gap: 3px;
+  @include flex($direction: row, $justify: center, $wrap: wrap);
+  column-gap: 30px;
+  row-gap: 5px;
+}
+
+@media print {
+  .game_statistics_wrapper {
+    > :first-child {
+      display: none;
+    }
+  }
+  .game_statistics_issue {
+    padding: 50px;
+    border-top: none;
+  }
+  .game_statistics_issue:nth-child(2n) {
+    page-break-after: always;
+  }
+  .game_statistics_cards {
+    column-gap: 5px;
+  }
 }
