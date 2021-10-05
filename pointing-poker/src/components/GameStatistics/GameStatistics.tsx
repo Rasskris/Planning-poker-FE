@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import {Button, GameCard} from '..';
+import { Button, GameCard } from '..';
 import { useAppSelector } from '../../hooks';
 import { selectIssues } from '../../redux/selectors';
 import classes from './GameStatistics.module.scss';
@@ -19,7 +19,10 @@ const GameStatistics: FC<IGameStatisticsProps> = ({ onClickCancel }) => {
     const csvData: Array<string[]> = [];
     return (
       <div className={classes.game_statistics_wrapper}>
-        <Button type="button" text='Download CSV Results' colorButton="dark"> <CSVLink data={csvData} /> </Button>
+        <Button type="button" text="Download CSV Results" colorButton="dark">
+          {' '}
+          <CSVLink data={csvData} />{' '}
+        </Button>
         {gameStatistics.map(round => {
           const scoreTypeValue = round.scoreTypeValue;
           const percent: string[] = Object.values(round.roundStatistics);

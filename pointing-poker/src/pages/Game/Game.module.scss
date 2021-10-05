@@ -3,9 +3,6 @@
 .game {
   @include flex($align: flex-start, $justify: space-between, $direction: column);
   width: 45%;
-  //:last-child {
-  //  page-break-after: auto;
-  //}
   .wrapper {
     position: relative;
     margin-bottom: 10px;
