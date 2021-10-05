@@ -6,4 +6,6 @@ export interface ICurrentUser {
   isPendingDealerAnswer: boolean;
   isAutoAdmitedToGame: boolean;
   isAccessToGameRejected: boolean;
+  isLoginSuccess: boolean;
+  isLogoutSuccess: boolean;
 }
