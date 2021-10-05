@@ -12,7 +12,7 @@ const ScoreCard: FC<IProps> = ({ scoreType, scoreValue }) => {
   return (
     <div className={classes.scoreCard}>
       {isRoundActive ? (
-        <p>In progress</p>
+        <span>In progress</span>
       ) : (
         <p>
           <span>{scoreValue}</span>
