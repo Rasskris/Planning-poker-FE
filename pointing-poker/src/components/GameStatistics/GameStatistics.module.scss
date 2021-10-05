@@ -17,21 +17,22 @@
   margin-bottom: 20px;
   .game_statistics_title {
     margin-bottom: 10px;
+    word-break: break-all;
+  }
+  .game_statistics_content {
+    @include flex($justify: center, $wrap: wrap);
   }
 }
 
 .game_statistics_cards {
   @include flex($direction: row, $wrap: wrap);
   column-gap: 5px;
+  row-gap: 5px;
 }
 
 @media print {
-  .game_statistics_issue, {
-    padding: 20px;
-    page-break-after: avoid;
-    page-break-before: avoid;
-    .game_statistics_title {
-      word-break: break-all;
-    }
+  .game_statistics_issue {
+    padding: 50px;
+    page-break-after: auto;
   }
 }
