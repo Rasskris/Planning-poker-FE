@@ -38,6 +38,11 @@
 }
 
 @media print {
+  .game_statistics_wrapper {
+    > :first-child {
+      display: none;
+    }
+  }
   .game_statistics_issue {
     padding: 50px;
     border-top: none;
