@@ -1,4 +1,4 @@
-export const URL = 'http://localhost:5000';
+export const URL = 'https://rasskris-pointing-poker.herokuapp.com';
 
 export const FETCH_ERROR = 'Fetch failed';
 
