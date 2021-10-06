@@ -36,3 +36,9 @@
     @include flex($direction: column, $align: flex-end);
   }
 }
+
+@media all and (max-width: 1100px) {
+  .timer {
+    margin-bottom: 0;
+  }
+}

@@ -254,7 +254,7 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
         )}
       </aside>
       <section className={classes.game_page__content_wrapper}>
-        <article className={classes.game_page__content_block}>
+        <article className={classes.game_page__content_block_cards}>
           {/* Number of players WARNING */}
           {_.size(allPlayersIds) < MINIMUM_NUMBER_OF_PLAYERS && (
             <p>The round can be started if the number of players is at least two</p>
@@ -278,12 +278,13 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
             {_.size(roundStatistics) !== 0 && isCurrentPlayerPlayedRound ? <RoundStatistics /> : null}
           </div>
         </article>
-        <article className={classes.game_page__content_block}>
+        <article className={classes.game_page__content_block_issue}>
           <div className={classes.game_page__issue_list}>
+            <p className={classes.titleRule}>Round will start when dealer selected current issue</p>
             <IssueList currentUser={currentUser} />
           </div>
         </article>
-        <article className={classes.game_page__content_block}>
+        <article className={classes.game_page__content_block_users}>
           {isDealer && (
             <div className={classes.game_page__waiting_list}>
               <WaitingList />

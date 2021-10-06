@@ -12,7 +12,7 @@ interface TimerProps {
 const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMinutes, onChangeSeconds }) => (
   <div className={styles.timer}>
     <div className={styles.timer__minutes}>
-      <p>minutes</p>
+      <p className={styles.timer__word}>minutes</p>
       {areSettingsEdited ? (
         <input type="number" min="0" max="10" value={minutes} onChange={onChangeMinutes} />
       ) : (
@@ -20,7 +20,7 @@ const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMi
       )}
     </div>
     <div className={styles.timer__seconds}>
-      <p className={styles.timer__seconds__word}>seconds</p>
+      <p className={styles.timer__word}>seconds</p>
       <p>
         <span>:</span>
         {areSettingsEdited ? (

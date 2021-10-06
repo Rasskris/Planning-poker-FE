@@ -37,7 +37,7 @@ const UserCard: FC<UserCardProps> = ({
   const handleClick = () => {
     handleKickUser(id, firstName);
   };
-
+  console.log(avatarStyle);
   return (
     <div className={classes.userCard}>
       <div className={classes.userAvatar} style={avatarStyle} data-testid="initialsName">
