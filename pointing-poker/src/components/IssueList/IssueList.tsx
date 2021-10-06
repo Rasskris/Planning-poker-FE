@@ -1,4 +1,4 @@
-import { FC, RefObject, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getIssues, deleteIssue, updateIssue, resetGameRoundDataThunk, addIssue } from '../../redux/thunks';
 import { selectIssues } from '../../redux/selectors';
