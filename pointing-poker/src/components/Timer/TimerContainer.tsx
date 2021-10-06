@@ -40,14 +40,31 @@ const TimerContainer = (props: TimerContainerProps) => {
 
   const handleChangeMinutes = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
-    const { value } = event.target;
+    let value;
+    if (+event.target.value > 10) {
+      value = '10';
+    } else if (+event.target.value < 0) {
+      value = '0';
+    } else {
+      value = event.target.value;
+    }
+    if (+event.target.value === 0 && seconds < 5) setSeconds(5);
     setMinutes(+value);
     if (onChangeTimer) onChangeTimer({ minutes: +value, seconds });
   };
 
   const handleChangeSeconds = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
-    const { value } = event.target;
+    let value;
+    if (minutes === 0 && +event.target.value < 5) {
+      value = '5';
+    } else if (+event.target.value > 59) {
+      value = '59';
+    } else if (+event.target.value < 0) {
+      value = '0';
+    } else {
+      value = event.target.value;
+    }
     setSeconds(+value);
     if (onChangeTimer) onChangeTimer({ minutes, seconds: +value });
   };

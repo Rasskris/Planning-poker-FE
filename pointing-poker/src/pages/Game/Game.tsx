@@ -48,6 +48,7 @@ import {
 } from '../../components';
 import { logout } from '../../redux/actions';
 import {
+  deleteStatistics,
   resetNewUserJoinedStatus,
   resetNewUserLeftStatus,
   setLogoutSuccessStatus,
@@ -167,7 +168,11 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
   };
 
   const handleGameStatisticsButton = () => {
-    if (!gameStatistics) dispatch(getDataAllRoundsOfGame(gameId));
+    if (!gameStatistics) {
+      dispatch(getDataAllRoundsOfGame(gameId));
+    } else {
+      dispatch(deleteStatistics());
+    }
     setGameStatistics(prev => !prev);
   };
 

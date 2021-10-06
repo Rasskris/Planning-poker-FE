@@ -39,4 +39,4 @@ export {
   resetGameRoundStatistics,
   updateTimer,
 } from './gameRoundSlice';
-export { gameStatisticsReducer } from './gameStatisticsSlice';
+export { gameStatisticsReducer, deleteStatistics } from './gameStatisticsSlice';
