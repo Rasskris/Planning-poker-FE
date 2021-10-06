@@ -1,6 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getIssues, deleteIssue, updateIssue, resetGameRoundDataThunk, addIssue } from '../../redux/thunks';
+import {
+  getIssues,
+  deleteIssue,
+  updateIssue,
+  resetGameRoundDataThunk,
+  addIssue,
+  deleteGameRoundData,
+} from '../../redux/thunks';
 import { selectIssues } from '../../redux/selectors';
 import { IssueCard, IssueForm, BackDropModal } from '..';
 import { USER_ROLES } from '../../constants';
@@ -31,7 +38,7 @@ const IssueList: FC<IssueListProps> = ({ currentUser }) => {
   const handleRemoveIssue = (id: string) => {
     dispatch(deleteIssue(id));
     dispatch(deleteCurrentIssue(id));
-    // dispatch(deleteGameRoundData({ gameId, userId, currentIssue: id }));
+    dispatch(deleteGameRoundData({ gameId, userId, currentIssue: id }));
   };
 
   const handleSelectCurrentIssue = (issue: Partial<Issue>) => {
