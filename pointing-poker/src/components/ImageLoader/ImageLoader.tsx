@@ -18,6 +18,7 @@ const ImageLoader: FC<ImageProps> = ({ imgLink, onLoadImage }) => {
         <input
           className={classes.input}
           type="file"
+          accept=".jpg, .jpeg, .png"
           id="button-image"
           name="avatar"
           placeholder="Choose file"

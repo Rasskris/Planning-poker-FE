@@ -17,6 +17,9 @@
     border-radius: $card-radius;
   }
 
+  &__timer {
+    @include flex();
+  }
   &__content_wrapper {
     @include flex($align: flex-start);
     height: 100%;
@@ -26,15 +29,24 @@
       flex-basis: calc(100% / 4);
     }
 
-    > :nth-child(3) {
-      flex-grow: 3;
-    }
+    // > :nth-child(3) {
+    //   flex-grow: 3;
+    // }
   }
 
-  &__content_block {
+  &__content_block_cards {
     @include flex($align: center, $justify: space-between, $direction: column);
     row-gap: 20px;
-    height: 100%;
+    padding: 10px;
+  }
+  &__content_block_issue {
+    @include flex($align: center, $justify: space-between, $direction: column);
+    row-gap: 20px;
+    padding: 10px;
+  }
+  &__content_block_users {
+    @include flex($align: center, $justify: space-between, $direction: column);
+    row-gap: 20px;
     padding: 10px;
   }
 
@@ -69,7 +81,10 @@
     @include button($background: $white, $color: $dark-brown);
   }
 }
-
+.titleRule {
+  font-family: sans-serif;
+  font-size: 13px;
+}
 .game_statistics_bar {
   width: 100px;
   height: 100px;
@@ -128,18 +143,112 @@
   z-index: 5;
 }
 
-// @media all and (max-width: 1500px) {
-//   .game {
-//     width: 65%;
-//   }
-// }
+@media all and (max-width: 1300px) {
+  .game_page {
+    flex-wrap: nowrap;
+    &__content_wrapper {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    &__side_bar {
+      position: fixed;
+      flex-direction: column;
+      height: fit-content;
+      z-index: 5;
+      row-gap: 0;
+    }
+    &__content_block_cards {
+      flex-wrap: wrap;
+      flex-direction: row;
+      flex-basis: 100%;
+      order: 3;
+    }
+    &__content_block_issue {
+      flex-wrap: wrap;
+      order: 1;
+    }
+    &__content_block_users {
+      flex-wrap: wrap;
+      order: 2;
+    }
+  }
+}
 
-// @media all and (max-width: 900px) {
-//   .game {
-//     width: 90%;
-//   }
-
-//   .content > *:first-child {
-//     @include flex($direction: column);
-//   }
-// }
+@media all and (max-width: 1100px) {
+  .game_page {
+    flex-wrap: wrap;
+    &__side_bar {
+      width: 200px;
+      position: fixed;
+      flex-direction: row;
+      height: fit-content;
+      z-index: 5;
+      background-color: transparent;
+      grid-row-gap: 0;
+      row-gap: 0;
+    }
+    &__content_wrapper {
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: center;
+    }
+    &__content_wrapper {
+      flex-direction: row;
+      align-items: center;
+    }
+    &__content_block_cards {
+      flex-wrap: wrap;
+      flex-basis: 100%;
+      flex-direction: row;
+      order: 3;
+    }
+    &__content_block_issue {
+      flex-wrap: wrap;
+      flex-basis: 40%;
+      order: 1;
+    }
+    &__content_block_users {
+      flex-wrap: wrap;
+      flex-basis: 40%;
+      order: 2;
+    }
+  }
+}
+@media all and (max-width: 700px) {
+  .game_page {
+    &__side_bar {
+      position: fixed;
+      flex-direction: column;
+      height: fit-content;
+      z-index: 5;
+      row-gap: 0;
+    }
+    &__content_wrapper {
+      flex-direction: column;
+      align-items: center;
+    }
+    &__content_block_cards {
+      flex-wrap: wrap;
+      flex-direction: row;
+      order: 3;
+    }
+    &__content_block_issue {
+      flex-wrap: wrap;
+      order: 2;
+    }
+    &__content_block_users {
+      flex-wrap: wrap;
+      order: 1;
+    }
+  }
+  .game_round_status {
+    width: 50px;
+    height: 50px;
+    color: white;
+    font-weight: 600;
+    font-size: 8px;
+    line-height: 50px;
+    letter-spacing: 2px;
+    opacity: 0.7;
+  }
+}

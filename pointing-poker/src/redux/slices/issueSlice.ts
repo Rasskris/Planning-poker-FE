@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { issuesAdapter } from '../adapters';
-import { getIssues, addIssue, updateIssue, deleteIssue, updateIssueStatus } from '../thunks';
+import { getIssues, addIssue, updateIssue, deleteIssue, updateIssueStatus, addIssueList } from '../thunks';
 
 const initialState = issuesAdapter.getInitialState();
 
@@ -15,6 +15,9 @@ export const issueSlice = createSlice({
       })
       .addCase(addIssue.fulfilled, (state, { payload }) => {
         issuesAdapter.addOne(state, payload);
+      })
+      .addCase(addIssueList.fulfilled, (state, { payload }) => {
+        issuesAdapter.addMany(state, payload);
       })
       .addCase(updateIssue.fulfilled, (state, { payload }) => {
         issuesAdapter.setAll(state, payload);
