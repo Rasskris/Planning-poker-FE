@@ -336,7 +336,9 @@ const Game: FC<IGameProps> = ({ currentUser }) => {
       <VoteNotification />
       {/* statistics pop-up */}
       <BackDropModal isBackDropOpen={gameStatistics}>
-        <GameStatistics onClickCancel={handleGameStatisticsButton} />
+        <div className={classes.game_page__statistics_pop_up}>
+          <GameStatistics onClickCancel={handleGameStatisticsButton} />
+        </div>
       </BackDropModal>
     </main>
   );

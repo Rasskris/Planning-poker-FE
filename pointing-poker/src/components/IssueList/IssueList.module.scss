@@ -33,3 +33,10 @@
     transform: scale(1.1);
   }
 }
+
+label {
+  cursor: pointer;
+}
+.download_issue_list {
+  display: none;
+}

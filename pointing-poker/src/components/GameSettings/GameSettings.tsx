@@ -16,7 +16,6 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
     scramMasterAsPlayerSetting,
     changingCardInRoundEndSetting,
     isTimerNeededSetting,
-    changeSelectionAfterFlippingCardsSetting,
     automaticFlipCardsSetting,
     scoreTypeSetting,
     timerValuesSetting,
@@ -49,9 +48,6 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
   };
   const handleIsTimerNeededSetting = () => {
     dispatch(updateSettings({ isTimerNeededSetting: !isTimerNeededSetting }));
-  };
-  const handleChangeSelectionAfterFlippingCardsSetting = () => {
-    dispatch(updateSettings({ changeSelectionAfterFlippingCardsSetting: !changeSelectionAfterFlippingCardsSetting }));
   };
   const handleAutomaticFlipCardsSetting = () => {
     dispatch(updateSettings({ automaticFlipCardsSetting: !automaticFlipCardsSetting }));
@@ -102,14 +98,6 @@ const GameSettings: FC<GameSettingsProps> = ({ handlerSaveSettingsButton }) => {
           />
         </GameSettingRow>
       )}
-
-      <GameSettingRow>
-        <Switcher
-          switchState={changeSelectionAfterFlippingCardsSetting}
-          onChange={handleChangeSelectionAfterFlippingCardsSetting}
-          labelText="Сhange selection after flipping cards"
-        />
-      </GameSettingRow>
       <GameSettingRow>
         <Switcher
           switchState={automaticFlipCardsSetting}

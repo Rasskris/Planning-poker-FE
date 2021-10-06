@@ -4,6 +4,7 @@
   position: relative;
   @include flex($direction: column, $justify: center);
   min-height: 300px;
+  max-height: 90vh;
   max-width: 490px;
   overflow: auto;
   z-index: 2;
