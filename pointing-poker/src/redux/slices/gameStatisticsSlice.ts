@@ -13,7 +13,12 @@ const initialGameStatistics: IGameStatistics = {
 export const gameStatisticsSlice = createSlice({
   name: 'gameStatistics',
   initialState: initialGameStatistics,
-  reducers: {},
+  reducers: {
+    deleteStatistics(state) {
+      const newState = { ...initialGameStatistics };
+      return newState;
+    },
+  },
   extraReducers: builder => {
     builder.addCase(getDataAllRoundsOfGame.fulfilled, (state, action) => {
       state.gameStatistics = action.payload;
@@ -22,3 +27,4 @@ export const gameStatisticsSlice = createSlice({
 });
 
 export const gameStatisticsReducer = gameStatisticsSlice.reducer;
+export const { deleteStatistics } = gameStatisticsSlice.actions;
