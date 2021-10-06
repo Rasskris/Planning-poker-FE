@@ -1,5 +1,5 @@
 export { getMessages, addMessage } from './messageThunk';
-export { getIssues, addIssue, updateIssue, deleteIssue, updateIssueStatus } from './issueThunk';
+export { getIssues, addIssue, updateIssue, deleteIssue, updateIssueStatus, addIssueList } from './issueThunk';
 export { getUsers, addUser, updateUser, deleteUser } from './userThunk';
 export { addVote, putVoteForKick } from './voteThunk';
 export { checkExistGame, updateGameStatus, deleteGame } from './gameThunk';

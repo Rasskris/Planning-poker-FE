@@ -8,6 +8,7 @@ import {
   deleteUser,
   updateGameStatus,
   updateUser,
+  addIssueList,
 } from '../redux/thunks';
 import {
   enableVote,
@@ -68,6 +69,10 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('issueAdd', issue => {
     dispatch({ type: addIssue.fulfilled.type, payload: issue });
+  });
+
+  socket.on('issueListAdd', issueList => {
+    dispatch({ type: addIssueList.fulfilled.type, payload: issueList });
   });
 
   socket.on('issueUpdate', issues => {
