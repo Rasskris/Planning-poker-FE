@@ -35,6 +35,9 @@ const Timer: FC<TimerProps> = ({ minutes, seconds, areSettingsEdited, onChangeMi
     {seconds === 5 && minutes === 0 && areSettingsEdited && (
       <p className={styles.timer_warning}>the minimum possible timer value is 5 seconds</p>
     )}
+    {minutes === 10 && areSettingsEdited && (
+      <p className={styles.timer_warning}>the maximum number of minutes can be 10</p>
+    )}
   </div>
 );
 
