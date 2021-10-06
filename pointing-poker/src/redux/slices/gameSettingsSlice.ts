@@ -14,7 +14,7 @@ const initialGameSettingsState: IGameSettings = {
   scoreTypeShortSetting: SCORE_TYPE_SHORT_FN,
   timerValuesSetting: {
     minutes: 0,
-    seconds: 1,
+    seconds: 5,
   },
   scoreValues: SCORE_VALUES_FN,
   automaticAdmitAfterStartGame: false,

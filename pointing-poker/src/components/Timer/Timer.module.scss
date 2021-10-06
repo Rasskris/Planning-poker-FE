@@ -35,4 +35,14 @@
   &__minutes {
     @include flex($direction: column, $align: flex-end);
   }
+
+  &_wrapper {
+    @include flex($direction: column, $align: flex-end);
+  }
+
+  &_wrapper &_warning {
+    color: red;
+    font-weight: 700;
+    font-size: 18px;
+  }
 }

@@ -40,6 +40,7 @@ const TimerContainer = (props: TimerContainerProps) => {
 
   const handleChangeMinutes = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
+    if (+event.target.value === 0 && seconds < 5) setSeconds(5);
     const { value } = event.target;
     setMinutes(+value);
     if (onChangeTimer) onChangeTimer({ minutes: +value, seconds });
@@ -47,7 +48,7 @@ const TimerContainer = (props: TimerContainerProps) => {
 
   const handleChangeSeconds = (event: ChangeEvent<HTMLInputElement>) => {
     //TODO: add validation
-    const { value } = event.target;
+    const value = minutes === 0 && +event.target.value < 5 ? '5' : event.target.value;
     setSeconds(+value);
     if (onChangeTimer) onChangeTimer({ minutes, seconds: +value });
   };
