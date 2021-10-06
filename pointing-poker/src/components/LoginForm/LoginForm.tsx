@@ -16,11 +16,11 @@ const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUs
     type: 'text',
   },
   lastName: {
-    text: 'Last name:',
+    text: 'Last name: *',
     type: 'text',
   },
   jobPosition: {
-    text: 'Job position:',
+    text: 'Job position: *',
     type: 'text',
   },
 };

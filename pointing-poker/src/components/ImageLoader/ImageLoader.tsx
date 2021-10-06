@@ -10,7 +10,7 @@ interface ImageProps {
 const ImageLoader: FC<ImageProps> = ({ imgLink, onLoadImage }) => {
   return (
     <div className={classes.wrapper}>
-      <h3>Image:</h3>
+      <p className={classes.title}>Avatar: *</p>
       <div className={classes.loader}>
         <label className={classes.label} htmlFor="button-image">
           Choose file
