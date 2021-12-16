@@ -1,37 +1,40 @@
 import { FC } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { putVoteForKick } from '../../redux/thunks';
-import { BackDropModal, Button } from '..';
-import { IUser } from '../../interfaces';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { putVoteAgainstKick, putVoteForKick } from '../../redux/thunks';
 import { disableVote } from '../../redux/slices';
+import { selectUserById, selectUserOpenedVote, selectVoteStatus, selectVoteVictim } from '../../redux/selectors';
+import { BackDropModal, Button } from '..';
 import classes from './Notification.module.scss';
 
-interface INotificationProps {
-  isVoteActive: boolean;
+interface NotificationProps {
+  gameId: string;
   currentUserId: string;
-  victim: IUser;
-  userNameOpenedVote: string;
 }
 
-const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserId, victim, userNameOpenedVote }) => {
-  const { firstName: victimName, gameId } = victim;
+const MemberNotification: FC<NotificationProps> = ({ gameId, currentUserId }) => {
+  const userIdOpenedVote = useAppSelector(selectUserOpenedVote);
+  const userOpenedVote = useAppSelector(state => selectUserById(state, userIdOpenedVote));
+  const victim = useAppSelector(selectVoteVictim);
+  const isVoteActive = useAppSelector(selectVoteStatus);
   const dispatch = useAppDispatch();
 
   const handleClickYes = () => {
-    dispatch(putVoteForKick({ gameId, currentUserId }));
+    dispatch(putVoteForKick(gameId));
     dispatch(disableVote());
   };
 
   const handleClickNo = () => {
+    dispatch(putVoteAgainstKick(gameId));
     dispatch(disableVote());
   };
 
-  return (
+  return isVoteActive && victim && userOpenedVote ? (
     <BackDropModal isBackDropOpen={isVoteActive}>
       <div className={classes.notification}>
         <p>Kick player?</p>
         <p>
-          {userNameOpenedVote} want to kick member {victimName}. Do you agree with it?{' '}
+          <span className={classes.userName}>{userOpenedVote.firstName}</span> want to kick member{' '}
+          <span className={classes.userName}>{victim.firstName}</span>. Do you agree with it?{' '}
         </p>
         <div className={classes.btnContainer}>
           <Button type="button" text="Yes" colorButton="dark" onClick={handleClickYes} />
@@ -39,7 +42,7 @@ const MemberNotification: FC<INotificationProps> = ({ isVoteActive, currentUserI
         </div>
       </div>
     </BackDropModal>
-  );
+  ) : null;
 };
 
 export { MemberNotification };
