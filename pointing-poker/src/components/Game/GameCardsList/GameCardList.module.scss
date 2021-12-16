@@ -1,6 +1,6 @@
-@import '../../layout/styles-config';
+@import '../../../layout/styles-config';
 
-.game_cards_list {
+.gameCardList {
   @include flex($justify: center);
   column-gap: 10px;
   row-gap: 10px;

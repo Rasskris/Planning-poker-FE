@@ -1,0 +1,29 @@
+@import '../../../layout/styles-config';
+
+span {
+  font-size: inherit;
+}
+.top {
+  width: 90%;
+  @include flex($justify: flex-start);
+}
+
+.center {
+  width: 50px;
+  height: 50px;
+  font-size: inherit;
+  text-transform: uppercase;
+}
+.cardImg {
+  width: 100%;
+  height: 100%;
+  background: url(../../../assets/images/img__coffe.png) center no-repeat;
+  background-size: contain;
+}
+.bottom {
+  width: 90%;
+  @include flex($justify: flex-end);
+  span {
+    transform: rotate(180dg);
+  }
+}
