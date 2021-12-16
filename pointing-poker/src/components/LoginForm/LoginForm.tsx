@@ -1,112 +1,73 @@
-import { FC, ChangeEvent, FormEvent, useState } from 'react';
-import { Button, ImageLoader, Input, Switcher } from '..';
+import { FC, useState } from 'react';
+import { useForm, FormProvider } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { LOGIN_FORM_INPUTS, USER_ROLES } from '../../enums';
 import { addUser } from '../../redux/thunks';
-import { InputLayoutTypes } from '../../interfaces/InputLayoutTypes';
-import { USER_ROLES } from '../../constants';
-import { useAppDispatch } from '../../hooks';
+import { selectUserLoadingStatus } from '../../redux/selectors';
+import { Switcher, Button, Spinner } from '..';
+import { TextField } from './TextField';
 import classes from './LoginForm.module.scss';
 
-interface IUserField {
-  text: string;
-  type: string;
+interface FormInputs {
+  firstName: string;
+  lastName: string;
+  jobPosition: string;
 }
-const USER_INIT: { firstName: IUserField; lastName: IUserField; jobPosition: IUserField } = {
-  firstName: {
-    text: 'First name:',
-    type: 'text',
-  },
-  lastName: {
-    text: 'Last name:',
-    type: 'text',
-  },
-  jobPosition: {
-    text: 'Job position:',
-    type: 'text',
-  },
-};
-enum userNameFieldId {
-  firstName = 'firstname',
-  lastName = 'lastname',
-  jobPosition = 'jobposition',
-}
-const REGEX = /[a-zA-Z]/g;
 
-interface IFormProps {
+interface FormProps {
   gameId?: string;
-  onModalCloseHandler: () => void;
   role: USER_ROLES;
+  onModalCloseHandler: VoidFunction;
 }
 
-const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
-  const dispatch = useAppDispatch();
+const validationSchema = yup.object({
+  firstName: yup
+    .string()
+    .required('First name is required')
+    .min(3, 'First name must be at least 3 characters')
+    .max(8, 'First name must not exceed 8 characters'),
+  lastName: yup
+    .string()
+    .required('Last name is required')
+    .min(3, 'Last name must be at least 3 characters')
+    .max(8, 'Last name must not exceed 8 characters'),
+  jobPosition: yup
+    .string()
+    .required('Job position is required')
+    .min(4, 'Job position must be at least 4 characters')
+    .max(10, 'Job position must not exceed 10 characters'),
+});
 
-  const [firstName, setFirstName] = useState('');
-  const [firstNameValid, setFirstNameValid] = useState(false);
-  const [firstNameTouched, setFirstNameTouched] = useState(false);
-  const [lastName, setLastName] = useState('');
-  const [jobPosition, setJobPosition] = useState('');
-  const [isObserver, setIsObserver] = useState(false);
-  const [imageLink, setImageLink] = useState('');
+const LoginForm: FC<FormProps> = ({ gameId, onModalCloseHandler, role }) => {
   const isDealer = role === USER_ROLES.DEALER;
+  const [isObserver, setIsObserver] = useState(false);
+  const isLoading = useAppSelector(selectUserLoadingStatus);
+  const dispatch = useAppDispatch();
+  const methods = useForm<FormInputs>({
+    mode: 'all',
+    resolver: yupResolver(validationSchema),
+  });
+  const { handleSubmit } = methods;
 
-  const isValid = (id: string, value: string) => {
-    const isFirstNameValid = id === userNameFieldId.firstName && value.length > 1;
-    setFirstNameValid(isFirstNameValid);
-  };
-
-  const onImageLoadHandler = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const file = target.files ? target.files[0] : null;
-    setImageLink(URL.createObjectURL(file));
-  };
-
-  const onFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
+  const onSubmit = (userData: FormInputs) => {
     const user = {
-      firstName,
-      lastName,
-      jobPosition,
+      ...userData,
       role: isObserver ? USER_ROLES.OBSERVER : role,
-      image: imageLink,
       gameId,
     };
-
-    if (firstNameValid) {
-      dispatch(addUser(user));
-      onModalCloseHandler();
-    }
-  };
-
-  const handleFormChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
-    const value = target.value;
-    const match = target.id.match(REGEX);
-    const id = match ? match.join('').toLowerCase() : null;
-
-    switch (id) {
-      case userNameFieldId.firstName:
-        setFirstNameTouched(true);
-        setFirstName(value);
-        isValid(id, value);
-        break;
-
-      case userNameFieldId.lastName:
-        setLastName(value);
-        break;
-
-      case userNameFieldId.jobPosition:
-        setJobPosition(value);
-        break;
-
-      default:
-        break;
-    }
+    console.log('user', user);
+    dispatch(addUser(user));
   };
 
   const handleSwitcher = () => {
     setIsObserver(prevState => !prevState);
   };
 
-  return (
+  return isLoading ? (
+    <Spinner />
+  ) : (
     <div className={classes.wrapper}>
       {!isDealer && (
         <Switcher
@@ -116,37 +77,18 @@ const LoginForm: FC<IFormProps> = ({ gameId, onModalCloseHandler, role }) => {
           onChange={handleSwitcher}
         />
       )}
-      <form className={classes.form} onSubmit={onFormSubmit}>
-        <Input
-          layout={InputLayoutTypes.column}
-          type={USER_INIT.firstName.type}
-          label={USER_INIT.firstName.text}
-          value={firstName}
-          validate={firstNameValid}
-          touched={firstNameTouched}
-          messageError="Min length: 2 symbols"
-          onChangeInputHandler={handleFormChange}
-        />
-        <Input
-          layout={InputLayoutTypes.column}
-          type={USER_INIT.lastName.type}
-          label={USER_INIT.lastName.text}
-          value={lastName}
-          onChangeInputHandler={handleFormChange}
-        />
-        <Input
-          layout={InputLayoutTypes.column}
-          type={USER_INIT.jobPosition.type}
-          label={USER_INIT.jobPosition.text}
-          value={jobPosition}
-          onChangeInputHandler={handleFormChange}
-        />
-        <ImageLoader onLoadImage={onImageLoadHandler} imgLink={imageLink} />
-        <div className={classes.buttons}>
-          <Button text="Confirm" colorButton="dark" type="submit" />
-          <Button text="Cancel" colorButton="light" type="button" onClick={onModalCloseHandler} />
-        </div>
-      </form>
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <TextField fieldName={LOGIN_FORM_INPUTS.FIRST_NAME} labelName="First name" />
+          <TextField fieldName={LOGIN_FORM_INPUTS.LAST_NAME} labelName="Last name" />
+          <TextField fieldName={LOGIN_FORM_INPUTS.JOB_POSITION} labelName="Job position" />
+
+          <div className={classes.buttons}>
+            <Button text="Confirm" colorButton="dark" type="submit" />
+            <Button text="Cancel" colorButton="light" type="button" onClick={onModalCloseHandler} />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

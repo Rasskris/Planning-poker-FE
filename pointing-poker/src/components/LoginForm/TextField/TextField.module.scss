@@ -1,0 +1,38 @@
+@import '../../../layout/styles-config';
+
+.wrapper {
+  margin-bottom: 20px;
+  @include flex($direction: column, $align: flex-start);
+}
+
+.label {
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal);
+  text-transform: capitalize;
+}
+
+.input {
+  border: 1px solid $black;
+  box-shadow: inset 6px 6px 6px #d5d5d5, inset -6px -6px 6px $dark;
+  padding: 5px;
+  border-radius: 0 10px;
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 700, $style: normal, $align: left);
+  outline: none;
+}
+
+.valid .input {
+  box-shadow: inset 6px 6px 6px #a1bb4133 inset -6px -6px 6px $dirty-green;
+}
+
+.invalid .input {
+  box-shadow: inset 6px 6px 6px #e42b7736, inset -6px -6px 6px $dirty-pink;
+}
+
+.error {
+  color: red;
+  @include font($size: 10px, $weight: 200);
+
+  &::before {
+    display: inline;
+    content: '⚠ ';
+  }
+}
