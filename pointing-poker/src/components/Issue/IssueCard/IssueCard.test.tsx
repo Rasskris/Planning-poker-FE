@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { IssueCard } from '..';
+import { IssueCard } from '../IssueCard';
 
 const ISSUE_NAME = 'Issue 345';
 const ISSUE_PRIORITY = 'Low';
@@ -11,6 +11,7 @@ const DEALER_TRUE = true;
 const DEALER_FALSE = false;
 const CURRENT_ISSUE_FALSE = false;
 const CURRENT_ISSUE_TRUE = true;
+const IS_DONE = false;
 
 const renderComponent = (isDealer: boolean, isCurrent: boolean) => {
   const handleRemoveIssue = jest.fn();
@@ -20,6 +21,7 @@ const renderComponent = (isDealer: boolean, isCurrent: boolean) => {
     <IssueCard
       id={ID}
       gameId={GAME_ID}
+      isDone={IS_DONE}
       creatorId={CREATOR_ID}
       isCurrent={isCurrent}
       title={ISSUE_NAME}

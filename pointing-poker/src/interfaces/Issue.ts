@@ -6,11 +6,11 @@ export interface IssueStatistics {
 
 export interface Issue {
   id: string;
-  isCurrent: boolean;
-  title: string;
-  priority: string;
   creatorId: string;
   gameId: string;
+  title: string;
+  priority: string;
+  isCurrent: boolean;
   isDone: boolean;
   statistics?: Array<IssueStatistics>;
 }

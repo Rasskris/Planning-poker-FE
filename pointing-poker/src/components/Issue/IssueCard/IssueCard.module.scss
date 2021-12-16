@@ -1,4 +1,4 @@
-@import '../../layout/styles-config';
+@import '../../../layout/styles-config';
 
 .issueCard {
   position: relative;
@@ -12,7 +12,7 @@
   @include flex($align: center, $justify: space-between);
   box-shadow: $card-shadow;
   &.active {
-    background-color: #60dabf;
+    background-color: #03fc4e5c;
   }
 }
 .issueInfo {
@@ -22,6 +22,7 @@
 .issueCurrent {
   @include font($size: 10px, $weight: 900, $height: 15px);
   text-transform: uppercase;
+  color: red;
 }
 .issueName {
   font-size: 23px;
@@ -41,7 +42,7 @@
   background-size: contain;
   width: 45px;
   height: 45px;
-  background-image: url(../../assets/icons/icon__remove.svg);
+  background-image: url(../../../assets/icons/icon__remove.svg);
   z-index: 1;
   &:hover {
     opacity: 0.6;
@@ -56,9 +57,10 @@
   width: 100%;
   height: 100%;
   border-radius: $card-radius;
+
   &:hover {
     cursor: pointer;
-    background-color: $viking;
+    background-color: #03fc4e5c;
     opacity: 0.5;
   }
 }

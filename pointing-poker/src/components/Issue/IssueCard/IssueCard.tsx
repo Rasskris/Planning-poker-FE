@@ -1,9 +1,11 @@
 import { FC } from 'react';
-import { ROUND_STATUS } from '../../constants';
-import { useAppSelector } from '../../hooks';
-import { Issue } from '../../interfaces';
-import { selectGameStatus, selectRoundStatus } from '../../redux/selectors';
+import classnames from 'classnames';
+import { ROUND_STATUS } from '../../../enums';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { Issue } from '../../../interfaces';
+import { selectGameStatus, selectRoundStatus } from '../../../redux/selectors';
 import classes from './IssueCard.module.scss';
+import { resetRoundStatus } from '../../../redux/slices';
 
 interface IssueProps extends Issue {
   isDealer: boolean;
@@ -24,11 +26,14 @@ const IssueCard: FC<IssueProps> = ({
   handleRemoveIssue,
   handleSelectCurrentIssue,
 }) => {
-  const issueCardClasses = isCurrent ? [classes.issueCard, classes.active].join(' ') : classes.issueCard;
+  const issueCardClasses = classnames(classes.issueCard, {
+    [classes.active]: isCurrent,
+  });
   const isGameStarted = useAppSelector(selectGameStatus);
   const roundStatus = useAppSelector(selectRoundStatus);
   const isRoundStarted = roundStatus === ROUND_STATUS.STARTED;
-  const isCover = isGameStarted && isDealer && !isRoundStarted;
+  const issueCardCover = isGameStarted && isDealer && !isRoundStarted;
+  const dispatch = useAppDispatch();
 
   const handleClickRemove = () => {
     handleRemoveIssue(id);
@@ -36,6 +41,7 @@ const IssueCard: FC<IssueProps> = ({
 
   const handleClickSelect = () => {
     handleSelectCurrentIssue({ id, gameId, creatorId, isDone, isCurrent: true });
+    dispatch(resetRoundStatus());
   };
 
   return (
@@ -46,7 +52,7 @@ const IssueCard: FC<IssueProps> = ({
         <p className={classes.issuePriority}>{priority} priority</p>
       </div>
       {isDealer && <button className={classes.btnRemove} onClick={handleClickRemove} data-testid="btnRemove"></button>}
-      {isCover && <div className={classes.cover} onClick={handleClickSelect}></div>}
+      {issueCardCover && <div className={classes.cover} onClick={handleClickSelect}></div>}
     </div>
   );
 };

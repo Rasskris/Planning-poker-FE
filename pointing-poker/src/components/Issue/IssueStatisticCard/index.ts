@@ -1,0 +1,1 @@
+export { IssueStatisticCard } from './IssueStatisticCard';

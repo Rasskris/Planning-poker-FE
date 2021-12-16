@@ -1,13 +1,13 @@
 import { FC } from 'react';
-import { VALUE_COFFE, VALUE_UNKNOWN } from '../../constants';
-import { IssueStatistics } from '../../interfaces';
-import classes from './StatisticCard.module.scss';
+import { VALUE_COFFE, VALUE_UNKNOWN } from '../../../constants';
+import { IssueStatistics } from '../../../interfaces';
+import classes from './IssueStatisticCard.module.scss';
 
-interface IStatisticCardProps {
+interface StatisticCardProps {
   statistics: IssueStatistics[];
 }
 
-const StatisticCard: FC<IStatisticCardProps> = ({ statistics }) => {
+export const IssueStatisticCard: FC<StatisticCardProps> = ({ statistics }) => {
   return (
     <div className={classes.statisticCard}>
       {statistics.map(({ scoreType, scoreValue, percent }) => (
@@ -20,5 +20,3 @@ const StatisticCard: FC<IStatisticCardProps> = ({ statistics }) => {
     </div>
   );
 };
-
-export { StatisticCard };

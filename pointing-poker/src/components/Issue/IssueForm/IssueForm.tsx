@@ -1,16 +1,16 @@
 import { ChangeEvent, FC, FormEvent, useState } from 'react';
-import { useAppDispatch } from '../../hooks';
-import { addIssue } from '../../redux/thunks';
-import { Button } from '../Button';
+import { useAppDispatch } from '../../../hooks';
+import { addIssue } from '../../../redux/thunks';
+import { Button } from '../../Button';
 import classes from './IssueForm.module.scss';
 
 interface IssueFormProps {
   gameId: string;
   creatorId: string;
-  handleCloseModal: () => void;
+  onCloseModal: () => void;
 }
 
-const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId, handleCloseModal }) => {
+const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId, onCloseModal }) => {
   const [issueValues, setIssueValues] = useState({ title: '', priority: 'Low' });
   const dispatch = useAppDispatch();
 
@@ -29,7 +29,7 @@ const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId, handleCloseModal }) 
     const issue = { gameId, creatorId, ...issueValues };
 
     dispatch(addIssue(issue));
-    handleCloseModal();
+    onCloseModal();
   };
 
   const { title, priority } = issueValues;
@@ -51,7 +51,7 @@ const IssueForm: FC<IssueFormProps> = ({ gameId, creatorId, handleCloseModal }) 
       </label>
       <div className={classes.btnContainer}>
         <Button type="submit" text="Yes" colorButton="dark" />
-        <Button type="button" text="No" colorButton="light" onClick={handleCloseModal} />
+        <Button type="button" text="No" colorButton="light" onClick={onCloseModal} />
       </div>
     </form>
   );

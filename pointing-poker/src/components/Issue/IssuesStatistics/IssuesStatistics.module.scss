@@ -1,0 +1,24 @@
+@import '../../../layout/styles-config';
+
+.container {
+  margin: 20px;
+}
+.wrapper {
+  @include flex($direction: column, $align: center, $justify: center);
+}
+
+.issueTitle {
+  padding: 5px 0;
+  margin-bottom: 15px;
+  width: 100%;
+  @include font($size: 24px, $weight: bold);
+  border-bottom: 1px dotted $del-rio;
+  border-top: 1px dotted $del-rio;
+}
+.cardsContainer {
+  @include flex($justify: center);
+}
+.card {
+  margin: 10px;
+  @include flex($direction: column);
+}
