@@ -1,11 +1,11 @@
 @import '../../layout/styles-config.scss';
 
 .timer {
-  @include flex($justify: center);
-  @include font(36px);
+  margin-bottom: 20px;
   width: 190px;
   height: 80px;
-  margin-bottom: 20px;
+  @include flex($justify: center);
+  @include font(36px);
   border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
   box-shadow: $card-shadow;
   background-color: $del-rio;
@@ -37,5 +37,9 @@
 
   &__minutes {
     @include flex($direction: column, $align: center);
+  }
+
+  span {
+    font-size: 35px;
   }
 }
