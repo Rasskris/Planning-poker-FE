@@ -13,11 +13,14 @@ export const addVote = createAsyncThunk('vote/addVote', async ({ gameId, victimI
   return data;
 });
 
-export const putVoteForKick = createAsyncThunk(
-  'vote/putVote',
-  async ({ gameId, currentUserId }: Partial<VoteParams>) => {
-    const data = await clientAPI.put('/api/vote', { gameId, currentUserId });
+export const putVoteForKick = createAsyncThunk('vote/putVoteForKick', async (gameId: string) => {
+  const data = await clientAPI.put('/api/vote/for', { gameId });
 
-    return data;
-  },
-);
+  return data;
+});
+
+export const putVoteAgainstKick = createAsyncThunk('vote/putVoteAgainstKick', async (gameId: string) => {
+  const data = await clientAPI.put('/api/vote/against', { gameId });
+
+  return data;
+});
