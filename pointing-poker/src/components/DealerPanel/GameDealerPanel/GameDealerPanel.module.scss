@@ -1,0 +1,17 @@
+@import '../../../layout/styles-config.scss';
+
+.panel {
+  margin-bottom: 30px;
+  width: 50%;
+  @include flex($justify: space-around, $wrap: wrap);
+}
+
+.wrapper {
+  @include flex($direction: column);
+}
+
+@media all and (max-width: 500px) {
+  .panel {
+    width: 100%;
+  }
+}
