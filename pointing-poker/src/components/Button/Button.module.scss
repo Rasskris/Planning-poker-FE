@@ -1,25 +1,27 @@
 @import '../../layout/styles-config.scss';
 
 .button {
-  @include font($size: 1.5rem, $height: 1.1, $weight: 400);
-  font-family: inherit;
+  margin: 5px;
   min-height: 30px;
   padding: 0 10px;
-  cursor: pointer;
+
+  @include font($size: 1.5rem, $height: 1.1, $weight: 400);
+  font-family: inherit;
   transition: all 0.2s linear;
+  cursor: pointer;
 
   &_light {
-    @include button($background: $white, $color: $dark-brown);
+    @include button($background: $white, $color: $black);
   }
   &_light:hover {
-    @include button($background: $dark-brown, $color: $white);
+    @include button($background: $black, $color: $white);
   }
 
   &_dark {
-    @include button($background: $dark-brown, $color: $white);
+    @include button($background: $black, $color: $white);
   }
   &_dark:hover {
-    @include button($background: $white, $color: $dark-brown);
+    @include button($background: $white, $color: $black);
   }
 
   &_circle,
@@ -40,6 +42,18 @@
     transform: scale(1.02);
     box-shadow: 0 0 0 5px transparent;
     animation: pulse 1s;
+
+    &::after {
+      content: attr(data-tooltip);
+      display: block;
+      position: absolute;
+      width: fit-content;
+      border-radius: 5px;
+      background-color: #a3a3a3;
+      font-size: 16px;
+      font-family: sans-serif;
+      transform: translate(-50px, 11px);
+    }
   }
   &:disabled {
     opacity: 0.4;
@@ -59,6 +73,6 @@
 
 @keyframes pulse {
   from {
-    box-shadow: 0 0 0 0 $dark-brown;
+    box-shadow: 0 0 0 0 $black;
   }
 }
