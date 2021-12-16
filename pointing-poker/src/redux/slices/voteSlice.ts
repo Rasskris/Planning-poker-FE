@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { addVote } from '../thunks';
-import { IUser } from '../../interfaces';
+import { User } from '../../interfaces';
 
-interface IVote {
+interface Vote {
   availible: boolean;
   notAvailible: boolean;
   isActive: boolean;
-  victim: null | IUser;
+  victim: null | User;
   userOpenedVote: string;
 }
 
-const initialState: IVote = {
+const initialState: Vote = {
   availible: false,
   notAvailible: false,
   isActive: false,
@@ -22,7 +22,7 @@ export const voteSlice = createSlice({
   name: 'vote',
   initialState,
   reducers: {
-    enableVote: (state, { payload }: PayloadAction<{ currentUserId: string; victim: IUser }>) => {
+    enableVote: (state, { payload }: PayloadAction<{ currentUserId: string; victim: User }>) => {
       state.isActive = true;
       state.victim = payload.victim;
       state.userOpenedVote = payload.currentUserId;

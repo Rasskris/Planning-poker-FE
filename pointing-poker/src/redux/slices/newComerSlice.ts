@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../interfaces';
+import { User } from '../../interfaces';
 import { newComerAdapter } from '../adapters';
 import { admitNewComer, rejectNewComer } from '../thunks';
 
@@ -9,7 +9,7 @@ export const newComerSlice = createSlice({
   name: 'newComer',
   initialState,
   reducers: {
-    addNewComer: (state, { payload }: PayloadAction<IUser>) => {
+    addNewComer: (state, { payload }: PayloadAction<User>) => {
       newComerAdapter.addOne(state, payload);
     },
   },

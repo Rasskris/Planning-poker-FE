@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IGameSettings } from '../../interfaces';
-import { getGameSettings } from '../thunks';
+import { Settings } from '../../interfaces';
+import { getSettings } from '../thunks';
 
 interface ITimer {
   minutes: number;
@@ -23,8 +23,8 @@ export const timerSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(getGameSettings.fulfilled, (state, { payload }: PayloadAction<IGameSettings>) => {
-      const { minutes, seconds } = payload.timerValuesSetting;
+    builder.addCase(getSettings.fulfilled, (state, { payload }: PayloadAction<Settings>) => {
+      const { minutes, seconds } = payload.timerValues;
       state.minutes = minutes;
       state.seconds = seconds;
     });

@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { IUser } from '../../interfaces';
-import { getChangesForResetCard } from '../../utils';
 import { usersAdapter } from '../adapters';
 import { getUsers, addUser, deleteUser, putVoteForKick, updateUser } from '../thunks';
+import { User } from '../../interfaces';
+import { getChangesForResetCard } from '../../utils';
 
 const initialState = usersAdapter.getInitialState();
 
@@ -10,7 +10,7 @@ export const usersSlice = createSlice({
   name: 'users',
   initialState,
   reducers: {
-    memberJoin: (state, { payload }: PayloadAction<IUser>) => {
+    memberJoin: (state, { payload }: PayloadAction<User>) => {
       usersAdapter.addOne(state, payload);
     },
     resetSelectedCards: (state, { payload }) => {
