@@ -1,10 +1,13 @@
+import type { ToastOptions } from 'react-toastify';
+
 export const URL = 'http://localhost:5000';
 
 export const FETCH_ERROR = 'Fetch failed';
 
 export const VOTE_AVAILIBLE_TEXT = 'Vote open. This user must be deleted if more 50% members vote for kick user.';
 
-export const VOTE_NOT_AVAILIBLE_TEXT = "Sorry, you can't open vote, because in this game less 3 members.";
+export const VOTE_NOT_AVAILIBLE_TEXT =
+  "Sorry, you can't open vote, because in this game less 3 members (not including dealer).";
 
 export const SCORE_VALUES_FN: Array<string> = ['1', '2', '3', '5', '8', 'coffee', 'unknown'];
 
@@ -32,14 +35,20 @@ export const REDIRECT_TO_MAIN_TEXT = 'Maybe you want to go back to main page?';
 
 export const TOOLTIP_TEXT = 'Please, select current issue';
 
-export enum USER_ROLES {
-  PLAYER = 'player',
-  DEALER = 'dealer',
-  OBSERVER = 'observer',
-}
+export const MEMBER_ISSUE_TEXT = "Dealer doesn't yet created issues";
 
-export enum ROUND_STATUS {
-  NOT_STARTED = 'not started',
-  STARTED = 'started',
-  FINISHED = 'finished',
-}
+export const DEALER_ISSUE_TEXT = 'You and other members can see issues here after creating them';
+
+export const TOAST_OPTIONS: ToastOptions = {
+  position: 'top-center',
+  theme: 'dark',
+  style: { fontSize: '16px' },
+};
+
+export const USER_GREETING_TEXT = 'Welcome to Planning Poker!';
+
+export const USER_LEAVING__TEXT = 'GoodBye! See you soon!';
+
+export const MEMBER_JOINED_TEXT = 'New member joined to game';
+
+export const MEMBER_LEFT_TEXT = 'Member left this game';
