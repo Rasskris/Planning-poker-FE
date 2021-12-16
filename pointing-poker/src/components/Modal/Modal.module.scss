@@ -2,18 +2,27 @@
 
 .wrapper {
   position: relative;
-  @include flex($direction: column, $justify: center);
-  min-height: 300px;
-  overflow: auto;
-  z-index: 2;
   padding: 30px;
+  min-height: 300px;
+  @include flex($direction: column, $justify: center);
+  overflow: hidden;
   border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
-  box-shadow: 0 0 11px $sandy-brown-light;
+  box-shadow: 0 0 11px $greyColor;
   transition: all 1s linear;
   background-color: $white;
+  z-index: 2;
 }
 
 .header {
   @include font($size: 3rem, $height: 75px, $weight: 700);
   text-align: left;
+}
+
+@media all and (max-width: 500px) {
+  .wrapper {
+    width: 90%;
+  }
+  .header {
+    @include font($size: 2rem, $height: 50px, $weight: 700);
+  }
 }

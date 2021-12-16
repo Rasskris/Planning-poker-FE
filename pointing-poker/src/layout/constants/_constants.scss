@@ -1,16 +1,12 @@
 //main palette
-$dark-brown: #442a21;
-$pinch-brown: #784838;
-$pinch-brown-light: #78483830;
+$black: #000000;
+$dark: #00000030;
 $middle-blue: #496a81;
 $sage: #b3af8f;
 $peach: #ffc482;
 $blue-light: #0ff;
 
 //secondary palette
-$sandy-brown: #784838a6;
-$sandy-brown-light: #795548c2;
-$roman-coffee: #795548;
 $brown: #b7631a;
 $dark-purple: #7d3488;
 $pink: #e42b77;
@@ -23,12 +19,15 @@ $green: #a1bb41;
 $dirty-green: #a1bb4133;
 $light-grey: #c4c4c4;
 $alto: #d5d5d5;
-$del-rio: #b0978e;
+$del-rio: #a3a3a3;
+
+$greyColor: #828282;
+$whiteColor: #ffffff;
 
 //basic colors
 $black: #000000;
 $white: #ffffff;
 
 //cards style
-$card-shadow: 0 0 11px #795548c2;
+$card-shadow: 0 0 11px #585857c2;
 $card-radius: 60px 45px 30px 15px/15px 30px 45px 60px; ;
