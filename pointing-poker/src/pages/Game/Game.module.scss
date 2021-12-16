@@ -3,50 +3,59 @@
 .game {
   width: 90%;
   margin: 40px 0;
+
   .container {
     width: 100%;
     @include flex($direction: column);
   }
+
   .wrapperRow {
-    width: 100%;
-    @include flex($align: flex-start);
-  }
-  .wrapperColumn {
-    width: 40%;
-    @include flex($direction: column, $align: center);
-  }
-  .wrapper {
-    @include flex($direction: column, $align: center);
+    width: 80%;
     margin: 10px 0;
-    width: 100%;
+    @include flex($align: flex-start, $justify: center, $wrap: wrap);
   }
+
+  .wrapperIssue {
+    margin-bottom: 10px;
+    width: 50%;
+    @include flex($direction: column, $justify: center);
+  }
+  .wrapperGameCards {
+    width: 50%;
+    @include flex($direction: column, $justify: center);
+  }
+
   .title {
-    @include font($size: 24px, $weight: bold);
-    padding: 5px 0;
     margin-bottom: 15px;
-    border-bottom: 1px dotted brown;
-    border-top: 1px dotted brown;
+    padding: 5px 0;
     width: 100%;
+    @include font($size: 24px, $weight: bold);
+    border-bottom: 1px dotted $del-rio;
+    border-top: 1px dotted $del-rio;
   }
 }
 .link {
-  margin: 5px;
-  @include font($size: 1.5rem, $weight: 400);
-  @include button($background: $dark-brown, $color: $white);
-  min-height: 30px;
+  margin-bottom: 25px;
   padding: 0 10px;
+  min-height: 30px;
+
+  @include font($size: 1.5rem, $weight: 400);
+  @include button($background: $greyColor, $color: $white);
+
   text-decoration: none;
   transition: all 0.2s linear;
+
   &:hover {
-    @include button($background: $white, $color: $dark-brown);
+    @include button($background: $white, $color: $black);
   }
 }
 .header {
-  @include flex();
   width: 100%;
+  @include flex();
 }
 .gameControl {
   @include flex($direction: column, $align: flex-start);
+
   h3 {
     margin-bottom: 5px;
   }
@@ -63,12 +72,6 @@
   margin-bottom: 20px;
 }
 
-// @media all and (max-width: 1500px) {
-//   .game {
-//     width: 65%;
-//   }
-// }
-
 @media all and (max-width: 900px) {
   .game {
     width: 90%;
@@ -76,5 +79,18 @@
 
   .content > *:first-child {
     @include flex($direction: column);
+  }
+}
+
+@media all and (max-width: 800px) {
+  .game {
+    .wrapperIssue {
+      width: 100%;
+      order: 1;
+    }
+    .wrapperGameCards {
+      width: 100%;
+      order: 2;
+    }
   }
 }
