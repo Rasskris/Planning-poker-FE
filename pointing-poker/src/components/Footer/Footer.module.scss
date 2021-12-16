@@ -2,15 +2,15 @@
 
 .footer {
   border-radius: 100% 100% 0 0 / 60%;
-  background-color: $dark-brown;
+  background-color: $black;
   width: 100%;
 }
 
 .wrapper {
-  @include flex();
-  max-width: 1400px;
-  padding: 10px 30px;
   margin: 0 auto;
+  padding: 10px 30px;
+  max-width: 1400px;
+  @include flex();
 }
 
 .logo {
@@ -29,7 +29,7 @@
 .copyright {
   &__text {
     @include font($size: 1.5rem);
-    @include flex();
+    @include flex($wrap: wrap);
     color: $white;
 
     &_link {
