@@ -1,5 +1,7 @@
 import { FC, useEffect, useRef } from 'react';
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import type { Socket } from 'socket.io-client';
 import { initSocket } from './libs';
 import { useAppDispatch, useAppSelector } from './hooks';
@@ -10,7 +12,7 @@ import classes from './App.module.scss';
 
 const App: FC = () => {
   const socket = useRef<Socket>();
-  const isLogin = useAppSelector(selectLoginStatus);
+  const isLoggedIn = useAppSelector(selectLoginStatus);
   const isGameStarted = useAppSelector(selectGameStatus);
   const currentUser = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
@@ -34,20 +36,21 @@ const App: FC = () => {
       <Header />
       <Router>
         <Route exact path="/">
-          {isLogin ? <Redirect to="/lobby" /> : <Main />}
+          {isLoggedIn ? <Redirect to="/lobby" /> : <Main />}
         </Route>
         <Route path="/lobby">
-          {isLogin && currentUser ? <Lobby currentUser={currentUser} /> : <Redirect to="/" />}
+          {isLoggedIn && currentUser ? <Lobby currentUser={currentUser} /> : <Redirect to="/" />}
           {isGameStarted && <Redirect to="/game" />}
         </Route>
         <Route path="/game">
           {isGameStarted && currentUser ? <Game currentUser={currentUser} /> : <Redirect to="/lobby" />}
-          {!isLogin && <Main />}
+          {!isLoggedIn && <Main />}
         </Route>
         <Route path="/statistics">
           <Statistics />
         </Route>
       </Router>
+      <ToastContainer />
       <Footer />
     </div>
   );
