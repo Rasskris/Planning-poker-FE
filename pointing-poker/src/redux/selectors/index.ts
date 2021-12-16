@@ -1,7 +1,7 @@
+import { createSelector } from 'reselect';
 import { RootState } from '../store';
 import { issuesAdapter, messagesAdapter, usersAdapter, newComerAdapter } from '../adapters';
-import { createSelector } from 'reselect';
-import { USER_ROLES } from '../../constants';
+import { USER_ROLES } from '../../enums';
 
 export const { selectAll: selectIssues } = issuesAdapter.getSelectors<RootState>(state => state.issues);
 
@@ -15,7 +15,11 @@ export const { selectAll: selectNewComers } = newComerAdapter.getSelectors<RootS
 
 export const selectCurrentUser = (state: RootState) => state.currentUser.user;
 
-export const selectLoginStatus = (state: RootState) => state.currentUser.isLogin;
+export const selectUserLoadingStatus = (state: RootState) => state.currentUser.loading;
+
+export const selectLoginStatus = (state: RootState) => state.currentUser.isLoggedIn;
+
+export const selectAuthSuccessStatus = (state: RootState) => state.currentUser.authSuccess;
 
 export const selectPendingDealerAnswer = (state: RootState) => state.currentUser.isPendingDealerAnswer;
 
@@ -23,9 +27,11 @@ export const selectAutoAdmitedStatus = (state: RootState) => state.currentUser.i
 
 export const selectRejectedToGameStatus = (state: RootState) => state.currentUser.isAccessToGameRejected;
 
-export const selectExistGameStatus = (state: RootState) => state.game.isExist;
-
 export const selectGameStatus = (state: RootState) => state.game.isStarded;
+
+export const selectMemberJoinedStatus = (state: RootState) => state.game.isMemberJoined;
+
+export const selectMemberLeftStatus = (state: RootState) => state.game.isMemberLeft;
 
 export const selectRoundStatus = (state: RootState) => state.round.roundStatus;
 
@@ -37,15 +43,17 @@ export const selectVoteVictim = (state: RootState) => state.vote.victim;
 
 export const selectUserOpenedVote = (state: RootState) => state.vote.userOpenedVote;
 
-export const selectScoreTypeShort = (state: RootState) => state.gameSettings.scoreTypeShortSetting;
+export const selectScoreTypeShort = (state: RootState) => state.settings.scoreTypeShort;
 
-export const selectScoreValues = (state: RootState) => state.gameSettings.scoreValues;
+export const selectScoreValues = (state: RootState) => state.settings.scoreValues;
 
-export const selectSettings = (state: RootState) => state.gameSettings;
+export const selectSettings = (state: RootState) => state.settings;
 
 export const selectTimer = (state: RootState) => state.timer;
 
-export const selectDealer = createSelector([selectUsers], users => users.find(user => user.role === USER_ROLES.DEALER));
+export const selectDealer = createSelector([selectUsers], users =>
+  users.filter(user => user.role === USER_ROLES.DEALER),
+);
 
 export const selectObservers = createSelector([selectUsers], users =>
   users.filter(user => user.role === USER_ROLES.OBSERVER),
