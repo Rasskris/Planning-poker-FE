@@ -1,26 +1,17 @@
-import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react';
-import { BackDropModal, Button, LoginForm, ConnectNotification } from '../../components/index';
-import { USER_ROLES } from '../../constants';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { selectExistGameStatus } from '../../redux/selectors';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { toast } from 'react-toastify';
+import { BackDropModal, Button, LoginForm } from '../../components/index';
+import { TOAST_OPTIONS } from '../../constants';
+import { USER_ROLES } from '../../enums';
+import { useDispatchWithReturn } from '../../hooks';
 import { checkExistGame } from '../../redux/thunks';
 import classes from './Main.module.scss';
 
 const Main: FC = () => {
-  const isExistGame = useAppSelector(selectExistGameStatus);
   const [gameId, setGameId] = useState('');
   const [isLoginFormOpen, setIsLoginFormOpen] = useState(false);
-  const [isNotificationOpen, setIsNotificationOpen] = useState(false);
   const [role, setRole] = useState<USER_ROLES | null>(null);
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isExistGame === false) {
-      setIsNotificationOpen(true);
-    } else if (isExistGame === true) {
-      setIsLoginFormOpen(true);
-    }
-  }, [isExistGame]);
+  const [dispatch] = useDispatchWithReturn();
 
   const handleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
     setGameId(target.value);
@@ -32,16 +23,20 @@ const Main: FC = () => {
     setGameId('');
   };
 
-  const handleConnectGame = (event: FormEvent) => {
+  const handleConnectGame = async (event: FormEvent) => {
     event.preventDefault();
+    try {
+      await dispatch(checkExistGame(gameId));
 
-    dispatch(checkExistGame(gameId));
-    setRole(USER_ROLES.PLAYER);
+      setRole(USER_ROLES.PLAYER);
+      setIsLoginFormOpen(true);
+    } catch (error: any) {
+      toast.error(error.message, TOAST_OPTIONS);
+    }
   };
 
   const handleCloseModal = () => {
     setIsLoginFormOpen(false);
-    setIsNotificationOpen(false);
   };
 
   return (
@@ -49,11 +44,6 @@ const Main: FC = () => {
       {isLoginFormOpen && (
         <BackDropModal isBackDropOpen={isLoginFormOpen} titleModal="Connect to lobby">
           <LoginForm gameId={gameId} onModalCloseHandler={handleCloseModal} role={role as USER_ROLES} />
-        </BackDropModal>
-      )}
-      {isNotificationOpen && (
-        <BackDropModal isBackDropOpen={isNotificationOpen}>
-          <ConnectNotification onModalCloseHandler={handleCloseModal} />
         </BackDropModal>
       )}
       <p className={classes.logo}>Poker Planning </p>

@@ -10,21 +10,21 @@
 
 .form {
   width: 100%;
-  @include flex($align: flex-end);
+  @include flex($align: flex-end, $wrap: wrap);
   label {
-    @include flex($direction: column, $align: flex-start);
+    @include flex($direction: column, $align: flex-start, $wrap: wrap);
     font-size: 18px;
   }
   input {
     padding: 2px;
+    width: 100%;
     font-size: 18px;
-    width: 280px;
   }
 }
 
 .logo {
   text-transform: uppercase;
-  background: linear-gradient(270deg, $dark-brown, $white, $white);
+  background: linear-gradient(270deg, $black, $white, $white);
   letter-spacing: 5px;
   background-size: 77%;
   -webkit-background-clip: text;
@@ -46,7 +46,7 @@
 
 .header {
   @include font($size: 3.8rem, $height: 56.25px, $weight: 700);
-  color: $pinch-brown;
+  color: $black;
 }
 
 .create {
@@ -62,8 +62,31 @@
   font-size: 2rem;
 }
 
-@media all and (max-width: 550px) {
-  .wrapper {
+@media all and (max-width: 540px) {
+  .wrapper,
+  .connect,
+  .form {
     width: 90%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    label {
+      font-size: 14px;
+    }
+  }
+
+  .header {
+    @include font($size: 1.8rem, $height: 26.25px, $weight: 700);
+    color: $black;
+  }
+
+  .logo {
+    @include font($size: 2rem, $height: 36.25px, $weight: 700);
+  }
+
+  .create {
+    @include flex($direction: column);
+    font-size: 14px;
   }
 }
