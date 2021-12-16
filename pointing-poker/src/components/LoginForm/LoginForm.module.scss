@@ -1,0 +1,22 @@
+@import '../../layout/styles-config';
+
+.wrapper {
+  width: 420px;
+  padding: 0 20px;
+  @include flex($direction: column);
+  background-color: $white;
+}
+
+.form {
+  @include flex($direction: column);
+  width: 100%;
+
+  & > * {
+    margin: 10px 0;
+  }
+}
+
+.buttons {
+  @include flex();
+  width: 100%;
+}

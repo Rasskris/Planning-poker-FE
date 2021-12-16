@@ -1,0 +1,40 @@
+@mixin font($size, $weight: 400, $height: auto, $style: normal, $align: center) {
+  font-size: $size;
+  font-style: $style;
+  line-height: $height;
+  font-weight: $weight;
+  text-align: $align;
+}
+
+@mixin flex($display: flex, $direction: row, $align: center, $justify: space-between, $wrap: nowrap) {
+  display: $display;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+  flex-wrap: $wrap;
+}
+
+@mixin button($background: $black, $color: $white, $border: 1px solid #496a81, $border-radius: 3px) {
+  background: $background;
+  color: $color;
+  border: $border;
+  border-radius: $border-radius;
+  box-sizing: border-box;
+}
+
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white, 50%)) {
+  &::-webkit-scrollbar {
+    width: $size;
+    height: $size;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $foreground-color;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $background-color;
+    border-radius: 10px;
+  }
+}

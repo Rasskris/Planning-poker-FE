@@ -1,0 +1,26 @@
+@import '../../../layout/styles-config';
+
+.issueList {
+  width: 100%;
+  @include flex($direction: column, $align: center);
+
+  .title {
+    margin-bottom: 15px;
+    padding: 5px 0;
+    width: 100%;
+    @include font($size: 24px, $weight: bold);
+  }
+}
+.issueCard {
+  margin-bottom: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+  @include flex($align: center, $justify: space-between);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+}
+
+.cardWrapper {
+  @include flex($direction: column);
+}

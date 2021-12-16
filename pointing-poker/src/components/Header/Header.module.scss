@@ -1,0 +1,47 @@
+@import '../../layout/styles-config';
+
+.header {
+  width: 100%;
+  @include flex();
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.background {
+  position: relative;
+
+  &_darkBlue {
+    border-radius: 0 0 100% 100% / 60%;
+    background-color: $black;
+    width: 100%;
+    height: 70px;
+  }
+
+  &_blue {
+    background-color: $dark;
+    width: 100%;
+    height: 19px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+  }
+}
+
+.icons {
+  @include flex();
+}
+
+.logo {
+  position: absolute;
+  top: 15px;
+  left: 64px;
+  width: 80px;
+  height: 80px;
+  background: $black url('../../assets/icons/logo-card.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 50px;
+  border: none;
+  border-radius: 50%;
+  box-shadow: 2px 15px 35px -2px white, 0px 9px 8px -4px black, -4px -3px 0px -8px white, 13px -4px 13px -7px black;
+}

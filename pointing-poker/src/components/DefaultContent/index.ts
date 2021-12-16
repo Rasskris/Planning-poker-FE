@@ -1,0 +1,1 @@
+export { DefaultContent } from './DefaultContent';

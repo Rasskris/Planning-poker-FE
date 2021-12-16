@@ -1,0 +1,30 @@
+@import '../../layout/styles-config';
+
+.settings {
+  @include flex($direction: column, $align: space-between);
+  row-gap: 20px;
+  position: relative;
+  width: 100%;
+
+  &_title {
+    @include font($size: 24px, $weight: bold);
+    padding: 10px 0;
+    border-bottom: 1px dotted $del-rio;
+    border-top: 1px dotted $del-rio;
+  }
+}
+
+select,
+input[type='text'],
+input[type='number'] {
+  padding: 5px;
+  border: none;
+  border-radius: 0 10px;
+  box-shadow: inset 6px 6px 6px #d5d5d5, inset -6px -6px 6px $dark;
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 400, $style: normal, $align: left);
+  outline: none;
+}
+
+label {
+  @include font($size: 2.4rem, $height: 28.13px, $weight: 400, $style: normal, $align: left);
+}

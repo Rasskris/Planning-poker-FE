@@ -1,0 +1,13 @@
+@import '../../../layout/styles-config';
+
+.statisticCard {
+  @include flex($align: center, $justify: space-between);
+  margin-bottom: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+  box-shadow: $card-shadow;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 900;
+}

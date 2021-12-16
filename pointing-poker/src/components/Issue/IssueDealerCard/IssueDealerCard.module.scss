@@ -1,0 +1,24 @@
+@import '../../../layout/styles-config.scss';
+
+.issueCard {
+  margin-bottom: 10px;
+  padding: 20px;
+  width: 300px;
+  height: 75px;
+  @include flex($justify: flex-start);
+  box-shadow: $card-shadow;
+  border-radius: $card-radius;
+  // @include flex($align: center, $justify: space-between);
+}
+.btnCreate {
+  width: 30px;
+  height: 30px;
+  margin-left: 10px;
+  background-image: url(../../../assets/icons/icon__create.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  &:hover {
+    opacity: 0.5;
+    transform: scale(1.1);
+  }
+}

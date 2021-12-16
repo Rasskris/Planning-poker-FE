@@ -1,0 +1,78 @@
+@import '../../layout/styles-config.scss';
+
+.button {
+  margin: 5px;
+  min-height: 30px;
+  padding: 0 10px;
+
+  @include font($size: 1.5rem, $height: 1.1, $weight: 400);
+  font-family: inherit;
+  transition: all 0.2s linear;
+  cursor: pointer;
+
+  &_light {
+    @include button($background: $white, $color: $black);
+  }
+  &_light:hover {
+    @include button($background: $black, $color: $white);
+  }
+
+  &_dark {
+    @include button($background: $black, $color: $white);
+  }
+  &_dark:hover {
+    @include button($background: $white, $color: $black);
+  }
+
+  &_circle,
+  &_circle:hover {
+    @include button($border-radius: 50%);
+    width: 60px;
+    height: 60px;
+    line-height: 1.1;
+  }
+
+  &_absolute {
+    position: absolute;
+    right: 0;
+    top: 17px;
+  }
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 0 0 5px transparent;
+    animation: pulse 1s;
+
+    &::after {
+      content: attr(data-tooltip);
+      display: block;
+      position: absolute;
+      width: fit-content;
+      border-radius: 5px;
+      background-color: #a3a3a3;
+      font-size: 16px;
+      font-family: sans-serif;
+      transform: translate(-50px, 11px);
+    }
+  }
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    animation: none;
+    transform: none;
+  }
+}
+
+.button:active {
+  top: 2px;
+}
+
+.button:hover:active {
+  transform: translateY(3px);
+}
+
+@keyframes pulse {
+  from {
+    box-shadow: 0 0 0 0 $black;
+  }
+}

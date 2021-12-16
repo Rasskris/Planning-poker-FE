@@ -1,0 +1,45 @@
+@import '../../layout/styles-config.scss';
+
+.timer {
+  margin-bottom: 20px;
+  width: 190px;
+  height: 80px;
+  @include flex($justify: center);
+  @include font(36px);
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: $card-shadow;
+  background-color: $del-rio;
+  color: $white;
+
+  .colon {
+    margin-top: 20px;
+  }
+  &__minutes,
+  &__seconds {
+    font-weight: 600;
+
+    > :nth-child(1) {
+      @include font($size: 15px, $align: left);
+      padding-left: 8px;
+    }
+
+    > :nth-child(2) {
+      @include flex($justify: center);
+    }
+
+    input {
+      height: 40px;
+      width: 60px;
+      border-radius: 5px;
+      @include font(36px);
+    }
+  }
+
+  &__minutes {
+    @include flex($direction: column, $align: center);
+  }
+
+  span {
+    font-size: 35px;
+  }
+}

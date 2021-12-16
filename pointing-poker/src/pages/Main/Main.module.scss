@@ -1,0 +1,92 @@
+@import '../../layout/styles-config';
+
+.wrapper {
+  @include flex($direction: column, $align: flex-start);
+  max-width: 1000px;
+  border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
+  box-shadow: $card-shadow;
+  padding: 25px 40px;
+}
+
+.form {
+  width: 100%;
+  @include flex($align: flex-end, $wrap: wrap);
+  label {
+    @include flex($direction: column, $align: flex-start, $wrap: wrap);
+    font-size: 18px;
+  }
+  input {
+    padding: 2px;
+    width: 100%;
+    font-size: 18px;
+  }
+}
+
+.logo {
+  text-transform: uppercase;
+  background: linear-gradient(270deg, $black, $white, $white);
+  letter-spacing: 5px;
+  background-size: 77%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 4px -1px 0 $alto;
+  @include font($size: 4rem, $height: 56.25px, $weight: 700);
+  animation: shine 5s linear infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position-x: -500%;
+  }
+  100% {
+    background-position-x: 500%;
+  }
+}
+
+.header {
+  @include font($size: 3.8rem, $height: 56.25px, $weight: 700);
+  color: $black;
+}
+
+.create {
+  @include flex($direction: row);
+  width: 100%;
+  padding: 10px 0;
+  font-size: 2rem;
+}
+
+.connect {
+  @include flex($align: flex-end);
+  width: 100%;
+  font-size: 2rem;
+}
+
+@media all and (max-width: 540px) {
+  .wrapper,
+  .connect,
+  .form {
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    label {
+      font-size: 14px;
+    }
+  }
+
+  .header {
+    @include font($size: 1.8rem, $height: 26.25px, $weight: 700);
+    color: $black;
+  }
+
+  .logo {
+    @include font($size: 2rem, $height: 36.25px, $weight: 700);
+  }
+
+  .create {
+    @include flex($direction: column);
+    font-size: 14px;
+  }
+}

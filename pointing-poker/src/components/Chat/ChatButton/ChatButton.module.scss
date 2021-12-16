@@ -1,0 +1,24 @@
+@import '../../../layout/styles-config.scss';
+
+.logo {
+  height: fit-content;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 25px;
+  right: 40px;
+  transform: scale(1.5);
+
+  &_icon {
+    width: 19px;
+    height: 13.21px;
+  }
+
+  &_open {
+    background-image: url('../../../assets/icons/icon__chat.svg');
+  }
+
+  &_close {
+    background-image: url('../../../assets/icons/icon__cancel.svg');
+  }
+}
