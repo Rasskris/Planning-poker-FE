@@ -1,4 +1,4 @@
-@import '../../layout/styles-config';
+@import '../../../layout/styles-config.scss';
 
 .logo {
   height: fit-content;
@@ -15,10 +15,10 @@
   }
 
   &_open {
-    background-image: url('../../assets/icons/icon__chat.svg');
+    background-image: url('../../../assets/icons/icon__chat.svg');
   }
 
   &_close {
-    background-image: url('../../assets/icons/icon__cancel.svg');
+    background-image: url('../../../assets/icons/icon__cancel.svg');
   }
 }

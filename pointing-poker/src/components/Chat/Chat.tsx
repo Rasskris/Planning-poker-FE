@@ -2,14 +2,14 @@ import { FC, useEffect, useState, useRef, ChangeEvent, FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getMessages, addMessage } from '../../redux/thunks';
 import { selectMessages } from '../../redux/selectors';
+import { User } from '../../interfaces';
 import classes from './Chat.module.scss';
-import { IUser } from '../../interfaces';
 
-interface IChatProps {
-  currentUser: IUser;
+interface ChatProps {
+  currentUser: User;
 }
 
-const Chat: FC<IChatProps> = ({ currentUser }) => {
+const Chat: FC<ChatProps> = ({ currentUser }) => {
   const [text, setText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { gameId, id: currentUserId } = currentUser;
@@ -45,8 +45,8 @@ const Chat: FC<IChatProps> = ({ currentUser }) => {
         {messages.map(({ id, text, sender }) => {
           return (
             <div key={id} className={classes.message}>
-              <p>{text}</p>
-              <span>{currentUserId === sender.id ? 'You' : sender.firstName}</span>
+              <p className={classes.text}>{text}</p>
+              <span className={classes.sender}>{currentUserId === sender.id ? 'You' : sender.firstName}</span>
             </div>
           );
         })}
