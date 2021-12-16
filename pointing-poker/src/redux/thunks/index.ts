@@ -1,8 +1,8 @@
-export { getMessages, addMessage } from './messageThunk';
-export { getIssues, addIssue, updateCurrentIssue, updateDoneIssue, deleteIssue } from './issueThunk';
-export { getUsers, addUser, updateUser, deleteUser } from './userThunk';
-export { addVote, putVoteForKick } from './voteThunk';
+export { getMessages, addMessage } from './messagesThunk';
+export { getIssues, addIssue, updateCurrentIssue, updateDoneIssue, deleteIssue } from './issuesThunk';
+export { getUsers, addUser, updateUser, deleteUser, deleteVictim } from './usersThunk';
+export { addVote, putVoteForKick, putVoteAgainstKick } from './voteThunk';
 export { checkExistGame, updateGameStatus, deleteGame } from './gameThunk';
-export { updateGameSettings, getGameSettings } from './gameSettingsThunk';
-export { getRoundStatus, updateRoundStatus, stopTimer } from './gameRoundThunk';
+export { updateSettings, getSettings } from './settingsThunk';
+export { getRoundStatus, startRound, finishRound } from './roundThunk';
 export { admitNewComer, rejectNewComer } from './newComerThunk';

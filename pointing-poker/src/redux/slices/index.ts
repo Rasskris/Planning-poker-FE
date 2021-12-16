@@ -3,15 +3,23 @@ export {
   admitToGame,
   rejectToGame,
   resetAdmitedToGameStatus,
+  clearAuthSuccess,
   currentUserReducer,
 } from './currentUserSlice';
 export { usersSlice, memberJoin, resetSelectedCards, usersReducer } from './usersSlice';
 export { newComerSlice, addNewComer, newComerReducer } from './newComerSlice';
-export { messageSlice, messageReducer } from './messageSlice';
-export { issueSlice, issueReducer } from './issueSlice';
-export { gameSettingsSlice, gameSettingsReducer } from './gameSettingsSlice';
+export { messageSlice, messageReducer } from './messagesSlice';
+export { issueSlice, issueReducer } from './issuesSlice';
+export { settingsSlice, settingsReducer } from './settingsSlice';
 export { enableVote, disableVote, voteReducer } from './voteSlice';
-export { gameSlice, gameReducer } from './gameSlice';
+export {
+  gameSlice,
+  setMemberJoinedStatus,
+  setMemberLeftStatus,
+  resetMemberJoinedStatus,
+  resetMemberLeftStatus,
+  gameReducer,
+} from './gameSlice';
 export { chatSlice, changeChatStatus, chatReducer } from './chatSlice';
-export { gameRoundSlice, gameRoundReducer } from './gameRoundSlice';
+export { roundSlice, resetRoundStatus, roundReducer } from './roundSlice';
 export { timerSlice, updateTimer, timerReducer } from './timerSlice';
