@@ -1,6 +1,8 @@
-export type { IUser } from './IUser';
-export type { ICurrentUser } from './ICurrentUser';
-export type { IMessage } from './IMessage';
-export type { Issue, IssueStatistics } from './Issue';
-export type { IGameSettings } from './IGameSettings';
-export type { IGameRoundData } from './IGameRoundData';
+export type { User } from './user';
+export type { CurrentUser } from './currentUser';
+export type { Message } from './message';
+export type { Settings } from './settings';
+export type { RoundData } from './roundData';
+export type { ObjectType } from './objectType';
+export type { Issue, IssueStatistics } from './issue';
+export type { VictimData } from './victimData';
