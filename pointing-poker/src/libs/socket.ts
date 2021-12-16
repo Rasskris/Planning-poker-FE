@@ -8,9 +8,10 @@ import {
   deleteUser,
   updateGameStatus,
   updateUser,
-  updateGameSettings,
-  updateRoundStatus,
+  updateSettings,
   updateDoneIssue,
+  startRound,
+  finishRound,
 } from '../redux/thunks';
 import {
   enableVote,
@@ -20,6 +21,9 @@ import {
   rejectToGame,
   updateTimer,
   resetSelectedCards,
+  setMemberJoinedStatus,
+  setMemberLeftStatus,
+  resetRoundStatus,
 } from '../redux/slices';
 import { URL } from '../constants';
 import { logout } from '../redux/actions';
@@ -40,6 +44,7 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('memberJoin', user => {
     dispatch(memberJoin(user));
+    dispatch(setMemberJoinedStatus());
   });
 
   socket.on('memberLeave', deletedUserId => {
@@ -47,6 +52,7 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
       dispatch(logout());
     } else {
       dispatch({ type: deleteUser.fulfilled.type, payload: deletedUserId });
+      dispatch(setMemberLeftStatus());
     }
   });
 
@@ -64,6 +70,7 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
 
   socket.on('issueListUpdate', issues => {
     dispatch({ type: updateCurrentIssue.fulfilled.type, payload: issues });
+    dispatch(resetRoundStatus());
   });
 
   socket.on('issueUpdate', issue => {
@@ -84,8 +91,8 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch({ type: updateGameStatus.fulfilled.type, payload: status });
   });
 
-  socket.on('gameSettings', gameSettings => {
-    dispatch({ type: updateGameSettings.fulfilled.type, payload: gameSettings });
+  socket.on('settings', gameSettings => {
+    dispatch({ type: updateSettings.fulfilled.type, payload: gameSettings });
   });
 
   socket.on('notifyDealer', user => {
@@ -105,9 +112,12 @@ export const initSocket = (userId: string, gameId: string, dispatch: Dispatch): 
     dispatch(logout());
   });
 
-  socket.on('roundStatus', status => {
-    console.log('soket', status);
-    dispatch({ type: updateRoundStatus.fulfilled.type, payload: status });
+  socket.on('roundStart', () => {
+    dispatch({ type: startRound.fulfilled.type });
+  });
+
+  socket.on('roundFinish', () => {
+    dispatch({ type: finishRound.fulfilled.type });
   });
 
   socket.on('timer', timer => {
