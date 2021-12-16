@@ -1,0 +1,27 @@
+@import '../../layout/styles-config';
+
+.container {
+  margin-bottom: 50px;
+  width: 100%;
+  @include flex($align: flex-start, $wrap: wrap, $justify: space-evenly);
+}
+.title {
+  width: 50%;
+  font-size: 24px;
+  font-style: normal;
+  line-height: auto;
+  font-weight: bold;
+  text-align: start;
+  margin-bottom: 5px;
+  margin-right: 20px;
+  padding: 5px 0;
+  border-bottom: 1px dotted $del-rio;
+  border-top: 1px dotted $del-rio;
+}
+
+@media all and (max-width: 450px) {
+  .container {
+    align-items: center;
+    justify-content: center;
+  }
+}
