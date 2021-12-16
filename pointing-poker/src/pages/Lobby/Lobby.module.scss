@@ -12,42 +12,6 @@
       font-size: 16px;
       border: 1px #cccccc solid;
     }
-    .tooltipContainer {
-      position: relative;
-      margin-bottom: 10px;
-      display: flex;
-      word-break: break-all;
-      transition: all 0.2s;
-      .tooltipText {
-        visibility: hidden;
-        background-color: $sandy-brown;
-        color: $white;
-        text-align: center;
-        padding: 5px 0;
-        border-radius: 6px;
-        position: absolute;
-        z-index: 1;
-        width: 100%;
-        top: 100%;
-        left: 0;
-        font-size: 1.5rem;
-        line-height: 1.1;
-        border-radius: 60px 45px 30px 15px/15px 30px 45px 60px;
-      }
-      .tooltipText:after {
-        content: ' ';
-        position: absolute;
-        bottom: 100%;
-        left: 50%;
-        margin-left: -5px;
-        border-width: 5px;
-        border-style: solid;
-        border-color: transparent transparent $sandy-brown transparent;
-      }
-    }
-    .tooltipContainer:hover .tooltipText {
-      visibility: visible;
-    }
     .btnWrapper {
       width: 100%;
       @include flex();
@@ -64,24 +28,14 @@
 
 .content {
   padding: 30px;
-  width: 45%;
-  @include flex($direction: column, $align: flex-start);
-  .gameControl {
-    @include flex($direction: column, $align: flex-start);
-    h3 {
-      margin-bottom: 5px;
-    }
-  }
-}
-.chat {
-  @include flex($direction: column, $align: flex-end, $justify: flex-start);
-  height: 100vh;
+  width: 65%;
+  @include flex($direction: column, $align: center);
 }
 
 @media all and (max-width: 1500px) {
   .content {
     padding: 20px 30px;
-    width: 65%;
+    width: 70%;
   }
 }
 
@@ -92,16 +46,10 @@
   }
 }
 
-.title {
-  width: 50%;
-  font-size: 24px;
-  font-style: normal;
-  line-height: auto;
-  font-weight: bold;
-  text-align: start;
-  margin-bottom: 5px;
-  margin-right: 20px;
-  padding: 5px 0;
-  border-bottom: 1px dotted brown;
-  border-top: 1px dotted brown;
+@media all and (max-width: 450px) {
+  .content {
+    padding: 20px 30px;
+    width: 90%;
+    justify-content: center;
+  }
 }
