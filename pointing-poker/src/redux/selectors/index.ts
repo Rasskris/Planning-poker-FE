@@ -19,8 +19,6 @@ export const selectUserLoadingStatus = (state: RootState) => state.currentUser.l
 
 export const selectLoginStatus = (state: RootState) => state.currentUser.isLoggedIn;
 
-export const selectAuthSuccessStatus = (state: RootState) => state.currentUser.authSuccess;
-
 export const selectPendingDealerAnswer = (state: RootState) => state.currentUser.isPendingDealerAnswer;
 
 export const selectAutoAdmitedStatus = (state: RootState) => state.currentUser.isAutoAdmitedToGame;
