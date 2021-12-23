@@ -1,7 +1,7 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react';
+import { ChangeEvent, FC, FormEvent, ReactText, useState } from 'react';
 import { toast } from 'react-toastify';
 import { BackDropModal, Button, LoginForm } from '../../components/index';
-import { TOAST_OPTIONS } from '../../constants';
+import { SUCCESS_GAME_EXIST, TOAST_OPTIONS, TOAST_UPDATE_OPTIONS } from '../../constants';
 import { USER_ROLES } from '../../enums';
 import { useDispatchWithReturn } from '../../hooks';
 import { checkExistGame } from '../../redux/thunks';
@@ -25,13 +25,17 @@ const Main: FC = () => {
 
   const handleConnectGame = async (event: FormEvent) => {
     event.preventDefault();
+    let toastId: ReactText;
+    toastId = toast.loading('Please wait...', TOAST_OPTIONS);
+
     try {
       await dispatch(checkExistGame(gameId));
 
+      toast.update(toastId, { render: SUCCESS_GAME_EXIST, type: 'info', ...TOAST_UPDATE_OPTIONS });
       setRole(USER_ROLES.PLAYER);
       setIsLoginFormOpen(true);
     } catch (error: any) {
-      toast.error(error.message, TOAST_OPTIONS);
+      toast.update(toastId, { render: error.message, type: 'error', ...TOAST_UPDATE_OPTIONS });
     }
   };
 

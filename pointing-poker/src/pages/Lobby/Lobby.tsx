@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector, useMemberToast, useUsers, useUserToast } from '../../hooks';
+import { useAppDispatch, useAppSelector, useMemberToast, useUsers } from '../../hooks';
 import { selectAutoAdmitedStatus, selectPendingDealerAnswer, selectRejectedToGameStatus } from '../../redux/selectors';
 import { updateGameStatus } from '../../redux/thunks';
 import { User } from '../../interfaces';
@@ -31,7 +31,6 @@ const Lobby: FC<LobbyProps> = ({ currentUser }) => {
   const isAutoAdmitedToGame = useAppSelector(selectAutoAdmitedStatus);
   const isDealer = currentUserRole === USER_ROLES.DEALER;
   const dispatch = useAppDispatch();
-  useUserToast();
   useMemberToast();
 
   useEffect(() => {
