@@ -3,7 +3,6 @@ export {
   admitToGame,
   rejectToGame,
   resetAdmitedToGameStatus,
-  clearAuthSuccess,
   currentUserReducer,
 } from './currentUserSlice';
 export { usersSlice, memberJoin, resetSelectedCards, usersReducer } from './usersSlice';

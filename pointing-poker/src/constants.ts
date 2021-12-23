@@ -1,4 +1,4 @@
-import type { ToastOptions } from 'react-toastify';
+import type { ToastOptions, UpdateOptions } from 'react-toastify';
 
 export const URL = 'http://localhost:5000';
 
@@ -44,6 +44,15 @@ export const TOAST_OPTIONS: ToastOptions = {
   theme: 'dark',
   style: { fontSize: '16px' },
 };
+
+export const TOAST_UPDATE_OPTIONS: UpdateOptions = {
+  isLoading: false,
+  autoClose: 5000,
+  theme: 'dark',
+  style: { fontSize: '14px', textAlign: 'center' },
+};
+
+export const SUCCESS_GAME_EXIST = 'Game with that id found';
 
 export const USER_GREETING_TEXT = 'Welcome to Planning Poker!';
 

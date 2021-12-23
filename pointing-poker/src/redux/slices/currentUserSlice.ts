@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { USER_GREETING_TEXT } from '../../constants';
 import { CurrentUser } from '../../interfaces';
 import { addUser } from '../thunks';
 
@@ -7,7 +6,6 @@ const initialState: CurrentUser = {
   isLoggedIn: false,
   user: null,
   loading: false,
-  authSuccess: null,
   isPendingDealerAnswer: false,
   isAutoAdmitedToGame: false,
   isAccessToGameRejected: false,
@@ -27,9 +25,6 @@ export const currentUserSlice = createSlice({
     resetAdmitedToGameStatus: state => {
       state.isAutoAdmitedToGame = false;
     },
-    clearAuthSuccess: state => {
-      state.authSuccess = null;
-    },
   },
   extraReducers: builder => {
     builder
@@ -43,12 +38,11 @@ export const currentUserSlice = createSlice({
         state.loading = false;
         state.isLoggedIn = true;
         state.user = payload.user;
-        state.authSuccess = USER_GREETING_TEXT;
         state.isPendingDealerAnswer = payload.isPendingDealerAnswer;
         state.isAutoAdmitedToGame = payload.isAutoAdmitedToGame;
       });
   },
 });
 
-export const { admitToGame, rejectToGame, resetAdmitedToGameStatus, clearAuthSuccess } = currentUserSlice.actions;
+export const { admitToGame, rejectToGame, resetAdmitedToGameStatus } = currentUserSlice.actions;
 export const currentUserReducer = currentUserSlice.reducer;

@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { toast } from 'react-toastify';
 import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { LOGIN_FORM_INPUTS, USER_ROLES } from '../../enums';
@@ -8,6 +9,7 @@ import { addUser } from '../../redux/thunks';
 import { selectUserLoadingStatus } from '../../redux/selectors';
 import { Switcher, Button, Spinner } from '..';
 import { TextField } from './TextField';
+import { TOAST_OPTIONS, USER_GREETING_TEXT } from '../../constants';
 import classes from './LoginForm.module.scss';
 
 interface FormInputs {
@@ -51,14 +53,19 @@ const LoginForm: FC<FormProps> = ({ gameId, onModalCloseHandler, role }) => {
   });
   const { handleSubmit } = methods;
 
-  const onSubmit = (userData: FormInputs) => {
+  const onSubmit = async (userData: FormInputs) => {
     const user = {
       ...userData,
       role: isObserver ? USER_ROLES.OBSERVER : role,
       gameId,
     };
-    console.log('user', user);
-    dispatch(addUser(user));
+
+    try {
+      await dispatch(addUser(user));
+      toast.success(USER_GREETING_TEXT, TOAST_OPTIONS);
+    } catch (error: any) {
+      toast.error(error.message, TOAST_OPTIONS);
+    }
   };
 
   const handleSwitcher = () => {
