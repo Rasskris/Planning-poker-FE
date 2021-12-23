@@ -18,7 +18,7 @@ export const UserCard: FC<UserCardProps> = memo(
     const nameInitials = getNameInitials(firstName, lastName);
     const isCurrentUser = currentUserId === id;
     const isDealer = role === USER_ROLES.DEALER;
-    console.log(jobPosition);
+
     const handleClick = () => {
       handleKickUser(id, firstName);
     };
