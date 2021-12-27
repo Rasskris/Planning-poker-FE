@@ -1,1 +1,1 @@
-export { Lobby } from './Lobby';
+export { default as Lobby } from './Lobby';

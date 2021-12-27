@@ -85,4 +85,4 @@ const Lobby: FC<LobbyProps> = ({ currentUser }) => {
   );
 };
 
-export { Lobby };
+export default Lobby;
