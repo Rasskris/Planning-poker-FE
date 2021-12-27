@@ -40,6 +40,7 @@ export const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
 
 export const store = configureStore({
   reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
 export const initialRootState = {
