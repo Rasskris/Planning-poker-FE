@@ -78,4 +78,4 @@ const Game: FC<GameProps> = ({ currentUser }) => {
   );
 };
 
-export { Game };
+export default Game;
